@@ -223,8 +223,9 @@ function deleteUser(userId) {
   APIResources.deleteUser({ userId }).then((res) => {
     if (res.code != 200) {
       ElMessage.error('Code: ' + res.code + ',Message: ' + res.message)
+    }else{
+        ElMessage.success("删除成功")
     }
-    ElMessage.success("删除成功")
   }).finally(()=>{
     search()
   });

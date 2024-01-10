@@ -45,6 +45,9 @@ const isCollapse = ref(false);
         <el-menu-item index="/system/org">
           <el-icon><UserFilled /></el-icon>部门管理
         </el-menu-item>
+        <el-menu-item index="/system/position">
+          <el-icon><UserFilled /></el-icon>职位管理
+        </el-menu-item>
         <el-menu-item index="/system/user">
           <el-icon><UserFilled /></el-icon>用户管理
         </el-menu-item>

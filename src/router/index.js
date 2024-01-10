@@ -63,6 +63,11 @@ const router = createRouter({
           path: 'menu',
           name: 'menu',
           component: () => import('@/views/menu/MenuView.vue')
+        },
+        {
+          path: 'position',
+          name: 'position',
+          component: () => import('@/views/position/PositionView.vue')
         }
       ]
     },

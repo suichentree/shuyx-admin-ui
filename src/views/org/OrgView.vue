@@ -165,18 +165,19 @@ function toDelete(id) {
     type: 'warning',
     closeOnClickModal: false
   }).then(() => {
-    deleteUser(id)
+    deleteOrg(id)
   })
 }
 
 //删除用户
-function deleteUser(orgId) {
+function deleteOrg(orgId) {
   //调用接口
-  APIResources.deleteUser({ orgId }).then((res) => {
+  APIResources.deleteOrg({ orgId }).then((res) => {
     if (res.code != 200) {
       ElMessage.error('Code: ' + res.code + ',Message: ' + res.message)
+    }else{
+        ElMessage.success("删除成功")
     }
-    ElMessage.success("删除成功")
   }).finally(()=>{
     search()
   });
