@@ -1,7 +1,8 @@
 <template>
+  <el-space direction="vertical" :fill="true" style="width: 100%;">
     <!--查询条件-->
     <el-card shadow="never" :body-style="{ padding: '0px' }">
-      <div class="card-header">
+      <div class="card-div">
         <el-row justify="space-between">
           <el-col :span="2"><el-tag>查询条件</el-tag></el-col>
           <el-col :span="6" style="text-align: right">
@@ -10,7 +11,7 @@
           </el-col>
         </el-row>
       </div>
-      <div class="card-main">
+      <div class="card-div">
         <el-form :inline="true" :model="queryform" ref="queryformRef">
           <el-form-item label="职位名称" prop="positionName">
             <el-input v-model="queryform.positionName" placeholder="请输入" clearable />
@@ -30,7 +31,7 @@
     </el-card>
     <!--查询结果-->
     <el-card shadow="never" :body-style="{ padding: '0px' }">
-      <div class="card-header">
+      <div class="card-div">
         <el-row justify="space-between">
           <el-col :span="2"><el-tag>查询结果</el-tag></el-col>
           <el-col :span="6" style="text-align: right">
@@ -38,7 +39,7 @@
           </el-col>
         </el-row>
       </div>
-      <div class="card-main">
+      <div class="card-div">
         <!--数据表格-->
         <el-table :data="tableData" border>
           <el-table-column label="职位编号" align="center" key="positionId" prop="positionId" />
@@ -67,6 +68,8 @@
             </template>
           </el-table-column>
         </el-table>
+      </div>
+      <div class="card-div">
         <!--表格分页-->
         <el-pagination
           @change="changePageData"
@@ -79,6 +82,7 @@
         />
       </div>
     </el-card>
+  </el-space>
     <!--新增对话框-->
     <AddView />
     <!--编辑对话框-->
@@ -204,17 +208,8 @@
   }
   </script>
   <style scoped>
-  .card-header {
+  .card-div {
     padding: 10px;
-  }
-  .card-main {
-    padding: 10px;
-  }
-  .el-card {
-    margin: 10px;
-  }
-  .el-pagination {
-    margin: 10px;
   }
   </style>
   

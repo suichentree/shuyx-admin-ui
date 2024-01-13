@@ -15,7 +15,7 @@
           </el-input>
         </div>
         <div class="card-div">
-          <el-tree :data="treeData" :props="{children:'children',label:'roleName'}" @node-click="handleNodeClick" default-expand-all :highlight-current="true"/>
+          <el-tree :data="treeData" :props="{children:'children',label:'roleName'}" @node-click="handleNodeClick" default-expand-all/>
         </div>
       </el-card>
     </el-col>
@@ -23,16 +23,14 @@
       <el-card shadow="never" :body-style="{ padding: '0px' }">
         <el-tabs type="border-card" class="demo-tabs">
           <el-tab-pane label="角色信息维护">
-            <!--角色表单维护组件-->
+            <!--编辑角色表单组件-->
             <EditRoleForm/>
           </el-tab-pane>
           <el-tab-pane label="角色菜单维护">
-            <!--角色菜单维护组件-->
-            <EditRoleMenu/>
+
           </el-tab-pane>
           <el-tab-pane label="角色用户维护">
-            <!--角色用户维护组件-->
-            <EditRoleUser/>
+
           </el-tab-pane>
         </el-tabs>
       </el-card>
@@ -42,14 +40,12 @@
 </template>
 <script setup>
 import { ref, onMounted, provide } from 'vue'
-import APIResources from './RoleView.service'
+import APIResources from './DemoView.service'
 import { ElMessage} from 'element-plus'
 import { Search } from '@element-plus/icons-vue'
 
 // 组件注册
 import EditRoleForm from './components/EditRoleForm.vue'
-import EditRoleMenu from './components/EditRoleMenu.vue'
-import EditRoleUser from './components/EditRoleUser.vue'
 import AddView from './components/AddView.vue'
 
 // onMounted生命周期
@@ -57,6 +53,7 @@ onMounted(() => {
   //先查询
   search()
 })
+
 
 //包含无上级角色的角色树形数据
 const roleTreeData = ref([])
@@ -91,9 +88,6 @@ const EditForm = ref({
   status: undefined
 })
 provide('EditForm', EditForm)
-
-//------------------------
-
 //树形节点点击操作
 function handleNodeClick(data){
     //把data对象的属性值赋值给左边

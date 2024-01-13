@@ -36,6 +36,11 @@ const router = createRouter({
           path: 'about',
           name: 'about',
           component: () => import('@/views/home/AboutView.vue')
+        },
+        { 
+          path: 'demo', 
+          name: 'demo',
+          component: () => import('@/views/demo/DemoView.vue') //测试demo页面，一般用于写测试页面。
         }
       ]
     },

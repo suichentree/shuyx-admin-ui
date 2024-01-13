@@ -32,6 +32,11 @@ const isCollapse = ref(false);
             <el-icon><Odometer /></el-icon><span>仪表板</span>
           </template>
         </el-menu-item>
+        <el-menu-item index="/home/demo">
+          <template #title>
+            <el-icon><StarFilled /></el-icon><span>demo</span>
+          </template>
+        </el-menu-item>
         <el-menu-item index="/home/about">
           <template #title>
             <el-icon><StarFilled /></el-icon><span>关于</span>
@@ -43,7 +48,7 @@ const isCollapse = ref(false);
           <el-icon><Tools /></el-icon><span>系统管理</span>
         </template>
         <el-menu-item index="/system/org">
-          <el-icon><UserFilled /></el-icon>部门管理
+          <el-icon><UserFilled /></el-icon>组织机构管理
         </el-menu-item>
         <el-menu-item index="/system/position">
           <el-icon><UserFilled /></el-icon>职位管理
@@ -66,7 +71,7 @@ const isCollapse = ref(false);
 <style scoped>
 .el-menu {
   border: none;
-  height: 100vh;
+  height: 100%;
 }
 
 </style>

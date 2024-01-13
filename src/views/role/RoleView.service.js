@@ -45,6 +45,60 @@ const APIResources = {
             params: queryData,
             headers: { 'Content-Type': 'multipart/form-data' }
         })
+    },
+    //查询所有菜单和角色可使用菜单
+    selectRoleMenuInfo(queryData) {
+        return axiosService.request({
+            url: '/shuyx-user/menu/selectRoleMenuInfo',
+            method: 'GET',
+            params: queryData,
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+    },
+    //更新角色可使用菜单
+    updateRoleMenuInfo(queryData) {
+        return axiosService.request({
+            url: '/shuyx-user/menu/updateRoleMenuInfo',
+            method: 'POST',
+            data: queryData,
+            headers: { 'Content-Type': 'application/json' }
+        })
+    },
+    //查询角色下的用户分页信息
+    selectUserListByRoleId(queryData,pageData) {
+        return axiosService.request({
+            url: '/shuyx-user/user/selectUserListByRoleId',
+            method: 'POST',
+            data: Object.assign({},queryData,pageData),
+            headers: { 'Content-Type': 'application/json' }
+        })
+    },
+    //查询不属于该角色下的用户分页信息
+    selectUserListByNoRoleId(queryData,pageData) {
+        return axiosService.request({
+            url: '/shuyx-user/user/selectUserListByNoRoleId',
+            method: 'POST',
+            data: Object.assign({},queryData,pageData),
+            headers: { 'Content-Type': 'application/json' }
+        })
+    },
+    //将角色与用户绑定
+    addUserRole(queryData) {
+        return axiosService.request({
+            url: '/shuyx-user/user/addUserRole',
+            method: 'POST',
+            data: queryData,
+            headers: { 'Content-Type': 'application/json' }
+        })
+    },
+    //解除角色与用户的绑定
+    deleteUserRole(queryData) {
+        return axiosService.request({
+            url: '/shuyx-user/user/deleteUserRole',
+            method: 'POST',
+            data: queryData,
+            headers: { 'Content-Type': 'application/json' }
+        })
     }
   }
   

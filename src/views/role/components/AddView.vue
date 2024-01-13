@@ -58,7 +58,8 @@ const { proxy } = getCurrentInstance()
 
 //接收父组件传递的数据
 const DialogVisible = inject('AddDialogVisible')
-const roleTreeData = inject('roleTreeData')
+const roleTreeData = ref([])
+roleTreeData.value = inject('roleTreeData')
 
 //表单校验规则
 const rules = ref({
@@ -95,12 +96,12 @@ function add() {
     }
   })
 }
-
 //取消
 function cancel() {
   addformRef.value.resetFields()
   DialogVisible.value = false
 }
+
 </script>
 <style scoped>
 .card-header {

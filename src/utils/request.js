@@ -2,7 +2,7 @@
  * 在request.js 对 axios 进行封装。
  * */ 
 import axios from 'axios';		//引入axios
-import { ElNotification, ElMessageBox } from 'element-plus'; //引入element-plus的消息通知
+import { ElNotification, ElMessageBox,ElMessage} from 'element-plus'; //引入element-plus的消息通知
 
 // 创建axios实例
 const axiosService = axios.create({
@@ -33,9 +33,13 @@ axiosService.interceptors.request.use(
 
 // axios response 拦截器
 axiosService.interceptors.response.use(
-	//当响应成功的时候
+	//当响应成功的时候。返回响应内容中的data数据
 	(response) => {
-		//返回响应内容中的data数据
+		//如果响应成功，但是业务办理失败
+		if(response.data.code != 200){
+			ElMessage.error('Code: ' + response.data.code + ',Message: ' + response.data.message)
+		}
+		//响应成功且业务办理成功。
 		return response.data;
 	},
 	//当响应失败的时候，根据不同的失败状态，进行不同的动作
