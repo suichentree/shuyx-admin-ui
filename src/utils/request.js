@@ -12,7 +12,6 @@ const axiosService = axios.create({
     timeout: 10000
 })
 
-
 // axios request 拦截器
 axiosService.interceptors.request.use(
 	//请求成功的时候

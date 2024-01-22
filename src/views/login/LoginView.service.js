@@ -10,6 +10,15 @@ const APIResources = {
             params: Object.assign({}, queryData),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         })
+    },
+    //获取路由资源
+    selectRouterInfo(queryData){
+        return axiosService.request({
+            url: '/shuyx-user/user/login',
+            method: 'POST',
+            params: Object.assign({}, queryData),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        })
     }
   }
   

@@ -1,20 +1,27 @@
 <script setup>
 // 组件注册
-import Header from './components/HeaderView.vue'
-import Aside from './components/AsideView.vue'
+import Header from './Header/HeaderView.vue'
+import Aside from './Aside/AsideView.vue'
+import TagsView from "./Header/TagsView.vue"
 </script>
 
 <template>
+  <!--最外层容器高宽都为100%-->
   <el-container style="width: 100%;height: 100%;">
-    <el-aside style="padding: 0px;width: 15%;height: 100%;">
+    <!--左边区域高100%,宽auto自适应,宽度会随着侧边栏的折叠而变化-->
+    <el-aside style="padding: 0px;width: auto;height: 100%;">
       <Aside></Aside>
     </el-aside>
-    <el-container style="width: 85%;height: 100%;">
-      <el-header style="padding: 0px;width: 100%;height: 10%;">
+    <!--右边区域高100%,宽auto自适应-->
+    <el-container style="height: 100%;width: auto;">
+      <!--头部区域高auto自适应，宽100%-->
+      <el-header style="padding: 0px;width: 100%;height:auto;">
         <Header></Header>
+        <TagsView></TagsView>
       </el-header>
+      <!--主区域高90%，宽100%，背景色灰白-->
       <el-main style="padding: 10px;width: 100%;height: 90%;background-color: #f6f8f9;">
-          <!--通过子路由来显示内容-->
+        <!--通过router-view标签来显示嵌套路由的内容-->
         <router-view />
       </el-main>
     </el-container>
@@ -22,21 +29,4 @@ import Aside from './components/AsideView.vue'
 </template>
 
 <style scoped>
-
-.el-main {
-  /* padding: 0px;
-  background-color: #f6f8f9;
-  height:90%; */
-}
-
-.el-header {
-  /* padding: 0px;
-  height:10%; */
-}
-
-.el-aside {
-  /* padding: 0px;
-  width: 15%;
-  height:100%; */
-}
 </style>

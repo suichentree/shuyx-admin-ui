@@ -17,5 +17,8 @@ import RightView from './components/RightView.vue'
 
 
 <style scoped>
-.el-row{ width: 100%;height: 100%;}
+.el-row{ 
+  width: 100%;
+  height: 100%;
+}
 </style>

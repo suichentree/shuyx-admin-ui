@@ -11,6 +11,9 @@ import 'element-plus/dist/index.css'
 import router from './router'
 //引入pinia
 import { createPinia } from 'pinia'
+//引入pinia持久化插件
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
 //引入element-plus icon
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
@@ -20,7 +23,9 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 
-app.use(createPinia())
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)  //pinia使用持久化插件
+app.use(pinia)
 app.use(router)
 app.use(ElementPlus)
 app.mount('#app')
