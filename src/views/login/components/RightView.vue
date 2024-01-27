@@ -47,9 +47,9 @@
 import { ref , getCurrentInstance} from 'vue'
 import loginimg from "@/assets/logo.png"
 import { Lock , User } from '@element-plus/icons-vue'
-import APIResources from '../LoginView.service'
 import { ElMessage } from 'element-plus'
 import router from "@/router";
+import APIResources from '@/api/login.service'
 import { useMenuStore } from '@/stores/menuStore'
 const menuStore = useMenuStore()
 //getCurrentInstance方法用于获取当前视图的实例。即proxy相当于this
@@ -75,6 +75,7 @@ function onSubmit() {
     if (valid) {
         //调用登录接口
         APIResources.login(loginform.value).then(res => {
+            console.log("reslogin",res);
             if(res.code == 200){
                 ElMessage.success("登录成功")
                 router.push({ path: '/home' })

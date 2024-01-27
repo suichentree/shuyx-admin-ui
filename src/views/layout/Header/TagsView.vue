@@ -33,8 +33,6 @@ watch(() => router.currentRoute.value.fullPath, (to) => {
 
 //关闭tag
 function handleClose(index,item) {
-  console.log('index', index)
-  console.log('item', item)
   //判断删除的tag是不是当前path的tag
   if(item.path == currentPath.value){
     //如果是，则跳转到最后一个tag路由上

@@ -95,7 +95,7 @@
 </template>
 <script setup>
 import { ref, onMounted, provide } from 'vue'
-import APIResources from './UserView.service'
+import APIResources from '@/api/user.service.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
 // 组件注册
 import AddView from './components/AddView.vue'

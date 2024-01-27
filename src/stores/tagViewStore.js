@@ -5,12 +5,7 @@ import { defineStore } from 'pinia'
 //tagViewStore
 export const useTagViewStore = defineStore('tagViewStore', () => {
    //tagview菜单信息,主要用于存储tagview中展示的菜单
-   const tagViewMenuInfo = ref([
-    {
-        path: '/home/index',
-        name: 'home',
-    }
-   ])
+   const tagViewMenuInfo = ref([])
   //添加tagview菜单信息
   function addTagViewMenuInfo(obj){
     let item = {

@@ -1,5 +1,5 @@
-//引入主样式main.css
-import './style/main.css'
+//引入element-plus icon图标
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 //引入vue
 import { createApp } from 'vue'
 //引入主视图App.vue
@@ -13,18 +13,18 @@ import router from './router'
 import { createPinia } from 'pinia'
 //引入pinia持久化插件
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)  //pinia使用持久化插件
+//引入mock
+import Mock from '@/mock/index'
 
-//引入element-plus icon
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
+//创建根组件app
 const app = createApp(App)
-
+//elementplus图标注册到根组件app中
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 
-const pinia = createPinia()
-pinia.use(piniaPluginPersistedstate)  //pinia使用持久化插件
 app.use(pinia)
 app.use(router)
 app.use(ElementPlus)

@@ -1,4 +1,4 @@
-import axiosService from '@/utils/request';		//引入 request.js 中的axiosService
+import axiosService from '@/api/request';		//引入 request.js 中的axiosService
 
 // 针对特定资源，创建资源访问对象
 const APIResources = {

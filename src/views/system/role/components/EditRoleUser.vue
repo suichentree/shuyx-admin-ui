@@ -37,7 +37,7 @@
 </template>
 <script setup>
 import { ref,inject,getCurrentInstance,provide} from 'vue'
-import APIResources from '../RoleView.service'
+import APIResources from '@/api/role.service.js'
 import { ElMessage} from 'element-plus'
 
 // 组件注册

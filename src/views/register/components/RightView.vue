@@ -68,7 +68,7 @@
 import { ref , getCurrentInstance} from 'vue'
 import loginimg from "@/assets/logo.png"
 import { Lock , User } from '@element-plus/icons-vue'
-import APIResources from '../RegisterView.service'
+import APIResources from '@/api/register.service'
 import { ElMessage } from 'element-plus'
 import router from "@/router";
 

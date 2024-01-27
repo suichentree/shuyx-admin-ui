@@ -9,7 +9,7 @@ export default defineConfig(({mode}) =>  {
   const env = loadEnv(mode, process.cwd(), "")
   return {
     plugins: [
-      vue(),
+      vue()
     ],
     resolve: {
       alias: {

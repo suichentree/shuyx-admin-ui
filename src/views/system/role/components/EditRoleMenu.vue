@@ -23,7 +23,7 @@
 </template>
 <script setup>
 import { ref,inject} from 'vue'
-import APIResources from '../RoleView.service'
+import APIResources from '@/api/role.service.js'
 import { ElMessage,ElMessageBox} from 'element-plus'
 
 //接收父组件传递的数据

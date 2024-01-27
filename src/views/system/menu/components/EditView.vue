@@ -71,7 +71,7 @@
 import { ref, inject, getCurrentInstance } from 'vue'
 import { ElMessage } from 'element-plus'
 //api
-import APIResources from '../MenuView.service.js'
+import APIResources from '@/api/menu.service.js'
 
 //菜单页面数组
 import menuPageArray from '@/utils/menuPage'

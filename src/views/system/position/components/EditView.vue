@@ -42,7 +42,7 @@
 </template>
 <script setup>
 import { ref, inject, getCurrentInstance } from 'vue'
-import APIResources from '../PositionView.service.js'
+import APIResources from '@/api/position.service.js'
 import { ElMessage } from 'element-plus'
 
 //this

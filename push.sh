@@ -1,4 +1,5 @@
-# 该脚本主要用于提交代码到github上。提交代码到仓库 https://github.com/suichentree/suichenblog.git
+# 该脚本主要用于提交代码到github上。提交代码到仓库 https://github.com/suichentree/shuyx-admin-ui.git
+# 或者 https://githubfast.com/suichentree/shuyx-admin-ui.git
 
 # 注意1: 在git终端中运行脚本。
 # 注意2：可用检查当前git远程仓库是否是目标仓库

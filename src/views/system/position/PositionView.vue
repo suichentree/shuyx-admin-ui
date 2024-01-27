@@ -90,7 +90,7 @@
   </template>
   <script setup>
   import { ref, onMounted, provide } from 'vue'
-  import APIResources from './PositionView.service.js'
+  import APIResources from '@/api/position.service.js'
   import { ElMessage, ElMessageBox } from 'element-plus'
   
   // 组件注册

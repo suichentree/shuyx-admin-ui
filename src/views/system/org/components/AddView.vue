@@ -50,7 +50,7 @@
 </template>
 <script setup>
 import { ref, inject, getCurrentInstance } from 'vue'
-import APIResources from '../OrgView.service.js'
+import APIResources from '@/api/org.service'
 import { ElMessage } from 'element-plus'
 
 //this

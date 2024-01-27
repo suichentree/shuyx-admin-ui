@@ -8,6 +8,7 @@
           <el-icon ><component :is="route.icon"></component></el-icon>
           <span>{{ route.name }}</span>
         </template>
+        <!--嵌套使用 SidebarItem组件-->
         <sidebar-item
           v-for="child in route.children"
           :key="child.path"

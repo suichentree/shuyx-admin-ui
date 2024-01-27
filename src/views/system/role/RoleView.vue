@@ -42,7 +42,7 @@
 </template>
 <script setup>
 import { ref, onMounted, provide } from 'vue'
-import APIResources from './RoleView.service'
+import APIResources from '@/api/role.service.js'
 import { ElMessage} from 'element-plus'
 import { Search } from '@element-plus/icons-vue'
 

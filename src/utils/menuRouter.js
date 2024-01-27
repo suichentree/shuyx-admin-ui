@@ -1,5 +1,5 @@
 /**
- * menuRouter.js文件主要用于将后台传过来的用户菜单信息，转换为可以被vue-router使用的路由信息。
+ * menuRouter.js文件主要用于将后台传过来的用户菜单信息，转换为可以被vue-router使用的动态路由信息。
  */
 
 //导入Layout视图组件

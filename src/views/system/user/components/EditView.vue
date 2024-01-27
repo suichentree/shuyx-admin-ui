@@ -72,7 +72,7 @@
 </template>
 <script setup>
 import { ref, inject, getCurrentInstance } from 'vue'
-import APIResources from '../UserView.service.js'
+import APIResources from '@/api/user.service.js'
 import { ElMessage } from 'element-plus'
 
 //this

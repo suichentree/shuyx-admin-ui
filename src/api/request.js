@@ -1,13 +1,22 @@
 /**
- * 在request.js 对 axios 进行封装。
+ * request.js 是对 axios 进行封装。
  * */ 
 import axios from 'axios';		//引入axios
 import { ElNotification, ElMessageBox,ElMessage} from 'element-plus'; //引入element-plus的消息通知
 
+//接口根路径
+let baseurl = null
+
+//检查是否是mock模式
+if(import.meta.env.VITE_APP_MOCK_MODE === "true"){
+	baseurl = "/mock/api"
+}else{
+	baseurl = import.meta.env.VITE_APP_API_BASEURL
+}
+
 // 创建axios实例
 const axiosService = axios.create({
-    // axios中请求配置有baseURL选项，表示请求URL公共部分
-    baseURL: import.meta.env.VITE_APP_API_BASEURL,
+    baseURL: baseurl,
     // 超时时间
     timeout: 10000
 })

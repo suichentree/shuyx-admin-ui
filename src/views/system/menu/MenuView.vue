@@ -84,9 +84,10 @@
   <EditView />
 </template>
 <script setup>
-import { ref, onMounted, provide } from 'vue'
-import APIResources from './MenuView.service'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { ref, onMounted, provide } from 'vue'
+import APIResources from '@/api/menu.service'
+
 //导入组件
 import AddView from './components/AddView.vue'
 import EditView from './components/EditView.vue'
@@ -157,23 +158,21 @@ function search() {
   if(queryform.value.menuName == undefined && queryform.value.status == undefined){
     //全查接口
     APIResources.menuTreelist().then((res) => {
-      if (res.code != 200) {
-        ElMessage.error('Code: ' + res.code + ',Message: ' + res.message)
+      if (res.code == 200) {
+        //填充表格数据
+        tableData.value = res.data
+        //将所有菜单数据赋值给menuTreeList
+        menuTreeList.value = buildtreeMenuData(res.data)
       }
-      //填充表格数据
-      tableData.value = res.data
-      //将所有菜单数据赋值给menuTreeList
-      menuTreeList.value = buildtreeMenuData(res.data)
     })
 
   }else{
     //条件查询接口
     APIResources.menulist(queryform.value).then((res) => {
-      if (res.code != 200) {
-        ElMessage.error('Code: ' + res.code + ',Message: ' + res.message)
+      if (res.code == 200) {
+        //填充表格数据
+        tableData.value = res.data
       }
-      //填充表格数据
-      tableData.value = res.data
     })
   }
 }
@@ -201,10 +200,8 @@ function toDelete(id) {
 function deleteMenu(menuId) {
   //调用接口
   APIResources.deleteMenu({ menuId }).then((res) => {
-    if (res.code != 200) {
-      ElMessage.error('Code: ' + res.code + ',Message: ' + res.message)
-    }else{
-        ElMessage.success("删除成功")
+    if (res.code == 200) {
+      ElMessage.success("删除成功")
     }
   }).finally(()=>{
     search()

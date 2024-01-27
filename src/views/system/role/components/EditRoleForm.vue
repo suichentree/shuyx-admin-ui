@@ -30,7 +30,7 @@
 </template>
 <script setup>
 import { ref,inject,getCurrentInstance} from 'vue'
-import APIResources from '../RoleView.service'
+import APIResources from '@/api/role.service.js'
 import { ElMessage,ElMessageBox} from 'element-plus'
 
 //this

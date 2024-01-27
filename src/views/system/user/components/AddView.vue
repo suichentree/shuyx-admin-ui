@@ -95,7 +95,7 @@
 </template>
 <script setup>
 import { ref,inject,getCurrentInstance } from 'vue'
-import APIResources from '../UserView.service.js'
+import APIResources from '@/api/user.service.js'
 import { ElMessage } from 'element-plus'
 
 //this
@@ -147,10 +147,8 @@ function addUser(){
         //调用接口
         APIResources.addUser(addform.value).then(res => {
             if(res.code == 200){
-                ElMessage.success("添加成功")
-                cancel()
-            }else{
-                ElMessage.error("Code: "+res.code+",Message: "+res.message)
+              ElMessage.success("添加成功")
+              cancel()
             }
         });
     }

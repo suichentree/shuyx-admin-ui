@@ -60,7 +60,7 @@
 </template>
 <script setup>
 import { ref, inject, getCurrentInstance } from 'vue'
-import APIResources from '../RoleView.service.js'
+import APIResources from '@/api/role.service.js'
 import { ElMessage } from 'element-plus'
 
 //父组件传值
