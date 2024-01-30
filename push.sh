@@ -1,5 +1,4 @@
-# 该脚本主要用于提交代码到github上。提交代码到仓库 https://github.com/suichentree/shuyx-admin-ui.git
-# 或者 https://githubfast.com/suichentree/shuyx-admin-ui.git
+# 该脚本主要用于提交代码到github上。提交代码到仓库 https://gitee.com/suichentree/shuyx-admin-ui.git
 
 # 注意1: 在git终端中运行脚本。
 # 注意2：可用检查当前git远程仓库是否是目标仓库
@@ -15,9 +14,9 @@ function commit() {
 
 # 定义push方法
 function push(){
-    # 本地分支强制推送最新文件到远程分支
-    git push -f origin master
-    # $?可以获取git push -f origin master命令是否运行成功，成功返回0，否则非0。
+    # 本地分支推送文件到远程仓库origin的main分支
+    git push origin main
+    # $?可以获取git push 命令是否运行成功，成功返回0，否则非0。
     if [ $? -eq 0 ] 
     then
         # 上传成功，方法结束
