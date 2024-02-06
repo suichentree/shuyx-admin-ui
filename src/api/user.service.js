@@ -2,6 +2,14 @@ import axiosService from '@/api/request';		//引入 request.js 中的axiosServic
 
 // 针对特定资源，创建资源访问对象
 const APIResources = {
+    //根据token获取用户信息
+    getUserInfoByToken(){
+        return axiosService.request({
+            url: '/shuyx-user/user/userInfo',
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
+    },
     //查询全部用户
     pagelist(queryData,pageData) {
         return axiosService.request({

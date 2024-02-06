@@ -5,10 +5,19 @@ const APIResources = {
     //登录
     login(queryData) {
         return axiosService.request({
-            url: '/shuyx-user/user/login',
+            url: '/shuyx-user/auth/login',
             method: 'POST',
-            params: Object.assign({}, queryData),
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            data: queryData,
+            headers: { 'Content-Type': 'application/json' }
+        })
+    },
+    //注销登录
+    logout(queryData) {
+        return axiosService.request({
+            url: '/shuyx-user/auth/logout',
+            method: 'POST',
+            data: queryData,
+            headers: { 'Content-Type': 'application/json' }
         })
     }
   }

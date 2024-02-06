@@ -2,6 +2,15 @@ import axiosService from '@/api/request';		//引入 request.js 中的axiosServic
 
 // 针对特定资源，创建资源访问对象
 const APIResources = {
+    //查询用户菜单信息
+    userMenuInfo(queryData) {
+        return axiosService.request({
+            url: '/shuyx-user/menu/userMenuInfo',
+            method: 'GET',
+            params: queryData,
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+    },
     //查询全部
     menulist(queryData) {
         return axiosService.request({

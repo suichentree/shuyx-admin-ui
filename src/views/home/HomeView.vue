@@ -11,7 +11,8 @@
     </el-card>
   </div>
 </template>
-
+<script setup>
+</script>
 <style scoped>
 .home {
   blockquote {

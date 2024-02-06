@@ -5,7 +5,7 @@ const APIResources = {
     //注册
     register(queryData){
         return axiosService.request({
-            url: '/shuyx-user/user/register',
+            url: '/shuyx-user/auth/register',
             method: 'POST',
             data: queryData,
             headers: { 'Content-Type': 'application/json' }

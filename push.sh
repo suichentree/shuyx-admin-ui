@@ -1,6 +1,6 @@
 # 该脚本主要用于提交代码到github上。提交代码到仓库 https://gitee.com/suichentree/shuyx-admin-ui.git
 
-# 注意1: 在git终端中运行脚本。
+# 注意1: 在git终端中运行脚本。运行脚本命令：bash push.sh
 # 注意2：可用检查当前git远程仓库是否是目标仓库
 
 # 定义commit方法

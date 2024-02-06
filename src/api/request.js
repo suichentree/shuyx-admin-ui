@@ -25,10 +25,10 @@ const axiosService = axios.create({
 axiosService.interceptors.request.use(
 	//请求成功的时候
 	(config) => {
-		//将cookie中的TOKEN内容加入到请求头Authorization中
-		let token = document.cookie.match(new RegExp("(^| )TOKEN=([^;]*)(;|$)"))
+		//将本地存储中的token加入到请求头Authorization中
+		let token = localStorage.getItem("shuyxWebsiteToken")
 		if(token){
-			config.headers['Authorization'] = "Bearer " + token
+			config.headers['Authorization'] = token
 		}
 		Object.assign(config.headers)
 		return config;

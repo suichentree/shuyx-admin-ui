@@ -49,9 +49,16 @@ import loginimg from "@/assets/logo.png"
 import { Lock , User } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import router from "@/router";
-import APIResources from '@/api/login.service'
+import LoginAPIResources from '@/api/login.service'
+import UserAPIResources from "@/api/user.service"
+import MenuAPIResources from "@/api/menu.service"
+//menuStore
 import { useMenuStore } from '@/stores/menuStore'
 const menuStore = useMenuStore()
+//userStore
+import { useUserStore } from '@/stores/userStore'
+const userStore = useUserStore()
+
 //getCurrentInstance方法用于获取当前视图的实例。即proxy相当于this
 const { proxy } = getCurrentInstance();
 
@@ -74,18 +81,39 @@ function onSubmit() {
     proxy.$refs.ruleFormRef.validate((valid) => {
     if (valid) {
         //调用登录接口
-        APIResources.login(loginform.value).then(res => {
-            console.log("reslogin",res);
+        LoginAPIResources.login(loginform.value).then(res => {
             if(res.code == 200){
                 ElMessage.success("登录成功")
                 router.push({ path: '/home' })
-                //将获取的用户菜单信息，保持到store中
-                menuStore.setMenuInfo(res.data)
+                //存token到localStorage中
+                localStorage.setItem("shuyxWebsiteToken",res.data)
+                //获取用户信息
+                getUserInfo()
+                //获取用户菜单信息
+                getUserMenuInfo()
             }
         });
     }
   })
 }
+
+//获取用户信息
+function getUserInfo(){
+    UserAPIResources.getUserInfoByToken().then(res => {
+        //把获取的用户信息保存到userStore中
+        userStore.setUserInfo(res.data)
+    });
+}
+
+//获取用户菜单信息
+function getUserMenuInfo(){
+    //调用登录接口
+    MenuAPIResources.userMenuInfo().then(res => {
+        //将获取的用户菜单信息，保存到menuStore中
+        menuStore.setMenuInfo(res.data)
+    });
+}
+
 
 </script>
 

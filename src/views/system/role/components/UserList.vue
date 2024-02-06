@@ -108,7 +108,7 @@ function addUserRole() {
   }
   var userRoles = []
   for (var a of selectUsers) {
-    var obj = { roleId: EditForm.value.roleId, userId: a.userId, status: 0 }
+    var obj = { roleId: EditForm.value.roleId, userId: a.userId}
     userRoles.push(obj)
   }
   console.log(userRoles)
