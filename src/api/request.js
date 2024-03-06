@@ -26,7 +26,7 @@ axiosService.interceptors.request.use(
 	//请求成功的时候
 	(config) => {
 		//将本地存储中的token加入到请求头Authorization中
-		let token = localStorage.getItem("shuyxWebsiteToken")
+		let token = window.localStorage.getItem("shuyxWebsiteToken")
 		if(token){
 			config.headers['Authorization'] = token
 		}

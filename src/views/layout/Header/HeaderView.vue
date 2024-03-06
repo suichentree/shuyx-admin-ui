@@ -37,6 +37,8 @@ import APIResources from '@/api/login.service'
 //route
 import { useRoute } from "vue-router"
 const route = useRoute()
+//router
+import router from "@/router"
 //UserStore
 import { useUserStore } from '@/stores/userStore'
 const userStore = useUserStore()
@@ -59,8 +61,10 @@ watch(() => route.matched, (to) => {
 //退出登录操作
 function logout(){
     //调用登录接口
-    APIResources.logout(userStore.getUserInfo()).then(res => {
-        console.log("logout",res);
+    APIResources.logout().then(() => {
+        //清除所有本地缓存数据,包括token
+        window.localStorage.clear()
+        router.push({ path: '/login' })
     });
 }
 

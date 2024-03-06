@@ -1,6 +1,17 @@
 <script setup></script>
 
 <template>
+  <el-row>
+    <el-col :span="6">
+      <el-statistic title="注册用户" :value="562" >
+        <template #suffix>
+          <el-icon style="vertical-align: -0.125em">
+            <ChatLineRound />
+          </el-icon>
+        </template>
+      </el-statistic>
+    </el-col>
+  </el-row>
   <div>
     <el-card shadow="never"> 
       <h2>SHUYX ADMIN UI </h2>

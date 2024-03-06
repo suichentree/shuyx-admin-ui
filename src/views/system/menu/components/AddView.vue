@@ -32,9 +32,27 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="菜单路径" prop="menuPath">
-            <el-input v-model="addform.menuPath" placeholder="请输入" clearable />
+            <template #label>
+              <span>
+                  <el-tooltip placement="top">
+                    <template #content>访问菜单的路由地址。<br /> 例如: '/system/user' 就是访问系统管理下的用户管理菜单的路由地址。<br /> 注意：如果该菜单有上级菜单，那么该菜单的菜单路径的前缀必须是上级菜单的菜单路径。</template>
+                    <el-icon><question-filled /></el-icon>
+                  </el-tooltip>
+                  菜单路径
+              </span>
+            </template>
+            <el-input v-model="addform.menuPath" placeholder="请输入" clearable/>
           </el-form-item>
-          <el-form-item label="菜单页面" prop="menuPage">
+          <el-form-item label="菜单页面" prop="menuPage"  v-if="addform.menuType == 1">
+            <template #label>
+              <span>
+                  <el-tooltip placement="top">
+                    <template #content>该菜单在前端工程中的具体页面路径。<br /> 例如 /src/views/system/user/UserView.vue 是用户管理菜单在前端工程中的页面文件路径。</template>
+                    <el-icon><question-filled /></el-icon>
+                  </el-tooltip>
+                  菜单页面
+              </span>
+            </template>
             <el-select v-model="addform.menuPage" placeholder="请选择" clearable>
               <el-option
                 v-for="obj in PageOptions"
@@ -51,6 +69,12 @@
                 <span>{{ item.label }}</span>
               </el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="菜单侧边栏可见" prop="visible">
+            <el-radio-group v-model="addform.visible">
+              <el-radio :label="0">可见</el-radio>
+              <el-radio :label="1">隐藏</el-radio>
+            </el-radio-group>
           </el-form-item>
           <el-form-item label="菜单状态" prop="status">
             <el-radio-group v-model="addform.status">
@@ -78,6 +102,7 @@ import menuPageArray from '@/utils/menuPage'
 const PageOptions = ref(menuPageArray)
 
 //菜单图标相关
+import { QuestionFilled } from '@element-plus/icons-vue'
 import icons from "@/utils/iconsArray"
 const iconList = ref(icons)
 
@@ -95,6 +120,7 @@ const rules = ref({
   menuPath: [{ required: true, message: '请输入', trigger: 'blur' }],
   menuType: [{ required: true, message: '请选择', trigger: 'blur' }],
   icon: [{ required: true, message: '请输入', trigger: 'blur' }],
+  visible: [{ required: true, message: '请选择', trigger: 'blur' }],
   status: [{ required: true, message: '请选择', trigger: 'blur' }]
 })
 
@@ -105,8 +131,9 @@ const addform = ref({
   parentId: undefined,
   menuPath: undefined,
   menuPage: undefined,
-  menuType: undefined,
+  menuType: 0,
   icon: undefined,
+  visible: undefined,
   status: undefined
 })
 

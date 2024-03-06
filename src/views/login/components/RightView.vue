@@ -32,7 +32,7 @@
                     </el-col>
                 </el-form-item>
                 <el-form-item>
-                    <el-button style="width: 100%;" type="primary" @click="onSubmit" round>登录</el-button>
+                    <el-button style="width: 100%;" type="primary" @click="onSubmit" round :loading="loginLoading">登录</el-button>
                 </el-form-item>
                 <el-form-item>
                     还没有账号？
@@ -69,6 +69,7 @@ const loginform = ref({
 })
 
 const isRemember = ref(false)
+const loginLoading = ref(false)
 
 //表单校验规则
 const rules = ref({
@@ -77,9 +78,11 @@ const rules = ref({
 })
 //登录
 function onSubmit() {
+    
     //先进行表单校验
     proxy.$refs.ruleFormRef.validate((valid) => {
     if (valid) {
+        loginLoading.value = true
         //调用登录接口
         LoginAPIResources.login(loginform.value).then(res => {
             if(res.code == 200){
@@ -92,6 +95,8 @@ function onSubmit() {
                 //获取用户菜单信息
                 getUserMenuInfo()
             }
+        }).finally(()=>{
+            loginLoading.value = false
         });
     }
   })

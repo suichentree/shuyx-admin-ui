@@ -45,7 +45,7 @@
           <el-table-column label="职位编号" align="center" key="positionId" prop="positionId" />
           <el-table-column label="职位名称" align="center" key="positionName" prop="positionName" />
           <el-table-column label="职位编码" align="center" key="positionCode" prop="positionCode" />
-          <el-table-column label="用户状态" align="center" key="status">
+          <el-table-column label="状态" align="center" key="status">
             <template #default="scope">
                 <el-tag v-if="scope.row.status == 0">正常</el-tag>
                 <el-tag v-else type="danger">禁用</el-tag>

@@ -58,6 +58,12 @@
             <el-tag v-else>菜单</el-tag>
           </template>
         </el-table-column>
+        <el-table-column label="侧边栏可见"  key="visible">
+          <template #default="scope">
+            <el-tag v-if=" scope.row.visible == 0 ">可见</el-tag>
+            <el-tag v-else type="danger">隐藏</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column label="菜单状态"  key="status">
           <template #default="scope">
             <el-tag v-if=" scope.row.status == 0 ">正常</el-tag>
@@ -120,6 +126,7 @@ function buildtreeMenuData(obj){
         "menuPath": "root",
         "menuPage": null,
         "menuType": 0,
+        "visible": 0,
         "status": 0,
         "icon": "root",
         "children": []

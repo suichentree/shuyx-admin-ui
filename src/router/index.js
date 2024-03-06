@@ -78,8 +78,23 @@ const router = createRouter({
 //是否已加载过动态路由
 let isAddDynamicRouter = false
 
-//router路由前置守卫
+//
+/**
+ * router路由前置守卫，刷新页面后会重新执行一次beforeEach方法
+ * 1. 如果访问login,则直接放行
+ * 2. 获取token，如果token获取不到，则表示尚未登录，重新访问login
+ * 3. 如果访问的是其他页面，则判断是否已经添加动态路由。若没有添加，则添加动态路由。
+ */
 router.beforeEach(async (to,from,next) => {
+  // 如果访问的是登录界面则直接放行
+  if (to.path === '/login') {
+    return next()
+  }
+  // 如果本地存储中的token无法获取，表示用户尚未登录了。直接跳转到login页面，重新登录
+  let token = window.localStorage.getItem("shuyxWebsiteToken")
+  if(!token){
+    return next("/login")
+  }
   //判断是否添加了动态路由
   if(!isAddDynamicRouter){
     //获取menuStore中存储的动态路由信息
