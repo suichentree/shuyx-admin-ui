@@ -17,7 +17,7 @@
             <el-input v-model="queryform.mediaName" placeholder="请输入" clearable />
           </el-form-item>
           <el-form-item label="媒体分类" prop="mediaType">
-            <el-select v-model="queryform.mediaType" placeholder="请选择" clearable>
+            <el-select v-model="queryform.mediaType" placeholder="请选择" clearable style="width:200px">
               <el-option
                 v-for="obj in options"
                 :key="obj.value"
@@ -42,21 +42,22 @@
       <div class="card-div">
         <!--数据表格-->
         <el-table :data="tableData" border>
-          <el-table-column label="媒体编号" align="center" key="mediaId" prop="mediaId" />
-          <el-table-column label="媒体名称" align="center" key="mediaName" prop="mediaName" />
-          <el-table-column label="媒体分类" align="center" key="mediaType" prop="mediaType" />
-          <el-table-column label="导演" align="center" key="director" prop="director" />
-          <el-table-column label="演员" align="center" key="actor" prop="actor" />
+          <el-table-column label="媒体编号"  key="mediaId" prop="mediaId" />
+          <el-table-column label="媒体名称"  key="mediaName" prop="mediaName" />
+          <el-table-column label="媒体分类" key="mediaType" prop="mediaType" />
+          <el-table-column label="媒体标签"  key="mediaTag" prop="mediaTag" show-overflow-tooltip/>
+          <el-table-column label="导演"  key="director" prop="director" />
+          <el-table-column label="演员"  key="actor" prop="actor" />
           <el-table-column
             label="上映日期"
-            align="center"
             key="releaseDate"
             prop="releaseDate"
             :formatter="DateTimeformatter"
+            show-overflow-tooltip
           />
-          <el-table-column label="制片地区" align="center" key="region" prop="region" />
-          <el-table-column label="媒体评分" align="center" key="mediaScore" prop="mediaScore" />
-          <el-table-column label="操作" align="center">
+          <el-table-column label="制片地区"  key="region" prop="region" />
+          <el-table-column label="媒体评分"  key="mediaScore" prop="mediaScore" />
+          <el-table-column label="操作" >
             <template #default="scope">
               <el-tooltip content="修改" placement="top">
                 <el-button link type="primary" icon="Edit" @click="toEdit(scope.row.mediaId)" />
@@ -85,7 +86,7 @@
   <!--新增对话框-->
   <AddView />
   <!--编辑对话框-->
-  <EditView />
+  <EditView :Id="EditMediaId" />
 </template>
 <script setup>
 import { ref, onMounted, provide } from 'vue'
@@ -102,10 +103,12 @@ const AddDialogVisible = ref(false)
 provide('AddDialogVisible', AddDialogVisible)
 
 //编辑对话框
-const EditDialogVisible = ref(false)
-const EditForm = ref({})
+let EditDialogVisible = ref(false)
+let EditMediaId = ref()
+let EditForm = ref({})
 provide('EditDialogVisible', EditDialogVisible)
 provide('EditForm', EditForm)
+
 
 //表单对象
 const queryformRef = ref()
@@ -193,18 +196,10 @@ function search() {
 
 //编辑操作
 function toEdit(mediaId) {
-  let query = ref({
-    mediaId: mediaId
-  })
-  //分页查询接口，根据id查询
-  MediaAPIResources.pagelist(query.value, pageData.value)
-    .then((res) => {
-      EditForm.value = res.data.list[0]
-    })
-    .finally(() => {
-      //打开编辑对话框
-      EditDialogVisible.value = true
-    })
+  //给编辑对话框子组件传值
+  EditMediaId.value = mediaId
+  //打开编辑对话框
+  EditDialogVisible.value = true
 }
 
 //删除操作
@@ -235,10 +230,9 @@ function changePageData() {
   search()
 }
 
-//日期表头格式化操作
+//日期格式化操作
 function DateTimeformatter(row) {
-  // 将ISO时间字符串 格式化一下
-  return new Date(row.createTime).toLocaleString()
+  return row.releaseDate.substring(0,10)
 }
 </script>
 <style scoped>
