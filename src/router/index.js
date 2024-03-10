@@ -40,16 +40,22 @@ export const constantRoutes = [
   },
   {
     path: '/demo',
-    name: "模板",
+    name: "组件",
     icon:"HomeFilled",
     component: LayoutView,
     hidden: false,
     children: [
       {
-        path: '/demo/test',
-        name: '测试',
+        path: '/demo/echart',
+        name: '图表',
         icon:"UserFilled",
-        component: () => import('@/views/demo/DemoView.vue')
+        component: () => import('@/views/demo/EchartDemoView.vue')
+      },
+      {
+        path: '/demo/icon',
+        name: '图标',
+        icon:"UserFilled",
+        component: () => import('@/views/demo/IconDemoView.vue')
       }
     ]
   },

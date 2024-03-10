@@ -5,7 +5,6 @@
         <div class="card-div">
             <el-row justify="space-between">
                 <el-tag>角色树</el-tag>
-                <el-button @click="search" size="small">刷新</el-button>
                 <el-button type="success" @click="toAdd" size="small">新增角色</el-button>
             </el-row>
         </div>

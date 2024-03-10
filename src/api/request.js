@@ -5,14 +5,7 @@ import axios from 'axios';		//引入axios
 import { ElNotification, ElMessageBox,ElMessage} from 'element-plus'; //引入element-plus的消息通知
 
 //接口根路径
-let baseurl = null
-
-//检查是否是mock模式
-if(import.meta.env.VITE_APP_MOCK_MODE === "true"){
-	baseurl = "/mock/api"
-}else{
-	baseurl = import.meta.env.VITE_APP_API_BASEURL
-}
+let baseurl = import.meta.env.VITE_APP_API_BASEURL
 
 // 创建axios实例
 const axiosService = axios.create({

@@ -2,7 +2,7 @@
   <el-row :gutter="20">
     <el-col :span="8">
         <el-image  style="height: 400px;width: 100%;"
-        src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" fit="fill" />
+        src="https://img.zcool.cn/community/01edb95b0cd6fea8012181b049fca0.jpg@1280w_1l_2o_100sh.jpg" fit="fill" />
     </el-col>
     <el-col :span="16">
       <el-descriptions :title="mediaList.mediaName" :column="1" border>

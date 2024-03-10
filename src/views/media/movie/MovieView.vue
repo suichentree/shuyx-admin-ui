@@ -42,16 +42,16 @@
     </div>
   </el-card>
   <!--查询结果-->
-  <el-row :gutter="20">
-    <el-col :span="6" v-for="i in mediaList" :key="i" style="padding: 5px 5px;">
-      <el-card :body-style="{ padding: '0px' }" @click="showMovie(i.mediaId)">
-        <el-image src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+  <el-row :gutter="20" style="padding: 5px 0px;">
+    <el-col :span="6" v-for="i in mediaList" :key="i" class="media_card">
+      <el-card  @click="showMovie(i.mediaId)">
+        <el-image src="https://img.zcool.cn/community/01edb95b0cd6fea8012181b049fca0.jpg@1280w_1l_2o_100sh.jpg"
           fit="fill" />
         <template #footer>
           <el-row class="row-bg" justify="space-between">
             <el-col :span="20">{{ i.mediaName }}</el-col>
             <el-col :span="4" style="text-align: right">{{ i.mediaScore }}</el-col>
-            <el-col :span="24">{{ i.mediaTag }}</el-col>
+            <el-col :span="24" class="mediaTag">{{ i.mediaTag }}</el-col>
           </el-row>
         </template>
       </el-card>
@@ -172,6 +172,18 @@ function changePageData() { }
 
 <style scoped>
 .el-card {
-  --el-card-padding: 5px;
+  --el-card-padding: 1px;
+}
+.media_card{
+  padding-bottom: 10px;
+}
+
+/* 文字超出溢出样式 */
+.mediaTag{
+	overflow: hidden; 
+	text-overflow: ellipsis;
+	white-space: nowrap;
+  color:rgb(121, 124, 127);
+  padding: 2px;
 }
 </style>

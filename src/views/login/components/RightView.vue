@@ -87,7 +87,7 @@ function onSubmit() {
         LoginAPIResources.login(loginform.value).then(res => {
             if(res.code == 200){
                 ElMessage.success("登录成功")
-                router.push({ path: '/home' })
+                router.push({ path: '/home/index' })
                 //存token到localStorage中
                 localStorage.setItem("shuyxWebsiteToken",res.data)
                 //获取用户信息

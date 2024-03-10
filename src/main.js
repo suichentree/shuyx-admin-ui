@@ -15,8 +15,6 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)  //pinia使用持久化插件
-//引入mock
-import Mock from '@/mock/index'
 
 //引入视频播放器
 import VueVideoPlayer from '@videojs-player/vue'

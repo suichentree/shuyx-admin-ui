@@ -11,10 +11,10 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "^2.3.1",
     "@videojs-player/vue": "^1.0.0",
     "axios": "^1.6.3",
-    "element-plus": "^2.6.0",
+    "echarts": "^5.5.0",
+    "element-plus": "^2.6.1",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "vue": "^3.3.11",
@@ -26,7 +26,6 @@
     "@vue/eslint-config-prettier": "^8.0.0",
     "eslint": "^8.49.0",
     "eslint-plugin-vue": "^9.17.0",
-    "mockjs": "^1.1.0",
     "prettier": "^3.0.3",
     "vite": "^5.0.10"
   }
