@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="20">
     <el-col :span="8">
-        <el-image  style="height: 400px;width: 100%;"
+        <el-image  style="height:auto;width:auto;"
         src="https://img.zcool.cn/community/01edb95b0cd6fea8012181b049fca0.jpg@1280w_1l_2o_100sh.jpg" fit="fill" />
     </el-col>
     <el-col :span="16">

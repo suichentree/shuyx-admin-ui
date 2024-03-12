@@ -17,24 +17,32 @@
           <el-space wrap>
             <div v-for="i in movieTypeArray" :key="i" @click="handClick1(i)">
               <el-tag size="small" :effect="queryform.movieType === i.genreId ? 'dark' : 'plain'">{{
-    i.genreName
-  }}</el-tag>
+                i.genreName
+              }}</el-tag>
             </div>
           </el-space>
         </el-form-item>
         <el-form-item label="年代:">
           <el-space wrap>
             <div v-for="i in releaseDateArray" :key="i" @click="handClick2(i)">
-              <el-tag size="small" type="success" :effect="queryform.releaseDate === i.genreId ? 'dark' : 'plain'">{{
-    i.genreName }}</el-tag>
+              <el-tag
+                size="small"
+                type="success"
+                :effect="queryform.releaseDate === i.genreId ? 'dark' : 'plain'"
+                >{{ i.genreName }}</el-tag
+              >
             </div>
           </el-space>
         </el-form-item>
         <el-form-item label="地区:">
           <el-space wrap>
             <div v-for="i in regionArray" :key="i" @click="handClick3(i)">
-              <el-tag size="small" type="warning" :effect="queryform.region === i.genreId ? 'dark' : 'plain'">{{
-    i.genreName }}</el-tag>
+              <el-tag
+                size="small"
+                type="warning"
+                :effect="queryform.region === i.genreId ? 'dark' : 'plain'"
+                >{{ i.genreName }}</el-tag
+              >
             </div>
           </el-space>
         </el-form-item>
@@ -42,28 +50,34 @@
     </div>
   </el-card>
   <!--查询结果-->
-  <el-row :gutter="20" style="padding: 5px 0px;">
-    <el-col :span="6" v-for="i in mediaList" :key="i" class="media_card">
-      <el-card  @click="showMovie(i.mediaId)">
-        <el-image src="https://img.zcool.cn/community/01edb95b0cd6fea8012181b049fca0.jpg@1280w_1l_2o_100sh.jpg"
-          fit="fill" />
-        <template #footer>
-          <el-row class="row-bg" justify="space-between">
-            <el-col :span="20">{{ i.mediaName }}</el-col>
-            <el-col :span="4" style="text-align: right">{{ i.mediaScore }}</el-col>
-            <el-col :span="24" class="mediaTag">{{ i.mediaTag }}</el-col>
-          </el-row>
-        </template>
-      </el-card>
-    </el-col>
-  </el-row>
+  <el-space wrap>
+    <div v-for="i in mediaList" :key="i" @click="showMovie(i.mediaId)">
+      <div style="height: auto; width: 200px">
+        <el-image
+          src="https://img.zcool.cn/community/01edb95b0cd6fea8012181b049fca0.jpg@1280w_1l_2o_100sh.jpg"
+          fit="fill"
+        />
+        <el-row justify="space-between">
+          <el-col :span="20">{{ i.mediaName }}</el-col>
+          <el-col :span="4" style="text-align: right">{{ i.mediaScore }}</el-col>
+          <el-col :span="24" class="mediaTag">{{ i.mediaTag }}</el-col>
+        </el-row>
+      </div>
+    </div>
+  </el-space>
   <!--分页-->
   <div>
     <el-row class="row-bg" justify="center">
       <el-col :span="12">
-        <el-pagination @change="changePageData" v-model:current-page="pageData.pageNum"
-          v-model:page-size="pageData.pageSize" :page-sizes="pageData.pageSizes" background
-          layout="total, prev, pager, next, jumper" :total="pageData.total" />
+        <el-pagination
+          @change="changePageData"
+          v-model:current-page="pageData.pageNum"
+          v-model:page-size="pageData.pageSize"
+          :page-sizes="pageData.pageSizes"
+          background
+          layout="total, prev, pager, next, jumper"
+          :total="pageData.total"
+        />
       </el-col>
     </el-row>
   </div>
@@ -80,17 +94,11 @@ let router = useRouter()
 let mediaList = ref([])
 
 //电影类型数组
-let movieTypeArray = ref([
-  { "genreId": 0, "genreName": "全部", "type": "Movie" }
-])
+let movieTypeArray = ref([{ genreId: 0, genreName: '全部', type: 'Movie' }])
 //上映时间数组
-let releaseDateArray = ref([
-  { "genreId": 0, "genreName": "全部", "type": "Time" }
-])
+let releaseDateArray = ref([{ genreId: 0, genreName: '全部', type: 'Time' }])
 //地区数组
-let regionArray = ref([
-  { "genreId": 0, "genreName": "全部", "type": "Region" }
-])
+let regionArray = ref([{ genreId: 0, genreName: '全部', type: 'Region' }])
 
 //查询表单相关
 let queryform = ref({
@@ -167,23 +175,20 @@ function showMovie(obj) {
   })
 }
 
-function changePageData() { }
+function changePageData() {}
 </script>
 
 <style scoped>
 .el-card {
   --el-card-padding: 1px;
 }
-.media_card{
-  padding-bottom: 10px;
-}
 
 /* 文字超出溢出样式 */
-.mediaTag{
-	overflow: hidden; 
-	text-overflow: ellipsis;
-	white-space: nowrap;
-  color:rgb(121, 124, 127);
+.mediaTag {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgb(121, 124, 127);
   padding: 2px;
 }
 </style>

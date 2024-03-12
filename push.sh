@@ -1,4 +1,6 @@
-# 该脚本主要用于提交代码到github上。提交代码到仓库 https://gitee.com/suichentree/shuyx-admin-ui.git
+# 该脚本主要用于同时提交代码到gitee和github上。
+# gitee的远程仓库是 https://gitee.com/suichentree/shuyx-admin-ui.git  main分支
+# github的远程仓库是 https://github.com/suichentree/shuyx-admin-ui.git main分支
 
 # 注意1: 在git终端中运行脚本。运行脚本命令：bash push.sh
 # 注意2：可用检查当前git远程仓库是否是目标仓库
@@ -14,8 +16,10 @@ function commit() {
 
 # 定义push方法
 function push(){
-    # 本地分支推送文件到远程仓库origin的main分支
+    # 本地分支推送文件到远程仓库origin的main分支。 origin分支的是gitee的远程仓库
     git push origin main
+    # 本地分支推送文件到远程仓库github-origin的main分支。github-origin分支的是github的远程仓库
+    git push github-origin main
     # $?可以获取git push 命令是否运行成功，成功返回0，否则非0。
     if [ $? -eq 0 ] 
     then

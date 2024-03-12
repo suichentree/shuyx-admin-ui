@@ -11,6 +11,15 @@ const APIResources = {
             headers: { 'Content-Type': 'application/json' }
         })
     },
+    //获取验证码
+    verifyCode(queryData) {
+        return axiosService.request({
+            url: '/shuyx-user/auth/verifycode',
+            method: 'GET',
+            params: queryData,
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+    },
     //注销登录
     logout(queryData) {
         return axiosService.request({
