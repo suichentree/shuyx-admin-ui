@@ -56,6 +56,12 @@ export const constantRoutes = [
         name: '图标',
         icon:"UserFilled",
         component: () => import('@/views/demo/IconDemoView.vue')
+      },
+      {
+        path: '/demo/jobMap',
+        name: 'Job地图',
+        icon:"UserFilled",
+        component: () => import('@/views/demo/JobMapDemoView.vue')
       }
     ]
   },
