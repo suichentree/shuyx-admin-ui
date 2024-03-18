@@ -66,6 +66,13 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/blog',
+    name: "博客",
+    icon:"Tools",
+    hidden: false,
+    component: () => import('@/views/blog/BlogView.vue')
+  },
+  {
     path: '/other',
     name: "其他",
     icon:"Tools",
