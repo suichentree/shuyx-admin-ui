@@ -59,6 +59,9 @@
           <el-table-column label="媒体评分"  key="mediaScore" prop="mediaScore" />
           <el-table-column label="操作" >
             <template #default="scope">
+              <el-tooltip content="剧集维护" placement="top">
+                <el-button link type="primary" icon="Plus" @click="toEpisodes(scope.row.mediaId,scope.row.mediaName)" />
+              </el-tooltip>
               <el-tooltip content="修改" placement="top">
                 <el-button link type="primary" icon="Edit" @click="toEdit(scope.row.mediaId)" />
               </el-tooltip>
@@ -93,6 +96,8 @@ import { ref, onMounted, provide } from 'vue'
 import MediaAPIResources from '@/api/media.service.js'
 import GenreAPIResources from '@/api/genre.service.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { useRouter } from 'vue-router'
+let router = useRouter()
 
 // 组件注册
 import AddView from './components/AddView.vue'
@@ -108,7 +113,6 @@ let EditMediaId = ref()
 let EditForm = ref({})
 provide('EditDialogVisible', EditDialogVisible)
 provide('EditForm', EditForm)
-
 
 //表单对象
 const queryformRef = ref()
@@ -234,9 +238,21 @@ function changePageData() {
 function DateTimeformatter(row) {
   return row.releaseDate.substring(0,10)
 }
+
+//剧集维护按钮
+function toEpisodes(id,name){
+  router.push({
+    path: '/media/epsiodes',
+    query: {
+      id: id,
+      name:name
+    }
+  })
+}
+
 </script>
 <style scoped>
 .card-div {
   padding: 10px;
 }
-</style>
+</style>./episodes/EpisodesView.vue

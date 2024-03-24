@@ -31,7 +31,6 @@
       <h3>电影播放</h3>
       <VideoPlayer
         src="https://vjs.zencdn.net/v/oceans.mp4"
-        poster="https://p1.music.126.net/5zs7IvmLv7KahY3BFzUmrg==/109951163635241613.jpg?param=600y500"
         controls
         :loop="true"
         :volume="0.6"

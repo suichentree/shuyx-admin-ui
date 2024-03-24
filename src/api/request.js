@@ -10,9 +10,7 @@ let baseurl = import.meta.env.VITE_APP_API_BASEURL
 
 // 创建axios实例
 const axiosService = axios.create({
-  baseURL: baseurl,
-  // 超时时间
-  timeout: 10000
+  baseURL: baseurl
 })
 
 // axios request 拦截器

@@ -67,6 +67,7 @@
           >
         </el-checkbox-group>
       </el-form-item>
+      <div></div>
       <el-form-item label="时间分类" prop="">
         <el-radio-group v-model="mediaGenreArray2">
           <el-radio
@@ -77,6 +78,7 @@
           />
         </el-radio-group>
       </el-form-item>
+      <div></div>
       <el-form-item label="地区分类" prop="">
         <el-radio-group v-model="mediaGenreArray3">
           <el-radio
