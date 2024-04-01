@@ -1,5 +1,14 @@
 import axiosService from '@/api/request' //引入 request.js 中的axiosService
 const APIResources = {
+  //findBy
+  findBy(queryData) {
+    return axiosService.request({
+      url: '/shuyx-media/media/findBy',
+      method: 'POST',
+      data: queryData,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  },
   //分页查询
   pagelist(queryData, pageData) {
     return axiosService.request({
@@ -18,12 +27,20 @@ const APIResources = {
       headers: { 'Content-Type': 'application/json' }
     })
   },
-  //条件查询
-  findBy(queryData, pageData) {
+  //联查
+  findMediaAndGenre(queryData) {
     return axiosService.request({
-      url: '/shuyx-media/media/findBy',
+      url: '/shuyx-media/media/findMediaAndGenre',
       method: 'POST',
-      data: Object.assign({}, queryData, pageData),
+      data: queryData,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  },
+  findMediaAndEpisodes(queryData) {
+    return axiosService.request({
+      url: '/shuyx-media/media/findMediaAndEpisodes',
+      method: 'POST',
+      data: queryData,
       headers: { 'Content-Type': 'application/json' }
     })
   },

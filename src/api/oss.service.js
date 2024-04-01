@@ -29,6 +29,15 @@ const APIResources = {
             data: queryData,
             headers: { 'Content-Type': 'multipart/form-data' }
         })
+    },
+    //获取文件外链
+    getFileUrl(queryData){
+        return axiosService.request({
+            url: '/shuyx-minio/oss/url',
+            method: 'GET',
+            params: queryData,
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
     }
   }
   

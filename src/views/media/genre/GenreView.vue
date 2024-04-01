@@ -17,7 +17,7 @@
             <el-input v-model="queryform.genreName" placeholder="请输入" clearable />
           </el-form-item>
           <el-form-item label="类型分类" prop="type">
-            <el-select v-model="queryform.type" placeholder="请选择" clearable>
+            <el-select v-model="queryform.type" placeholder="请选择" clearable style="width:200px">
               <el-option
                 v-for="obj in options"
                 :key="obj.value"

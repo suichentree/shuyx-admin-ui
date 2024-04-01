@@ -59,9 +59,6 @@
           <el-table-column label="媒体评分"  key="mediaScore" prop="mediaScore" />
           <el-table-column label="操作" >
             <template #default="scope">
-              <el-tooltip content="剧集维护" placement="top">
-                <el-button link type="primary" icon="Plus" @click="toEpisodes(scope.row.mediaId,scope.row.mediaName)" />
-              </el-tooltip>
               <el-tooltip content="修改" placement="top">
                 <el-button link type="primary" icon="Edit" @click="toEdit(scope.row.mediaId)" />
               </el-tooltip>
@@ -237,17 +234,6 @@ function changePageData() {
 //日期格式化操作
 function DateTimeformatter(row) {
   return row.releaseDate.substring(0,10)
-}
-
-//剧集维护按钮
-function toEpisodes(id,name){
-  router.push({
-    path: '/media/epsiodes',
-    query: {
-      id: id,
-      name:name
-    }
-  })
 }
 
 </script>

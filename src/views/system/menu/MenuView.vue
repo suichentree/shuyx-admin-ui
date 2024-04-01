@@ -17,7 +17,7 @@
           <el-input v-model="queryform.menuName" placeholder="请输入" clearable />
         </el-form-item>
         <el-form-item label="菜单状态" prop="status">
-          <el-select v-model="queryform.status" placeholder="请选择" clearable>
+          <el-select v-model="queryform.status" placeholder="请选择" clearable style="width: 200px">
             <el-option
               v-for="obj in statusOptions"
               :key="obj.value"

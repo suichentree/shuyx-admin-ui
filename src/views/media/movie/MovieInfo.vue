@@ -29,18 +29,21 @@
     </el-col>
     <el-col :span="24">
       <h3>电影播放</h3>
-      <VideoPlayer
-        src="https://vjs.zencdn.net/v/oceans.mp4"
-        controls
-        :loop="true"
-        :volume="0.6"
-      />
+      <el-button v-for="(item, index) in mediaList.episodesList" :key="index" @click="toPlay(item)">
+        {{ item.episodesName }}
+      </el-button>
+    </el-col>
+    <el-col :span="24">
+      <el-row>
+        <VideoPlayer :src="currentVideo" controls :width="500" :loop="true" :volume="0.6" />
+      </el-row>
     </el-col>
   </el-row>
 </template>
 <script setup>
-import { ref, onMounted} from 'vue'
+import { ref, onMounted,provide} from 'vue'
 import MediaAPIResources from '@/api/media.service.js'
+import OSSAPIResources from '@/api/oss.service.js'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 
@@ -48,11 +51,13 @@ const route = useRoute()
 import { VideoPlayer } from '@videojs-player/vue'
 import 'video.js/dist/video-js.css'
 
-
 //接收router传参
-let params = route.query.id
+let mediaId = route.query.id
+
 //媒体列表
 let mediaList = ref([])
+
+//================================
 
 onMounted(() => {
   search()
@@ -61,17 +66,27 @@ onMounted(() => {
 //分页查询
 function search() {
   let query = {
-    mediaId: params
+    mediaId: mediaId
   }
-  MediaAPIResources.findBy(query).then((res) => {
+  MediaAPIResources.findMediaAndEpisodes(query).then((res) => {
     mediaList.value = res.data[0]
     //对数据进行修饰
     mediaList.value.releaseDate = mediaList.value.releaseDate.substring(0,10)
   })
-  
 }
+
+//剧集按钮============================
+let currentVideo = ref(undefined)
+function toPlay(obj){
+  let b = {
+    fileName:obj.episodesUrl,
+    bucketName:"media-episodes-bucket"
+  }
+  OSSAPIResources.getFileUrl(b).then((res)=>{
+    currentVideo.value = res.data
+  })
+} 
 
 </script>
 <style scoped>
-
 </style>

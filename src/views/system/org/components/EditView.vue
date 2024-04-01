@@ -22,6 +22,7 @@
               :render-after-expand="false"
               placeholder="请选择"
               clearable
+              style="width: 200px"
             />
           </el-form-item>
         </el-col>

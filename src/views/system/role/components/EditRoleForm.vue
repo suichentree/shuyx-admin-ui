@@ -5,7 +5,6 @@
         </el-form-item>
         <el-form-item label="上级角色" prop="parentId" style="width: 100%">
             <el-tree-select
-            style="width: 100%"
             :props="{ value: 'roleId', label: 'roleName', children: 'children' }"
             v-model="formData.parentId"
             :data="roleTreeData"
@@ -13,6 +12,7 @@
             :render-after-expand="false"
             placeholder="请选择"
             clearable
+            style="width: 200px"
             />
         </el-form-item>
         <el-form-item label="角色名称" prop="roleName" style="width: 100%">

@@ -17,7 +17,7 @@
             <el-input v-model="queryform.userName" placeholder="请输入" clearable />
           </el-form-item>
           <el-form-item label="用户状态" prop="status">
-            <el-select v-model="queryform.status" placeholder="请选择" clearable>
+            <el-select v-model="queryform.status" placeholder="请选择" clearable style="width: 200px">
               <el-option v-for="obj in statusOptions" :key="obj.value" :label="obj.label" :value="obj.value" />
             </el-select>
           </el-form-item>
@@ -33,6 +33,7 @@
               :render-after-expand="false"
               placeholder="请选择"
               clearable
+              style="width: 200px"
             />
           </el-form-item>
           <el-form-item label="创建时间" prop="dateRange">

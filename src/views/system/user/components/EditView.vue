@@ -50,12 +50,13 @@
                         :render-after-expand="false"
                         placeholder="请选择"
                         clearable
+                        style="width: 200px"
                     />
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="职位" prop="positionId">
-                        <el-select v-model="form.positionId" placeholder="请选择" clearable>
+                        <el-select v-model="form.positionId" placeholder="请选择" clearable style="width: 200px">
                             <el-option v-for="obj in positionInfo" :key="obj.positionId" :label="obj.positionName" :value="obj.positionId" />
                         </el-select>
                     </el-form-item>

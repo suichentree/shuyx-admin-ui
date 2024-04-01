@@ -19,7 +19,7 @@
         </el-col>
         <el-col :span="24">
           <el-form-item label="类型分类" prop="type">
-            <el-select v-model="form.type" placeholder="Select">
+            <el-select v-model="form.type" placeholder="Select" style="width:200px">
               <el-option
                 v-for="item in options"
                 :key="item.value"

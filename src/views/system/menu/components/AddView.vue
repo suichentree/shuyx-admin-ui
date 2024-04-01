@@ -20,6 +20,7 @@
               :render-after-expand="false"
               placeholder="请选择"
               clearable
+              style="width: 200px"
             />
           </el-form-item>
           <el-form-item label="菜单名称" prop="menuName">
@@ -53,7 +54,7 @@
                   菜单页面
               </span>
             </template>
-            <el-select v-model="addform.menuPage" placeholder="请选择" clearable>
+            <el-select v-model="addform.menuPage" placeholder="请选择" clearable style="width: 200px">
               <el-option
                 v-for="obj in PageOptions"
                 :key="obj.value"
@@ -63,7 +64,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="菜单图标" prop="icon">
-            <el-select v-model="addform.icon" placeholder="请选择" clearable>
+            <el-select v-model="addform.icon" placeholder="请选择" clearable style="width: 200px">
               <el-option v-for="item in iconList" :key="item.value" :label="item.label" :value="item.value">
                 <el-icon ><component :is="item.value"></component></el-icon>
                 <span>{{ item.label }}</span>

@@ -185,7 +185,7 @@ function handOpen() {
   }
 
   //查询接口
-  MediaAPIResources.findBy(query).then((res) => {
+  MediaAPIResources.findMediaAndGenre(query).then((res) => {
     //媒体数据
     form.value = res.data[0]
     //媒体类型数据
