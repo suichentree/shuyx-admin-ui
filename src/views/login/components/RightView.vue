@@ -33,17 +33,15 @@
             />
           </el-form-item>
           <el-form-item prop="verifyCode">
-            <el-input
-              v-model="loginform.verifyCode"
-              placeholder="请输入验证码"
-              :prefix-icon="Lock"
-            >
+            <el-input v-model="loginform.verifyCode" placeholder="请输入验证码" :prefix-icon="Lock">
             </el-input>
           </el-form-item>
           <el-form-item>
-            <div style="display: flex;">
-                <el-button type="primary" @click="getCodeIMG" text>获取验证码</el-button>
-            <img :src="codeURL"/>
+            <div style="display: flex">
+              <el-button type="primary" @click="getCodeIMG" :loading="btnLoad"
+                >获取验证码</el-button
+              >
+              <img :src="codeURL" />
             </div>
           </el-form-item>
           <el-form-item>
@@ -153,16 +151,25 @@ function getUserMenuInfo() {
   })
 }
 
+//按钮加载
+let btnLoad = ref(false)
+
 //获取验证码图片
 function getCodeIMG() {
-    if(loginform.value.userName != undefined){
-        let userName = loginform.value.userName
-        LoginAPIResources.verifyCode({userName}).then((res) => {
-            codeURL.value = res.data.img
-        })
-    }else{
-        ElMessage.error('获取验证码，需要先输入用户名。')
-    }
+  if (loginform.value.userName != undefined) {
+    btnLoad.value = true
+    //获取用户名
+    let userName = loginform.value.userName
+    LoginAPIResources.verifyCode({ userName })
+      .then((res) => {
+        codeURL.value = res.data.img
+      })
+      .finally(() => {
+        btnLoad.value = false
+      })
+  } else {
+    ElMessage.error('获取验证码，需要先输入用户名。')
+  }
 }
 </script>
 

@@ -65,7 +65,7 @@
   <!--新增对话框-->
   <AddView/>
   <!--编辑对话框-->
-  <EditView />
+  <EditView :form="EditForm" v-if="EditForm"/>
 </template>
 <script setup>
 import { ref, onMounted, provide } from 'vue'
@@ -125,7 +125,6 @@ function toAdd(){
 let EditDialogVisible = ref(false)
 provide('EditDialogVisible', EditDialogVisible)
 let EditForm = ref(undefined)
-provide('EditForm', EditForm)
 
 function toEdit(obj) {
   EditForm.value = obj
