@@ -160,8 +160,6 @@ function uploadlFile() {
 
 //进度条数组
 let ProgressArray = ref([])
-let upFileLog = ref("")
-
 //自定义分片文件上传请求
 function uploadlPartFile() {
   //按钮加载

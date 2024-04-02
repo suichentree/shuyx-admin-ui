@@ -2,6 +2,15 @@ import axiosService from '@/api/request';		//引入 request.js 中的axiosServic
 
 // 文件相关请求
 const APIResources = {
+    //删除文件
+    delete(queryData){
+        return axiosService.request({
+            url: '/shuyx-minio/oss/delete',
+            method: 'DELETE',
+            params: queryData,
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+    },
     //上传文件
     uploadFile(queryData,onUploadProgress){
         return axiosService.request({

@@ -18,7 +18,7 @@
           </el-form-item>
           <el-form-item label="用户状态" prop="status">
             <el-select v-model="queryform.status" placeholder="请选择" clearable style="width: 200px">
-              <el-option v-for="obj in statusOptions" :key="obj.value" :label="obj.label" :value="obj.value" />
+              <el-option v-for="obj in userStatusDict" :key="obj.value" :label="obj.label" :value="obj.value" />
             </el-select>
           </el-form-item>
           <el-form-item label="手机号码" prop="phone">
@@ -128,11 +128,14 @@ const pageData = ref({
   total: 0
 })
 
-//用户状态数组
-const statusOptions = [
-  { value: 0, label: '正常' },
-  { value: 1, label: '禁用' }
-]
+//用户状态
+import { useDictStore } from '@/stores/dictStore.js'
+let userStatusDict = ref([])
+userStatusDict.value = useDictStore().getBykey('user_status')
+// const statusOptions = [
+//   { value: 0, label: '正常' },
+//   { value: 1, label: '禁用' }
+// ]
 
 //时间范围数组
 const dateRange = ref([])

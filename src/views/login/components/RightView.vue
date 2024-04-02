@@ -72,34 +72,18 @@
   </el-row>
 </template>
 <script setup>
-import { ref, getCurrentInstance, onMounted } from 'vue'
+import { ref, getCurrentInstance } from 'vue'
 import loginimg from '@/assets/logo.png'
 import { Lock, User } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import router from '@/router'
 import LoginAPIResources from '@/api/login.service'
-import UserAPIResources from '@/api/user.service'
-import MenuAPIResources from '@/api/menu.service'
-//menuStore
-import { useMenuStore } from '@/stores/menuStore'
-const menuStore = useMenuStore()
-//userStore
-import { useUserStore } from '@/stores/userStore'
-const userStore = useUserStore()
 
 //getCurrentInstance方法用于获取当前视图的实例。即proxy相当于this
 const { proxy } = getCurrentInstance()
 
-//登录表单
-const loginform = ref({
-  userName: undefined,
-  passWord: undefined,
-  verifyCode: undefined
-})
-
-let codeURL = ref(undefined)
+//记住账号
 const isRemember = ref(false)
-const loginLoading = ref(false)
 
 //表单校验规则
 const rules = ref({
@@ -107,7 +91,13 @@ const rules = ref({
   passWord: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 })
 
-//登录
+//登录相关=====================
+let loginform = ref({
+  userName: undefined,
+  passWord: undefined,
+  verifyCode: undefined
+})
+let loginLoading = ref(false)
 function onSubmit() {
   //先进行表单校验
   proxy.$refs.ruleFormRef.validate((valid) => {
@@ -125,6 +115,8 @@ function onSubmit() {
             getUserInfo()
             //获取用户菜单信息
             getUserMenuInfo()
+            //加载字典数据
+            loadDict()
           }
         })
         .finally(() => {
@@ -134,27 +126,30 @@ function onSubmit() {
   })
 }
 
-//获取用户信息
+//用户信息相关===============
+import { useUserStore } from '@/stores/userStore'
+import UserAPIResources from '@/api/user.service'
 function getUserInfo() {
   UserAPIResources.getUserInfoByToken().then((res) => {
     //把获取的用户信息保存到userStore中
-    userStore.setUserInfo(res.data)
+    useUserStore().setUserInfo(res.data)
   })
 }
 
-//获取用户菜单信息
+//用户菜单相关===========================
+import MenuAPIResources from '@/api/menu.service'
+import { useMenuStore } from '@/stores/menuStore'
 function getUserMenuInfo() {
   //调用登录接口
   MenuAPIResources.userMenuInfo().then((res) => {
     //将获取的用户菜单信息，保存到menuStore中
-    menuStore.setMenuInfo(res.data)
+    useMenuStore().setMenuInfo(res.data)
   })
 }
 
-//按钮加载
-let btnLoad = ref(false)
-
-//获取验证码图片
+//验证码相关==============================
+let codeURL = ref(undefined)
+let btnLoad = ref(false)     //按钮加载
 function getCodeIMG() {
   if (loginform.value.userName != undefined) {
     btnLoad.value = true
@@ -171,6 +166,41 @@ function getCodeIMG() {
     ElMessage.error('获取验证码，需要先输入用户名。')
   }
 }
+
+
+//字典相关==============================
+import DictAPIInstance from "@/api/dict.service.js"
+import { useDictStore } from '@/stores/dictStore.js'
+function loadDict(){
+  //调用字典接口获取全部字典数据
+  DictAPIInstance.findBy({}).then((res)=>{
+    let DictData = {}
+    let array = res.data
+    array.forEach(item => {
+      //若该字典编码存在字典数据中,则添加
+      if(item.dictCode in DictData){
+        let a =  {
+          label: item.dictLabel,
+          value: item.dictValue,
+          name: item.dictName
+        }
+        DictData[item.dictCode].push(a)
+      }else{
+        //若该字典编码不存在字典数据中，则新建字典数据的属性，然后再添加
+        let a =  {
+          label: item.dictLabel,
+          value: item.dictValue,
+          name: item.dictName
+        }
+        DictData[item.dictCode] = []
+        DictData[item.dictCode].push(a)
+      }
+    });
+    //把全部字典数据，添加到pinia中,pinia会持久化到localStorage中
+    useDictStore().add(DictData)
+  })
+}
+
 </script>
 
 <style scoped>

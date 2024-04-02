@@ -8,7 +8,7 @@
           <el-button type="primary" @click="search">搜索</el-button>
         </el-col>
       </el-row>
-      <el-form :inline="true">
+      <el-form :inline="true" ref="formRef">
         <el-form-item label="选择媒体" prop="mediaId">
           <el-select v-model="MediaId" placeholder="Select" style="width: 240px" filterable remote :remote-method="findAllMedia">
             <el-option
@@ -65,25 +65,19 @@
   <!--新增对话框-->
   <AddView/>
   <!--编辑对话框-->
-  <EditView :form="EditForm" v-if="EditForm"/>
+  <EditView v-if="EditForm"/>
 </template>
 <script setup>
 import { ref, onMounted, provide } from 'vue'
 import EpisodesAPIResources from '@/api/episodes.service.js'
 import MediaAPIResources from '@/api/media.service.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { useRoute } from 'vue-router'
-const route = useRoute()
 //组件注册
 import AddView from './components/AddView.vue'
 import EditView from './components/EditView.vue'
 
 //表格相关=======================
 const tableData = ref([])
-
-//路由跳转时的传参=====================
-console.log('route.query.id', route.query.id)
-console.log('route.query.name', route.query.name)
 
 //查询相关==================
 let mediaArray = ref([])
@@ -124,11 +118,12 @@ function toAdd(){
 //编辑相关====================
 let EditDialogVisible = ref(false)
 provide('EditDialogVisible', EditDialogVisible)
-let EditForm = ref(undefined)
+let EditForm = ref({})
+provide('EditForm', EditForm)
 
 function toEdit(obj) {
   EditForm.value = obj
-  console.log("EditForm",EditForm.value);
+  console.log("EditForm111",EditForm.value);
   EditDialogVisible.value = true
 }
 

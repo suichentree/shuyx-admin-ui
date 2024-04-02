@@ -58,7 +58,7 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref,onMounted } from 'vue'
 import { ChatLineRound, Male } from '@element-plus/icons-vue'
 </script>
 <style scoped>
