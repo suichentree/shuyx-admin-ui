@@ -34,16 +34,21 @@ function buildRouter(userMenuInfo){
     userMenuInfo.forEach(menuObj => {
       //新建一个router元素
       let routerObj = {
-        name: undefined,
-        path: undefined,
-        component: undefined,
-        icon: undefined,
-        hidden: false,
-        children:[]
+        name: undefined,  //路由名称
+        path: undefined,  //路由路径
+        component: undefined, //路由对应的组件
+        icon: undefined,  //图标
+        isLink: false,   //是否外链
+        hidden: false,    //路由是否隐藏
+        children:[]       //路由的子路由数组
       }
       routerObj.name = menuObj.menuName
       routerObj.path = menuObj.menuPath
       routerObj.icon = menuObj.icon
+      //菜单默认不是外链。如果为1，表示该菜单是外链。
+      if(menuObj.isLink == 1){
+        routerObj.isLink = true
+      }
       //菜单默认是不隐藏的。如果菜单可见为1，表示该菜单不可以在侧边栏展示，需要隐藏。
       if(menuObj.visible == 1){
         routerObj.hidden = true

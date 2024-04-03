@@ -71,6 +71,21 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="是否外链" prop="isLink">
+            <template #label>
+              <span>
+                  <el-tooltip placement="top">
+                    <template #content>外链是指外部页面的链接地址。点击外链菜单会打开外部页面。<br /> 注意：若菜单是外链，那么菜单路径必须是以http://开头 </template>
+                    <el-icon><question-filled /></el-icon>
+                  </el-tooltip>
+                  是否外链
+              </span>
+            </template>
+            <el-radio-group v-model="addform.isLink">
+              <el-radio :label="0">不是</el-radio>
+              <el-radio :label="1">是</el-radio>
+            </el-radio-group>
+          </el-form-item>
           <el-form-item label="菜单侧边栏可见" prop="visible">
             <el-radio-group v-model="addform.visible">
               <el-radio :label="0">可见</el-radio>
@@ -122,6 +137,7 @@ const rules = ref({
   menuType: [{ required: true, message: '请选择', trigger: 'blur' }],
   icon: [{ required: true, message: '请输入', trigger: 'blur' }],
   visible: [{ required: true, message: '请选择', trigger: 'blur' }],
+  isLink: [{ required: true, message: '请选择', trigger: 'blur' }],
   status: [{ required: true, message: '请选择', trigger: 'blur' }]
 })
 
@@ -134,8 +150,9 @@ const addform = ref({
   menuPage: undefined,
   menuType: 0,
   icon: undefined,
-  visible: undefined,
-  status: undefined
+  isLink: 0,
+  visible: 0,
+  status: 0
 })
 
 

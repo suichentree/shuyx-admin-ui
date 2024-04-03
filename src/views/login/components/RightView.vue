@@ -72,7 +72,7 @@
   </el-row>
 </template>
 <script setup>
-import { ref, getCurrentInstance } from 'vue'
+import { ref, getCurrentInstance,onMounted} from 'vue'
 import loginimg from '@/assets/logo.png'
 import { Lock, User } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
@@ -82,7 +82,7 @@ import LoginAPIResources from '@/api/login.service'
 //getCurrentInstance方法用于获取当前视图的实例。即proxy相当于this
 const { proxy } = getCurrentInstance()
 
-//记住账号
+//记住账号相关
 const isRemember = ref(false)
 
 //表单校验规则

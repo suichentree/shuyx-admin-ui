@@ -19,7 +19,7 @@
         <el-form-item label="菜单状态" prop="status">
           <el-select v-model="queryform.status" placeholder="请选择" clearable style="width: 200px">
             <el-option
-              v-for="obj in statusOptions"
+              v-for="obj in menuStatusDict"
               :key="obj.value"
               :label="obj.label"
               :value="obj.value"
@@ -56,6 +56,12 @@
           <template #default="scope">
             <el-tag v-if=" scope.row.menuType == 0 ">目录</el-tag>
             <el-tag v-else>菜单</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="是否外链"  key="isLink">
+          <template #default="scope">
+            <el-tag v-if=" scope.row.isLink == 0 ">不是</el-tag>
+            <el-tag v-else type="danger">是</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="侧边栏可见"  key="visible">
@@ -126,6 +132,7 @@ function buildtreeMenuData(obj){
         "menuPath": "root",
         "menuPage": null,
         "menuType": 0,
+        "isLink":0,
         "visible": 0,
         "status": 0,
         "icon": "root",
@@ -141,11 +148,9 @@ const queryform = ref({
   status: undefined,
 })
 
-//状态数组
-const statusOptions = [
-  { value: 0, label: '正常' },
-  { value: 1, label: '禁用' }
-]
+//菜单状态字典数据
+import { useDictStore } from '@/stores/dictStore.js'
+let menuStatusDict = useDictStore().getBykey('menu_status')
 
 /**--------------------- */
 
