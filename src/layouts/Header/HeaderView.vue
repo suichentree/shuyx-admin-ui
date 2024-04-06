@@ -1,6 +1,6 @@
 <template>
     <!--最外层容器 flex布局，space-between水平排列-->
-    <div style="display:flex;justify-content:space-between;align-items:center;padding: 10px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding: 5px;">
         <!--左边区域 flex布局，flex-start水平排列，center垂直居中-->
         <div style="display: flex;justify-content:flex-start;align-items:center;">
             <div>

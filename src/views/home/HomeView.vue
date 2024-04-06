@@ -1,29 +1,30 @@
 <template>
   <el-row :gutter="20" style="padding: 10px 0px">
     <el-col :span="6">
-      <el-card>
-        <el-statistic title="总用户数" :value="268500">
+      <el-card :body-style="{ padding: '10px'}">
+        <el-statistic :value="268500">
+          <template #title>
+            <div style="display: inline-flex; align-items: center;">
+              总用户数
+            </div>
+          </template>
           <template #suffix>
-            <el-icon>
-              <ChatLineRound />
-            </el-icon>
+            <el-icon> <ChatLineRound /> </el-icon>
           </template>
         </el-statistic>
       </el-card>
     </el-col>
     <el-col :span="6">
-      <el-card>
+      <el-card :body-style="{ padding: '10px' }">
         <el-statistic title="总菜单数" :value="268500">
           <template #suffix>
-            <el-icon>
-              <Male  />
-            </el-icon>
+            <el-icon> <Male /> </el-icon>
           </template>
         </el-statistic>
       </el-card>
     </el-col>
     <el-col :span="6">
-      <el-card>
+      <el-card :body-style="{ padding: '10px' }">
         <el-statistic title="总职位数" :value="268500">
           <template #suffix>
             <el-icon>
@@ -34,7 +35,7 @@
       </el-card>
     </el-col>
     <el-col :span="6">
-      <el-card>
+      <el-card :body-style="{ padding: '10px' }">
         <el-statistic title="总机构数" :value="268500">
           <template #suffix>
             <el-icon>
@@ -58,7 +59,7 @@
   </div>
 </template>
 <script setup>
-import { ref,onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { ChatLineRound, Male } from '@element-plus/icons-vue'
 </script>
 <style scoped>

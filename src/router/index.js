@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useMenuStore } from '@/stores/menuStore'
 
 // 布局页面（包含侧边栏，头部导航栏）。 除了注册登录等少数页面，其他页面都会嵌套在布局页面的main区域中展示。
-import LayoutView from '@/views/layout/LayoutView.vue'
+import LayoutView from '@/layouts/LayoutView.vue'
 //常规路由,任何用户都可访问的路由
 export const constantRoutes = [
   {
@@ -66,13 +66,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/blog',
-    name: "博客",
-    icon:"Tools",
-    hidden: false,
-    component: () => import('@/views/blog/BlogView.vue')
-  },
-  {
     path: '/other',
     name: "其他",
     icon:"Tools",
@@ -81,9 +74,15 @@ export const constantRoutes = [
     children: [
       {
         path: '/other/about',
-        name: 'about',
+        name: '关于',
         icon:"UserFilled",
         component: () => import('@/views/other/AboutView.vue')
+      },
+      {
+        path: '/other/404',
+        name: '404页面',
+        icon:"UserFilled",
+        component: () => import('@/views/other/404View.vue')
       }
     ]
   }

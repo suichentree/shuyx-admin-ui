@@ -3,7 +3,7 @@
  */
 
 //导入Layout视图组件
-const LayoutView = () => import("@/views/layout/LayoutView.vue");
+const LayoutView = () => import("@/layouts/LayoutView.vue");
 
 //全局获取views目录中所有的.vue文件信息
 const modules = import.meta.glob('@/views/**/*.vue')
@@ -45,10 +45,6 @@ function buildRouter(userMenuInfo){
       routerObj.name = menuObj.menuName
       routerObj.path = menuObj.menuPath
       routerObj.icon = menuObj.icon
-      //菜单默认不是外链。如果为1，表示该菜单是外链。
-      if(menuObj.isLink == 1){
-        routerObj.isLink = true
-      }
       //菜单默认是不隐藏的。如果菜单可见为1，表示该菜单不可以在侧边栏展示，需要隐藏。
       if(menuObj.visible == 1){
         routerObj.hidden = true
@@ -59,6 +55,10 @@ function buildRouter(userMenuInfo){
         routerObj.component = LayoutView
       }else{
         routerObj.component = loadView(menuObj.menuPage)
+      }
+      //isLink属性默认为false。如果菜单是外链（为1）,设置isLink属性为true。
+      if(menuObj.isLink == 1){
+        routerObj.isLink = true
       }
       //如果菜单有子菜单，递归访问buildRouter方法，传入子菜单对象
       if(menuObj.children && menuObj.children.length){
