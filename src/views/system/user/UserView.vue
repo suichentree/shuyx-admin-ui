@@ -96,7 +96,10 @@
 </template>
 <script setup>
 import { ref, onMounted, provide } from 'vue'
-import APIResources from '@/api/user.service.js'
+import UserAPIResources from '@/api/user.service.js'
+import OrgApiResources from "@/api/org.service.js"
+import PositionAPIResources from "@/api/position.service.js"
+
 import { ElMessage, ElMessageBox } from 'element-plus'
 // 组件注册
 import AddView from './components/AddView.vue'
@@ -132,10 +135,6 @@ const pageData = ref({
 import { useDictStore } from '@/stores/dictStore.js'
 let userStatusDict = ref([])
 userStatusDict.value = useDictStore().getBykey('user_status')
-// const statusOptions = [
-//   { value: 0, label: '正常' },
-//   { value: 1, label: '禁用' }
-// ]
 
 //时间范围数组
 const dateRange = ref([])
@@ -181,7 +180,7 @@ function search() {
     queryform.value.endTime = dateRange.value[1]
   }
   //调用分页查询接口
-  APIResources.pagelist(queryform.value, pageData.value).then((res) => {
+  UserAPIResources.pagelist(queryform.value, pageData.value).then((res) => {
     //填充表格数据
     tableData.value = res.data.list
     //填充分页数据
@@ -192,7 +191,7 @@ function search() {
 //编辑操作
 function toEdit(userId) {
     //调用接口
-    APIResources.selectById({ userId }).then((res) => {
+    UserAPIResources.selectById({ userId }).then((res) => {
       //赋值编辑表单。会传值给编辑子组件
       EditForm.value = res.data
     }).finally(() => {
@@ -216,7 +215,7 @@ function toDelete(userId) {
 //删除用户
 function deleteUser(userId) {
     //调用接口
-    APIResources.deleteUser({ userId }).then(() => {
+    UserAPIResources.deleteUser({ userId }).then(() => {
       ElMessage.success('删除成功')
     }).finally(() => {
       search()
@@ -231,14 +230,14 @@ function changePageData() {
 //查询组织机构树
 function selectOrgTree(){
   //全查接口
-  APIResources.orgTreelist().then((res) => {
+  OrgApiResources.orgTreelist().then((res) => {
       orgTreeOptions.value = res.data
   })
 }
 
 //查询职位
 function selectPostInfo(){
-  APIResources.postionlist().then((res) => {
+  PositionAPIResources.postionlist().then((res) => {
     positionInfo.value = res.data
   })
 }

@@ -78,17 +78,32 @@ import { Lock, User } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import router from '@/router'
 import LoginAPIResources from '@/api/login.service'
+// 引入CryptoJS加密解密库
+import CryptoJS from 'crypto-js'
+// 引入Cookies
+import Cookies from 'js-cookie'
 
 //getCurrentInstance方法用于获取当前视图的实例。即proxy相当于this
 const { proxy } = getCurrentInstance()
-
-//记住账号相关
-const isRemember = ref(false)
 
 //表单校验规则
 const rules = ref({
   userName: [{ required: true, message: '请输入账号', trigger: 'blur' }],
   passWord: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+})
+
+//页面加载=========
+onMounted(()=>{
+  //获取cookie中的账号信息
+  let a = Cookies.get('shuyxAccountInfo-cookie');
+  if(a){
+    let accountinfo = JSON.parse(a);
+    //解密密码
+    let b = CryptoJS.AES.decrypt(accountinfo.passWord, 'my_secret_key').toString(CryptoJS.enc.Utf8)
+    loginform.value.userName = accountinfo.userName
+    loginform.value.passWord = b
+    isRemember.value = true
+  }
 })
 
 //登录相关=====================
@@ -121,9 +136,27 @@ function onSubmit() {
         })
         .finally(() => {
           loginLoading.value = false
+          remeberAccount()
         })
     }
   })
+}
+
+//记住账号相关 =================
+let isRemember = ref(false)
+function remeberAccount(){
+  if(isRemember.value){
+    //记住账号
+    let a = {
+      userName: loginform.value.userName,
+      passWord: CryptoJS.AES.encrypt(loginform.value.passWord, 'my_secret_key').toString(),  //对密码进行加密
+    }
+    //cookie保存登录信息，保存7天
+    Cookies.set('shuyxAccountInfo-cookie',JSON.stringify(a), { expires: 7 });
+  }else{
+    //不记住账号，如果cookie中保存了账号信息，那么需要删除
+    Cookies.remove("shuyxAccountInfo-cookie")
+  }
 }
 
 //用户信息相关===============

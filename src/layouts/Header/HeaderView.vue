@@ -60,7 +60,7 @@ watch(() => route.matched, (to) => {
 
 //退出登录操作
 function logout(){
-    //调用登录接口
+    //调用登出接口
     APIResources.logout().then(() => {
         //清除所有本地缓存数据,包括token
         window.localStorage.clear()

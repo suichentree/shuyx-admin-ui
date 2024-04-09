@@ -47,6 +47,14 @@ const APIResources = {
             headers: { 'Content-Type': 'multipart/form-data' }
         })
     },
+    //查询职位信息
+    postionlist() {
+        return axiosService.request({
+            url: '/shuyx-user/position/postionlist',
+            method: 'GET',
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+    },
   }
   
 export default APIResources

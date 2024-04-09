@@ -5,7 +5,7 @@ import { defineStore } from 'pinia'
 //用户信息store
 export const useUserStore = defineStore('userStore', () => {
   //用户基础信息
-  const userInfo = ref({})
+  let userInfo = ref({})
   //设置用户信息
   function setUserInfo(obj){
     userInfo.value = obj
