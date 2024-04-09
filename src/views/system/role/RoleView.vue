@@ -25,11 +25,11 @@
             <!--角色表单维护组件-->
             <EditRoleForm/>
           </el-tab-pane>
-          <el-tab-pane label="角色菜单维护">
+          <el-tab-pane label="角色菜单维护" lazy="true">
             <!--角色菜单维护组件-->
             <EditRoleMenu/>
           </el-tab-pane>
-          <el-tab-pane label="角色用户维护">
+          <el-tab-pane label="角色用户维护" lazy="true">
             <!--角色用户维护组件-->
             <EditRoleUser/>
           </el-tab-pane>

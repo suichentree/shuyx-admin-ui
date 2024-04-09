@@ -13,19 +13,25 @@
     <el-form :inline="true" :model="form" :rules="rules" ref="formRef">
       <el-row>
         <el-col :span="24">
-          <el-form-item label="类型名称" prop="genreName">
-            <el-input v-model="form.genreName" placeholder="请输入" clearable />
+          <el-form-item label="标签名称" prop="tagName">
+            <el-input v-model="form.tagName" placeholder="请输入" clearable />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="类型分类" prop="type">
-            <el-select v-model="form.type" placeholder="Select" style="width:200px">
+          <el-form-item label="标签分类" prop="type">
+            <el-select v-model="form.tagType" placeholder="Select" style="width: 200px">
               <el-option
                 v-for="item in options"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
-              />
+              >
+                <span style="float: left">{{ item.label }}</span>
+                <span
+                  style="float: right; color: var(--el-text-color-secondary); font-size: 13px"
+                  >{{ item.value }}</span
+                >
+              </el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -40,48 +46,29 @@
   </el-dialog>
 </template>
 <script setup>
-import { ref, inject, getCurrentInstance } from 'vue'
-import APIResources from '@/api/genre.service.js'
+import { ref,inject,getCurrentInstance } from 'vue'
+import APIResources from '@/api/tag.service.js'
 import { ElMessage } from 'element-plus'
-
 //this
-const { proxy } = getCurrentInstance()
+let { proxy } = getCurrentInstance()
 
 //表单对象
-const formRef = ref()
+let formRef = ref()
 
 //接收父组件传递的数据
-const DialogVisible = inject('EditDialogVisible')
-const form = inject('EditForm')
+let DialogVisible = inject('EditDialogVisible')
+let form = inject('EditForm')
 
 //表单校验规则
-const rules = ref({
-  genreName: [{ required: true, message: '请输入', trigger: 'blur' }],
-  type: [{ required: true, message: '请选择', trigger: 'blur' }]
+let rules = ref({
+  tagName: [{ required: true, message: '请输入', trigger: 'blur' }],
+  tagType: [{ required: true, message: '请选择', trigger: 'blur' }]
 })
 
-const options = [
-  {
-    value: 'Movie',
-    label: '电影',
-  },
-  {
-    value: 'Anime',
-    label: '动漫',
-  },
-  {
-    value: 'TV',
-    label: '电视剧',
-  },
-  {
-    value: 'Time',
-    label: '时间',
-  },
-  {
-    value: 'Region',
-    label: '地区',
-  }
-]
+//标签类型字典
+import { useDictStore } from '@/stores/dictStore.js'
+let options = ref([])
+options.value = useDictStore().getBykey('tag_type')
 
 //点击确定操作
 function submit() {
@@ -90,12 +77,10 @@ function submit() {
     //若校验成功
     if (valid) {
       //调用接口
-      APIResources.updateGenre(form.value).then((res) => {
-        if (res.code == 200) {
+      APIResources.update(form.value).then((res) => {
+        if(res.code == 200){
           ElMessage.success('更新成功')
           cancel()
-        } else {
-          ElMessage.error('Code: ' + res.code + ',Message: ' + res.message)
         }
       })
     }
@@ -107,7 +92,5 @@ function cancel() {
   formRef.value.resetFields()
   DialogVisible.value = false
 }
-
 </script>
-<style scoped>
-</style>
+<style scoped></style>

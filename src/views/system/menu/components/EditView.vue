@@ -94,8 +94,12 @@
           </el-form-item>
           <el-form-item label="菜单状态" prop="status">
             <el-radio-group v-model="form.status">
-              <el-radio :label="0">正常</el-radio>
-              <el-radio :label="1">禁用</el-radio>
+              <el-radio
+                v-for="obj in menuStatusDict"
+                :key="obj.value"
+                :label="obj.label"
+                :value="obj.value"
+              />
             </el-radio-group>
           </el-form-item>
     </el-form>
@@ -132,6 +136,11 @@ const formRef = ref()
 const DialogVisible = inject('EditDialogVisible')
 const form = inject('EditForm')
 const menuTreeList = inject('menuTreeList')
+
+//菜单状态字典数据
+import { useDictStore } from '@/stores/dictStore.js'
+let menuStatusDict = useDictStore().getBykey('menu_status')
+
 //菜单树形数据
 const treeData = ref(menuTreeList)
 

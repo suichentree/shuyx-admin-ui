@@ -19,9 +19,11 @@
 <script setup>
 import { computed,ref,watch } from 'vue'
 import { useRouter } from "vue-router"
-const router = useRouter()
+let router = useRouter()
+
+//获取tagView列表数据
 import { useTagViewStore } from '@/stores/tagViewStore'
-const tagViewList = computed(() => {
+let tagViewList = computed(() => {
   return useTagViewStore().tagViewMenuInfo
 })
 

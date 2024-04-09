@@ -99,7 +99,6 @@ import { ref, onMounted, provide } from 'vue'
 import UserAPIResources from '@/api/user.service.js'
 import OrgApiResources from "@/api/org.service.js"
 import PositionAPIResources from "@/api/position.service.js"
-
 import { ElMessage, ElMessageBox } from 'element-plus'
 // 组件注册
 import AddView from './components/AddView.vue'
@@ -131,7 +130,7 @@ const pageData = ref({
   total: 0
 })
 
-//用户状态
+//用户状态字典
 import { useDictStore } from '@/stores/dictStore.js'
 let userStatusDict = ref([])
 userStatusDict.value = useDictStore().getBykey('user_status')

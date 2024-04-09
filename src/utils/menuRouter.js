@@ -49,10 +49,13 @@ function buildRouter(userMenuInfo){
       if(menuObj.visible == 1){
         routerObj.hidden = true
       }
-      //如果菜单类型为0（目录），则该router元素中的component为LayoutView
+      //如果菜单类型为0（目录），并且该目录是一级目录(parentId为0)，则该router元素中的component为LayoutView
+      //如果菜单类型为0（目录），并且该目录不是一级目录(parentId不为0)，则该router元素中的component为undefined
       //如果菜单类型不为0（非目录），则该router元素中的component为菜单页面匹配的.vue文件信息
-      if(menuObj.menuType == 0){
+      if(menuObj.menuType == 0 && menuObj.parentId == 0){
         routerObj.component = LayoutView
+      }else if(menuObj.menuType == 0 && menuObj.parentId > 0){
+        routerObj.component = undefined
       }else{
         routerObj.component = loadView(menuObj.menuPage)
       }

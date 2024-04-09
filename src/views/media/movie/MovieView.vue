@@ -1,110 +1,119 @@
 <template>
-  <!--查询条件-->
-  <el-card shadow="never" :body-style="{ padding: '0px' }">
-    <div style="padding: 10px">
-      <el-row justify="space-between">
-        <el-col :span="2">
-          <el-tag>查询条件</el-tag>
-        </el-col>
-        <el-col :span="6" style="text-align: right">
-          <el-button type="primary" @click="search">搜索</el-button>
-        </el-col>
-      </el-row>
-    </div>
-    <div style="padding: 10px">
-      <el-form :model="queryform">
-        <el-form-item label="类型:" prop="genreName">
-          <el-space wrap>
-            <div v-for="i in movieTypeArray" :key="i" @click="handClick1(i)">
-              <el-tag size="small" :effect="queryform.movieType === i.genreId ? 'dark' : 'plain'">{{
-                i.genreName
-              }}</el-tag>
-            </div>
-          </el-space>
-        </el-form-item>
-        <el-form-item label="年代:">
-          <el-space wrap>
-            <div v-for="i in releaseDateArray" :key="i" @click="handClick2(i)">
-              <el-tag
-                size="small"
-                type="success"
-                :effect="queryform.releaseDate === i.genreId ? 'dark' : 'plain'"
-                >{{ i.genreName }}</el-tag
-              >
-            </div>
-          </el-space>
-        </el-form-item>
-        <el-form-item label="地区:">
-          <el-space wrap>
-            <div v-for="i in regionArray" :key="i" @click="handClick3(i)">
-              <el-tag
-                size="small"
-                type="warning"
-                :effect="queryform.region === i.genreId ? 'dark' : 'plain'"
-                >{{ i.genreName }}</el-tag
-              >
-            </div>
-          </el-space>
-        </el-form-item>
-      </el-form>
-    </div>
-  </el-card>
-  <!--查询结果-->
-  <el-space wrap>
-    <div v-for="i in mediaList" :key="i" @click="showMovie(i.mediaId)">
-      <div style="height: auto; width: 200px">
-        <el-image
-          src="https://img.zcool.cn/community/01edb95b0cd6fea8012181b049fca0.jpg@1280w_1l_2o_100sh.jpg"
-          fit="fill"
-        />
+  <el-space direction="vertical" :fill="true" style="width: 100%">
+    <!--查询条件-->
+    <el-card shadow="never" :body-style="{ padding: '0px' }">
+      <div class="card-div">
         <el-row justify="space-between">
-          <el-col :span="20">{{ i.mediaName }}</el-col>
-          <el-col :span="4" style="text-align: right">{{ i.mediaScore }}</el-col>
-          <el-col :span="24" class="mediaTag">{{ i.mediaTag }}</el-col>
+          <el-col :span="2"><el-tag>查询条件</el-tag></el-col>
+          <el-col :span="6" style="text-align: right">
+            <el-button type="primary" @click="search">搜索</el-button>
+            <el-button @click="resetQuery">重置</el-button>
+          </el-col>
         </el-row>
       </div>
-    </div>
-  </el-space>
-  <!--分页-->
-  <div>
-    <el-row class="row-bg" justify="center">
-      <el-col :span="12">
+      <div class="card-div">
+        <el-form :inline="true" :model="queryform" ref="queryformRef">
+          <el-form-item label="媒体名称" prop="mediaName">
+            <el-input v-model="queryform.mediaName" placeholder="请输入" clearable />
+          </el-form-item>
+          <el-form-item label="媒体分类" prop="mediaType">
+            <el-select v-model="queryform.mediaType" placeholder="请选择" clearable style="width:200px" disabled>
+              <el-option
+                v-for="obj in options"
+                :key="obj.value"
+                :label="obj.label"
+                :value="obj.value"
+              />
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-card>
+    <!--查询结果-->
+    <el-card shadow="never" :body-style="{ padding: '0px' }">
+      <div class="card-div">
+        <el-row justify="space-between">
+          <el-col :span="2"><el-tag>查询结果</el-tag></el-col>
+          <el-col :span="6" style="text-align: right">
+            <el-button type="success" @click="AddDialogVisible = true">新增</el-button>
+          </el-col>
+        </el-row>
+      </div>
+      <div class="card-div">
+        <!--数据表格-->
+        <el-table :data="tableData" border>
+          <el-table-column label="媒体编号"  key="mediaId" prop="mediaId" />
+          <el-table-column label="媒体名称"  key="mediaName" prop="mediaName" />
+          <el-table-column label="媒体分类" key="mediaType" prop="mediaType" />
+          <el-table-column label="媒体标签"  key="mediaTag" prop="mediaTag" show-overflow-tooltip/>
+          <el-table-column label="导演"  key="director" prop="director" />
+          <el-table-column label="演员"  key="actor" prop="actor" />
+          <el-table-column
+            label="上映日期"
+            key="releaseDate"
+            prop="releaseDate"
+            :formatter="DateTimeformatter"
+            show-overflow-tooltip
+          />
+          <el-table-column label="制片地区"  key="region" prop="region" />
+          <el-table-column label="媒体评分"  key="mediaScore" prop="mediaScore" />
+          <el-table-column label="操作" >
+            <template #default="scope">
+              <el-tooltip content="修改" placement="top">
+                <el-button link type="primary" icon="Edit" @click="toEdit(scope.row.mediaId)" />
+              </el-tooltip>
+              <el-tooltip content="删除" placement="top">
+                <el-button link type="primary" icon="Delete" @click="toDelete(scope.row.mediaId)" />
+              </el-tooltip>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div class="card-div">
+        <!--表格分页-->
         <el-pagination
           @change="changePageData"
           v-model:current-page="pageData.pageNum"
           v-model:page-size="pageData.pageSize"
           :page-sizes="pageData.pageSizes"
-          background
-          layout="total, prev, pager, next, jumper"
+          :background="true"
+          layout="total, sizes, prev, pager, next, jumper"
           :total="pageData.total"
         />
-      </el-col>
-    </el-row>
-  </div>
+      </div>
+    </el-card>
+  </el-space>
+  
+  <!--新增对话框-->
+  <AddView v-if="AddDialogVisible" />
+  <!--编辑对话框-->
+  <EditView :Id="EditMediaId" v-if="EditDialogVisible" />
 </template>
-
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, provide } from 'vue'
 import MediaAPIResources from '@/api/media.service.js'
-import GenreAPIResources from '@/api/genre.service.js'
-import { useRouter } from 'vue-router'
-let router = useRouter()
+import { ElMessage, ElMessageBox } from 'element-plus'
+// 组件注册
+import AddView from './components/AddView.vue'
+import EditView from './components/EditView.vue'
 
-//媒体列表
-let mediaList = ref([])
+//新增对话框
+let AddDialogVisible = ref(false)
+provide('AddDialogVisible', AddDialogVisible)
 
-//电影类型数组
-let movieTypeArray = ref([{ genreId: 0, genreName: '全部', type: 'Movie' }])
-//上映时间数组
-let releaseDateArray = ref([{ genreId: 0, genreName: '全部', type: 'Time' }])
-//地区数组
-let regionArray = ref([{ genreId: 0, genreName: '全部', type: 'Region' }])
+//编辑对话框
+let EditDialogVisible = ref(false)
+let EditMediaId = ref()
+let EditForm = ref({})
+provide('EditDialogVisible', EditDialogVisible)
+provide('EditForm', EditForm)
 
-//查询表单相关
+//表单对象
+let queryformRef = ref()
 let queryform = ref({
-  movieType: 0,
-  releaseDate: 0,
-  region: 0
+  mediaId: undefined,
+  mediaName: undefined,
+  mediaType: "Movie"
 })
 
 //分页配置数据
@@ -112,83 +121,80 @@ let pageData = ref({
   pageNum: 1,
   pageSize: 10,
   pageSizes: [10, 50, 100],
-  total: 100
+  total: 0
 })
 
-//------------------
+//标签类型字典
+import { useDictStore } from '@/stores/dictStore.js'
+let options = ref([])
+options.value = useDictStore().getBykey('media_type')
+
+//表格数据
+let tableData = ref([])
+
+// onMounted生命周期
 onMounted(() => {
-  searchGenre()
   search()
 })
 
-//查询全部类型，并进行分组
-function searchGenre() {
-  GenreAPIResources.pagelist().then((res) => {
-    let a = res.data
-    a.forEach((obj) => {
-      if (obj.type === 'Movie') {
-        movieTypeArray.value.push(obj)
-      }
-      if (obj.type === 'Time') {
-        releaseDateArray.value.push(obj)
-      }
-      if (obj.type === 'Region') {
-        regionArray.value.push(obj)
-      }
-    })
-  })
+//重置按钮操作
+function resetQuery() {
+  queryformRef.value.resetFields()
 }
 
-//分页查询
+//搜索按钮操作
 function search() {
-  let genreIds = [queryform.value.movieType, queryform.value.releaseDate, queryform.value.region]
-  //修饰数组
-  genreIds = genreIds.filter((item) => {
-    return item != 0
-  })
-  MediaAPIResources.pageFindMediaAndGenre({ genreIds }, pageData.value).then((res) => {
-    mediaList.value = res.data.list
+  //分页查询接口
+  MediaAPIResources.pagelist(queryform.value, pageData.value).then((res) => {
+    //填充表格数据
+    tableData.value = res.data.list
+    //填充分页数据
     pageData.value.total = res.data.total
   })
 }
 
-//点击电影类型标签
-function handClick1(item) {
-  queryform.value.movieType = item.genreId
-}
-//点击电影上映时间标签
-function handClick2(item) {
-  queryform.value.releaseDate = item.genreId
-}
-//点击电影上映地区标签
-function handClick3(item) {
-  queryform.value.region = item.genreId
+//编辑操作
+function toEdit(mediaId) {
+  EditMediaId.value = mediaId
+  EditDialogVisible.value = true
 }
 
-//显示电影详细
-function showMovie(obj) {
-  router.push({
-    path: '/media/movie/info',
-    query: {
-      id: obj
-    }
+//删除操作
+function toDelete(mediaId) {
+  ElMessageBox.confirm('是否确定要删除编号为' + mediaId + '的媒体?', 'Warning', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning',
+    closeOnClickModal: false
+  }).then(() => {
+    doDelete(mediaId)
   })
 }
 
-function changePageData() {}
+//删除
+function doDelete(mediaId) {
+  MediaAPIResources.deleteMedia({ mediaId })
+    .then(() => {
+      ElMessage.success('删除成功')
+    })
+    .finally(() => {
+      search()
+    })
+}
+
+//分页数据变化
+function changePageData() {
+  search()
+}
+
+//日期格式化操作
+function DateTimeformatter(row) {
+  return row.releaseDate.substring(0,10)
+}
+
 </script>
-
 <style scoped>
-.el-card {
-  --el-card-padding: 1px;
+.card-div {
+  padding: 10px;
 }
-
-/* 文字超出溢出样式 */
-.mediaTag {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: rgb(121, 124, 127);
-  padding: 2px;
-}
-</style>
+</style>./episodes/EpisodesView.vue

@@ -13,17 +13,28 @@
       </div>
       <div class="card-div">
         <el-form :inline="true" :model="queryform" ref="queryformRef">
-          <el-form-item label="类型名称" prop="genreName">
-            <el-input v-model="queryform.genreName" placeholder="请输入" clearable />
+          <el-form-item label="标签名称" prop="tagName">
+            <el-input v-model="queryform.tagName" placeholder="请输入" clearable />
           </el-form-item>
-          <el-form-item label="类型分类" prop="type">
-            <el-select v-model="queryform.type" placeholder="请选择" clearable style="width:200px">
+          <el-form-item label="标签分类" prop="tagType">
+            <el-select
+              v-model="queryform.tagType"
+              placeholder="请选择"
+              clearable
+              style="width: 200px"
+            >
               <el-option
-                v-for="obj in options"
-                :key="obj.value"
-                :label="obj.label"
-                :value="obj.value"
-              />
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+                <span style="float: left">{{ item.label }}</span>
+                <span
+                  style="float: right; color: var(--el-text-color-secondary); font-size: 13px"
+                  >{{ item.value }}</span
+                >
+              </el-option>
             </el-select>
           </el-form-item>
         </el-form>
@@ -42,16 +53,16 @@
       <div class="card-div">
         <!--数据表格-->
         <el-table :data="tableData" border>
-          <el-table-column label="类型编号" align="center" key="genreId" prop="genreId" />
-          <el-table-column label="类型名称" align="center" key="genreName" prop="genreName" />
-          <el-table-column label="类型分类" align="center" key="type" prop="type" />
+          <el-table-column label="标签编号" align="center" key="tagId" prop="tagId" />
+          <el-table-column label="标签名称" align="center" key="tagName" prop="tagName" />
+          <el-table-column label="标签分类" align="center" key="tagType" prop="tagType" />
           <el-table-column label="操作" align="center">
             <template #default="scope">
               <el-tooltip content="修改" placement="top">
-                <el-button link type="primary" icon="Edit" @click="toEdit(scope.row.genreId)" />
+                <el-button link type="primary" icon="Edit" @click="toEdit(scope.row)" />
               </el-tooltip>
               <el-tooltip content="删除" placement="top">
-                <el-button link type="primary" icon="Delete" @click="toDelete(scope.row.genreId)" />
+                <el-button link type="primary" icon="Delete" @click="toDelete(scope.row.tagId)" />
               </el-tooltip>
             </template>
           </el-table-column>
@@ -74,11 +85,11 @@
   <!--新增对话框-->
   <AddView />
   <!--编辑对话框-->
-  <EditView />
+  <EditView/>
 </template>
 <script setup>
 import { ref, onMounted, provide } from 'vue'
-import APIResources from '@/api/genre.service.js'
+import TagAPIResources from '@/api/tag.service.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 // 组件注册
@@ -86,56 +97,37 @@ import AddView from './components/AddView.vue'
 import EditView from './components/EditView.vue'
 
 //新增对话框
-const AddDialogVisible = ref(false)
+let AddDialogVisible = ref(false)
 provide('AddDialogVisible', AddDialogVisible)
 
 //编辑对话框
-const EditDialogVisible = ref(false)
-const EditForm = ref({})
+let EditDialogVisible = ref(false)
+let EditForm = ref({})
 provide('EditDialogVisible', EditDialogVisible)
 provide('EditForm', EditForm)
 
 //表单对象
-const queryformRef = ref()
-const queryform = ref({
-  genreId: undefined,
-  genreName: undefined,
+let queryformRef = ref()
+let queryform = ref({
+  tagId: undefined,
+  tagName: undefined,
   type: undefined
 })
 //分页配置数据
-const pageData = ref({
+let pageData = ref({
   pageNum: 1,
   pageSize: 10,
   pageSizes: [10, 50, 100],
   total: 0
 })
-const options = [
-  {
-    value: 'Movie',
-    label: '电影'
-  },
-  {
-    value: 'Anime',
-    label: '动漫'
-  },
-  {
-    value: 'TV',
-    label: '电视剧'
-  },
-  {
-    value: 'Time',
-    label: '时间'
-  },
-  {
-    value: 'Region',
-    label: '地区'
-  }
-]
+
+//标签类型字典
+import { useDictStore } from '@/stores/dictStore.js'
+let options = ref([])
+options.value = useDictStore().getBykey('tag_type')
 
 //表格数据
-const tableData = ref([])
-
-/**--------------------- */
+let tableData = ref([])
 
 // onMounted生命周期
 onMounted(() => {
@@ -150,7 +142,7 @@ function resetQuery() {
 //搜索按钮操作
 function search() {
   //分页查询接口
-  APIResources.pagelist(queryform.value, pageData.value).then((res) => {
+  TagAPIResources.pagelist(queryform.value, pageData.value).then((res) => {
     //填充表格数据
     tableData.value = res.data.list
     //填充分页数据
@@ -159,37 +151,27 @@ function search() {
 }
 
 //编辑操作
-function toEdit(genreId) {
-  let query = ref({
-    genreId: genreId
-  })
-  //分页查询接口，根据id查询
-  APIResources.pagelist(query.value, pageData.value)
-    .then((res) => {
-      EditForm.value = res.data.list[0]
-    })
-    .finally(() => {
-      //打开编辑对话框
-      EditDialogVisible.value = true
-    })
+function toEdit(obj) {
+  EditForm.value = obj
+  EditDialogVisible.value = true
 }
 
 //删除操作
-function toDelete(genreId) {
-  ElMessageBox.confirm('是否确定要删除编号为' + genreId + '的类型?', 'Warning', {
+function toDelete(tagId) {
+  ElMessageBox.confirm('是否确定要删除编号为' + tagId + '的标签?', 'Warning', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning',
     closeOnClickModal: false
   }).then(() => {
-    doDelete(genreId)
+    doDelete(tagId)
   })
 }
 
 //删除用户
-function doDelete(genreId) {
+function doDelete(tagId) {
   //调用接口
-  APIResources.deleteGenre({ genreId })
+  TagAPIResources.delete({ tagId })
     .then(() => {
       ElMessage.success('删除成功')
     })

@@ -5,34 +5,43 @@ const APIResources = {
     //分页查询
     pagelist(queryData,pageData) {
         return axiosService.request({
-            url: '/shuyx-media/genre/pagelist',
+            url: '/shuyx-media/tag/pagelist',
             method: 'POST',
             data: Object.assign({},queryData,pageData),
             headers: { 'Content-Type': 'application/json' }
         })
     },
-    //添加
-    addGenre(queryData){
+    //条件查询
+    findBy(queryData) {
         return axiosService.request({
-            url: '/shuyx-media/genre/addGenre',
+            url: '/shuyx-media/tag/findBy',
+            method: 'POST',
+            data: Object.assign({},queryData),
+            headers: { 'Content-Type': 'application/json' }
+        })
+    },
+    //添加
+    add(queryData){
+        return axiosService.request({
+            url: '/shuyx-media/tag/add',
             method: 'POST',
             data: queryData,
             headers: { 'Content-Type': 'application/json' }
         })
     },
     //更新
-    updateGenre(queryData){
+    update(queryData){
         return axiosService.request({
-            url: '/shuyx-media/genre/updateGenre',
+            url: '/shuyx-media/tag/update',
             method: 'POST',
             data: queryData,
             headers: { 'Content-Type': 'application/json' }
         })
     },
     //删除
-    deleteGenre(queryData) {
+    delete(queryData) {
         return axiosService.request({
-            url: '/shuyx-media/genre/deleteGenre',
+            url: '/shuyx-media/tag/delete',
             method: 'DELETE',
             params: queryData,
             headers: { 'Content-Type': 'multipart/form-data' }

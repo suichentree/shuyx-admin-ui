@@ -3,9 +3,9 @@ import { ref} from 'vue'
 import { defineStore } from 'pinia'
 
 //tagViewStore
-export const useTagViewStore = defineStore('tagViewStore', () => {
+export let useTagViewStore = defineStore('tagViewStore', () => {
    //tagview菜单信息,主要用于存储tagview中展示的菜单
-   const tagViewMenuInfo = ref([])
+  let tagViewMenuInfo = ref([])
   //添加tagview菜单信息
   function addTagViewMenuInfo(obj){
     let item = {
@@ -16,7 +16,6 @@ export const useTagViewStore = defineStore('tagViewStore', () => {
     if (!tagViewMenuInfo.value.some(obj => obj.path === item.path && obj.name === item.name)) {
       tagViewMenuInfo.value.push(item)
     }
-
   }
   //删除tagview菜单信息
   function deleteTagViewMenuInfo(index){

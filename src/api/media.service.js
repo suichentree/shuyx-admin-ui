@@ -19,18 +19,18 @@ const APIResources = {
     })
   },
   //分页查询
-  pageFindMediaAndGenre(queryData, pageData) {
+  pageFindMediaAndTag(queryData, pageData) {
     return axiosService.request({
-      url: '/shuyx-media/media/pageFindMediaAndGenre',
+      url: '/shuyx-media/media/pageFindMediaAndTag',
       method: 'POST',
       data: Object.assign({}, queryData, pageData),
       headers: { 'Content-Type': 'application/json' }
     })
   },
   //联查
-  findMediaAndGenre(queryData) {
+  findMediaAndTag(queryData) {
     return axiosService.request({
-      url: '/shuyx-media/media/findMediaAndGenre',
+      url: '/shuyx-media/media/findMediaAndTag',
       method: 'POST',
       data: queryData,
       headers: { 'Content-Type': 'application/json' }

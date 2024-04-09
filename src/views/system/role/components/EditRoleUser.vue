@@ -36,7 +36,7 @@
   <UserList/>
 </template>
 <script setup>
-import { ref,inject,getCurrentInstance,provide} from 'vue'
+import { ref,onMounted,inject,getCurrentInstance,provide} from 'vue'
 import APIResources from '@/api/role.service.js'
 import { ElMessage} from 'element-plus'
 
@@ -64,8 +64,9 @@ const tableRef = ref()
 const UserDialogVisible = ref(false)
 provide('UserDialogVisible', UserDialogVisible)
 
-
-//------------------
+onMounted(()=>{
+  search()
+})
 
 //搜索按钮操作
 function search() {

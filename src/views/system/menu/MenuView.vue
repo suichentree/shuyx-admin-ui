@@ -54,7 +54,7 @@
         </el-table-column>
         <el-table-column label="菜单类型"  key="menuType" prop="menuType">
           <template #default="scope">
-            <el-tag v-if=" scope.row.menuType == 0 ">目录</el-tag>
+            <el-tag v-if=" scope.row.menuType == 0 " type="success">目录</el-tag>
             <el-tag v-else>菜单</el-tag>
           </template>
         </el-table-column>

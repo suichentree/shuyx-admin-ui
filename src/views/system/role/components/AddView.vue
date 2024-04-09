@@ -34,8 +34,12 @@
         <el-col :span="24">
           <el-form-item label="角色状态" prop="status">
             <el-radio-group v-model="addform.status">
-              <el-radio :label="0">正常</el-radio>
-              <el-radio :label="1">禁用</el-radio>
+              <el-radio
+              v-for="item in roleDictData"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              />
             </el-radio-group>
           </el-form-item>
         </el-col>
@@ -77,7 +81,10 @@ const addform = ref({
   status: undefined
 })
 
-//------------------------
+//角色状态字典
+import { useDictStore } from '@/stores/dictStore.js'
+let roleDictData = ref([])
+roleDictData.value = useDictStore().getBykey('role_status')
 
 //添加操作
 function add() {

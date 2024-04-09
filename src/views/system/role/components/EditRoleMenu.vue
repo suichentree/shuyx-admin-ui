@@ -22,7 +22,7 @@
   </el-form>
 </template>
 <script setup>
-import { ref,inject} from 'vue'
+import { ref,inject,onMounted} from 'vue'
 import APIResources from '@/api/role.service.js'
 import { ElMessage,ElMessageBox} from 'element-plus'
 
@@ -39,6 +39,10 @@ const treeRef = ref()
 const updateform = ref({
   roleId:undefined,
   menuIds:[]
+})
+
+onMounted(()=>{
+  search()
 })
 
 //查询所有菜单和角色下的菜单信息

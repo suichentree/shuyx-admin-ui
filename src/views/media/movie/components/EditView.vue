@@ -2,7 +2,6 @@
   <el-dialog
     v-model="DialogVisible"
     width="60%"
-    @open="handOpen()"
     :show-close="false"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
@@ -55,35 +54,35 @@
       </el-form-item>
       <h4>分类信息配置</h4>
       <el-form-item label="类型分类">
-        <el-checkbox-group v-model="mediaGenreArray1">
+        <el-checkbox-group v-model="mediaTagArray1">
           <el-checkbox
             v-for="item in movieTypeArray"
-            :key="item.genreId"
-            :label="item.genreName"
-            :value="item.genreId"
+            :key="item.tagId"
+            :label="item.tagName"
+            :value="item.tagId"
             ></el-checkbox
           >
         </el-checkbox-group>
       </el-form-item>
       <div></div>
       <el-form-item label="时间分类">
-        <el-radio-group v-model="mediaGenreArray2">
+        <el-radio-group v-model="mediaTagArray2">
           <el-radio
             v-for="item in releaseDateArray"
-            :key="item.genreId"
-            :label="item.genreName"
-            :value="item.genreId"
+            :key="item.tagId"
+            :label="item.tagName"
+            :value="item.tagId"
           />
         </el-radio-group>
       </el-form-item>
       <div></div>
       <el-form-item label="地区分类">
-        <el-radio-group v-model="mediaGenreArray3">
+        <el-radio-group v-model="mediaTagArray3">
           <el-radio
             v-for="item in regionArray"
-            :key="item.genreId"
-            :label="item.genreName"
-            :value="item.genreId"
+            :key="item.tagId"
+            :label="item.tagName"
+            :value="item.tagId"
           />
         </el-radio-group>
       </el-form-item>
@@ -99,7 +98,7 @@
 <script setup>
 import { ref, inject, getCurrentInstance,onMounted} from 'vue'
 import MediaAPIResources from '@/api/media.service.js'
-import GenreAPIResources from '@/api/genre.service.js'
+import TagAPIResources from '@/api/tag.service.js'
 import { ElMessage } from 'element-plus'
 //this
 const { proxy } = getCurrentInstance()
@@ -119,8 +118,8 @@ let form = ref({
   releaseDate: undefined,
   region: undefined,
   mediaScore: 6.0,
-  genreDTOList: [],
-  genreIds:[]
+  tagList: [],
+  tagIds:[]
 })
 
 //接收父组件传递的数据
@@ -130,41 +129,32 @@ let movieTypeArray = ref([])
 let releaseDateArray = ref([])
 let regionArray = ref([])
 
-let mediaGenreArray1 = ref([])
-let mediaGenreArray2 = ref(undefined)
-let mediaGenreArray3 = ref(undefined)
+let mediaTagArray1 = ref([])
+let mediaTagArray2 = ref(undefined)
+let mediaTagArray3 = ref(undefined)
 
-let options = [
-  {
-    value: 'Movie',
-    label: '电影'
-  },
-  {
-    value: 'Anime',
-    label: '动漫'
-  },
-  {
-    value: 'TV',
-    label: '电视剧'
-  }
-]
+//标签类型字典
+import { useDictStore } from '@/stores/dictStore.js'
+let options = ref([])
+options.value = useDictStore().getBykey('media_type')
 
 onMounted(() => {
-  searchGenre()
+  searchTag()
+  handOpen()
 })
 
 //查询全部类型，并进行分组
-function searchGenre() {
-  GenreAPIResources.pagelist().then((res) => {
+function searchTag() {
+  TagAPIResources.findBy().then((res) => {
     let a = res.data
     a.forEach((obj) => {
-      if (obj.type === 'Movie') {
+      if (obj.tagType === 'Movie') {
         movieTypeArray.value.push(obj)
       }
-      if (obj.type === 'Time') {
+      if (obj.tagType === 'Time') {
         releaseDateArray.value.push(obj)
       }
-      if (obj.type === 'Region') {
+      if (obj.tagType === 'Region') {
         regionArray.value.push(obj)
       }
     })
@@ -176,29 +166,27 @@ function searchGenre() {
 function handOpen() {
   //先重置数据
   form.value = {}
-  mediaGenreArray1.value = []
-  mediaGenreArray2.value = undefined
-  mediaGenreArray3.value = undefined
-
+  mediaTagArray1.value = []
+  mediaTagArray2.value = undefined
+  mediaTagArray3.value = undefined
   let query = {
     mediaId:props.Id
   }
-
   //查询接口
-  MediaAPIResources.findMediaAndGenre(query).then((res) => {
+  MediaAPIResources.findMediaAndTag(query).then((res) => {
     //媒体数据
     form.value = res.data[0]
     //媒体类型数据
-    let a =  res.data[0].genreDTOList
+    let a =  res.data[0].tagList
     a.forEach((obj) => {
-      if(obj.type === 'Movie'){
-        mediaGenreArray1.value.push(obj.genreId)
+      if(obj.tagType === 'Movie'){
+        mediaTagArray1.value.push(obj.tagId)
       }
-      if(obj.type === 'Time'){
-        mediaGenreArray2.value = obj.genreId
+      if(obj.tagType === 'Time'){
+        mediaTagArray2.value = obj.tagId
       }
-      if(obj.type === 'Region'){
-        mediaGenreArray3.value = obj.genreId
+      if(obj.tagType === 'Region'){
+        mediaTagArray3.value = obj.tagId
       }
     })
   })
@@ -209,24 +197,24 @@ function submit() {
   //表单校验
   proxy.$refs.formRef.validate((valid) => {
     if (valid) {
-      //修饰数据，拼接genreIds
-      form.value.genreIds = [mediaGenreArray2.value,mediaGenreArray3.value,...mediaGenreArray1.value]
-      //修饰数据，拼接genreDTOList
-      form.value.genreDTOList = []
+      //修饰数据，拼接tagIds
+      form.value.tagIds = [mediaTagArray2.value,mediaTagArray3.value,...mediaTagArray1.value]
+      //修饰数据，拼接tagDTOList
+      form.value.tagList = []
       regionArray.value.forEach((i)=>{
-        if(i.genreId == mediaGenreArray3.value){
-          form.value.genreDTOList.push(i)
+        if(i.tagId == mediaTagArray3.value){
+          form.value.tagList.push(i)
         }
       })
       releaseDateArray.value.forEach((i)=>{
-        if(i.genreId == mediaGenreArray2.value){
-          form.value.genreDTOList.push(i)
+        if(i.tagId == mediaTagArray2.value){
+          form.value.tagList.push(i)
         }
       })
       movieTypeArray.value.forEach((i)=>{
-        mediaGenreArray1.value.forEach((j)=>{
-          if(i.genreId == j){
-            form.value.genreDTOList.push(i)
+        mediaTagArray1.value.forEach((j)=>{
+          if(i.tagId == j){
+            form.value.tagList.push(i)
           }
         })
       })

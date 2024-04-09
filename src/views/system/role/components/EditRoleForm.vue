@@ -20,8 +20,12 @@
         </el-form-item>
         <el-form-item label="角色状态" prop="status">
             <el-radio-group v-model="formData.status">
-            <el-radio :label="0">正常</el-radio>
-            <el-radio :label="1">禁用</el-radio>
+              <el-radio
+              v-for="item in roleDictData"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              />
             </el-radio-group>
         </el-form-item>
         <el-button type="primary" @click="toupdate">更新</el-button>
@@ -48,6 +52,11 @@ const rules = ref({
   roleName: [{ required: true, message: '请输入', trigger: 'blur' }],
   status: [{ required: true, message: '请选择', trigger: 'blur' }]
 })
+
+//角色状态字典
+import { useDictStore } from '@/stores/dictStore.js'
+let roleDictData = ref([])
+roleDictData.value = useDictStore().getBykey('role_status')
 
 //更新操作
 function toupdate() {
