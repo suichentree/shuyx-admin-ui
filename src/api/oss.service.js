@@ -21,6 +21,16 @@ const APIResources = {
             onUploadProgress:onUploadProgress
         })
     },
+    //更新文件
+    updateFile(queryData,onUploadProgress){
+        return axiosService.request({
+            url: '/shuyx-minio/oss/updateFile',
+            method: 'POST',
+            data: queryData,
+            headers: { 'Content-Type': 'multipart/form-data' },
+            onUploadProgress:onUploadProgress
+        })
+    },
     //获取分片文件的预签名链接
     createMultipartUpload(queryData){
         return axiosService.request({

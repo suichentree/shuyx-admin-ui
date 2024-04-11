@@ -20,6 +20,15 @@ const APIResources = {
             headers: { 'Content-Type': 'application/json' }
         })
     },
+    //根据mediaId查询媒体所属的标签
+    findByMediaId(queryData) {
+        return axiosService.request({
+            url: '/shuyx-media/tag/findByMediaId',
+            method: 'GET',
+            params: queryData,
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+    },
     //添加
     add(queryData){
         return axiosService.request({

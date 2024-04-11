@@ -60,7 +60,13 @@
           <el-table-column label="操作" >
             <template #default="scope">
               <el-tooltip content="修改" placement="top">
-                <el-button link type="primary" icon="Edit" @click="toEdit(scope.row.mediaId)" />
+                <el-button link type="primary" icon="EditPen" @click="toEdit(scope.row.mediaId)" />
+              </el-tooltip>
+              <el-tooltip content="更新标签" placement="top">
+                <el-button link type="success" icon="Edit" @click="toChangeTag(scope.row)" />
+              </el-tooltip>
+              <el-tooltip content="更新封面" placement="top">
+                <el-button link type="warning" icon="Picture" @click="toChangePic(scope.row)" />
               </el-tooltip>
               <el-tooltip content="删除" placement="top">
                 <el-button link type="primary" icon="Delete" @click="toDelete(scope.row.mediaId)" />
@@ -88,25 +94,49 @@
   <AddView v-if="AddDialogVisible" />
   <!--编辑对话框-->
   <EditView :Id="EditMediaId" v-if="EditDialogVisible" />
+  <!-- 更新标签组件 -->
+  <UpdateTag v-if="UpdateVisible" :UpdateForm="UpdateForm"/>
+  <UpdateImg v-if="ImgVisible" :ImgForm="ImgForm"/>
 </template>
 <script setup>
 import { ref, onMounted, provide } from 'vue'
 import MediaAPIResources from '@/api/media.service.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
+
 // 组件注册
 import AddView from './components/AddView.vue'
 import EditView from './components/EditView.vue'
+import UpdateTag from "./components/UpdateTag.vue"
+import UpdateImg from "./components/UpdateImg.vue"
 
-//新增对话框
+//新增对话框子组件
 let AddDialogVisible = ref(false)
 provide('AddDialogVisible', AddDialogVisible)
 
-//编辑对话框
+//编辑对话框子组件
 let EditDialogVisible = ref(false)
 let EditMediaId = ref()
 let EditForm = ref({})
 provide('EditDialogVisible', EditDialogVisible)
 provide('EditForm', EditForm)
+
+//更新标签子组件
+let UpdateVisible = ref(false)
+let UpdateForm = ref({})
+provide('UpdateVisible',UpdateVisible)
+function toChangeTag(obj){
+  UpdateForm.value  = obj 
+  UpdateVisible.value = true
+}
+
+//更新封面子组件
+let ImgVisible = ref(false)
+let ImgForm = ref({})
+provide('ImgVisible',ImgVisible)
+function toChangePic(obj){
+  ImgForm.value  = obj 
+  ImgVisible.value = true
+}
 
 //表单对象
 let queryformRef = ref()

@@ -1,6 +1,6 @@
 <template>
   <!--查询条件-->
-  <el-card shadow="never" :body-style="{ padding: '0px' }">
+  <el-card shadow="never" :body-style="{ padding: '0px'}">
     <div style="padding: 10px">
       <el-row justify="space-between">
         <el-col :span="2">
@@ -50,7 +50,7 @@
     </div>
   </el-card>
   <!--查询结果-->
-  <el-space wrap>
+  <el-space wrap style="padding: 10px 0px;">
     <div v-for="i in mediaList" :key="i" @click="showMovie(i.mediaId)">
       <div style="height: auto; width: 200px">
         <el-image
@@ -66,7 +66,6 @@
     </div>
   </el-space>
   <!--分页-->
-  <div>
     <el-row class="row-bg" justify="center">
       <el-col :span="12">
         <el-pagination
@@ -80,7 +79,6 @@
         />
       </el-col>
     </el-row>
-  </div>
 </template>
 
 <script setup>

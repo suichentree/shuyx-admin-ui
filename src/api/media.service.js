@@ -62,6 +62,15 @@ const APIResources = {
       headers: { 'Content-Type': 'application/json' }
     })
   },
+  //更新
+  updateMedia2(queryData) {
+    return axiosService.request({
+      url: '/shuyx-media/media/updateMedia2',
+      method: 'POST',
+      data: queryData,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  },
   //删除
   deleteMedia(queryData) {
     return axiosService.request({
