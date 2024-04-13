@@ -14,6 +14,9 @@
       <el-form-item label="媒体编号" prop="mediaId">
         <el-input v-model="EditForm.mediaId" placeholder="请输入" disabled />
       </el-form-item>
+      <el-form-item label="媒体名称" prop="mediaName">
+        <el-input v-model="EditForm.media.mediaName" placeholder="请输入" disabled />
+      </el-form-item>
       <el-form-item label="剧集序号" prop="episodesNumber">
         <el-input-number v-model="EditForm.episodesNumber" placeholder="请输入" :min="0" />
       </el-form-item>
@@ -24,7 +27,7 @@
         <el-input v-model="EditForm.episodesUrl" placeholder="请输入" disabled />
       </el-form-item>
       <el-form-item>
-        <el-alert title="上传新剧集文件会替换旧剧集文件" type="warning" :closable="false" />
+        <el-alert title="上传新剧集文件会删除旧剧集文件" type="warning" :closable="false" />
       </el-form-item>
       <el-form-item label="上传新剧集文件">
         <el-upload
@@ -33,7 +36,6 @@
           :limit="1"
           :file-list="fileList"
           :on-change="onChange"
-          :on-remove="handleRemove"
           :auto-upload="false"
           accept="video/*"
         >
@@ -60,7 +62,7 @@
     </div>
     <template #footer>
       <span>
-        <el-button type="primary" @click="submit">确定</el-button>
+        <el-button type="primary" @click="submit" v-loading="submitLoading">确定</el-button>
         <el-button @click="cancel">取消</el-button>
       </span>
     </template>
@@ -70,11 +72,21 @@
 import { ref, inject, watch } from 'vue'
 import EpisodesAPIResources from '@/api/episodes.service.js'
 import OSSAPIResources from '@/api/oss.service.js'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import axios from 'axios' //引入axios
 //接收父组件数据
 let DialogVisible = inject('EditDialogVisible')
 let EditForm = inject('EditForm')
+
+//监听form
+watch(EditForm,(newValue, oldValue) => {
+    if (oldValue.episodesNumber >= 0) {
+      newValue.episodesName = '第' + newValue.episodesNumber + '集'
+    }
+  },
+  { deep: true }
+)
+
 
 //取消操作
 let formRef = ref()
@@ -87,7 +99,9 @@ function cancel() {
 }
 
 //确定=================
+let submitLoading = ref(false)
 async function submit() {
+  submitLoading.value = true
   //先删除旧剧集文件
   if (EditForm.value.NewEpisodesUrl != undefined) {
     //表示已上传新剧集文件，因此要先删除旧剧集文件
@@ -100,21 +114,18 @@ async function submit() {
       ElMessage.info('已删除旧剧集文件')
     })
   }
-
-  EditForm.value.episodesUrl = EditForm.value.NewEpisodesUrl   //文件链接替换为新的剧集文件的链接
+  //文件链接替换为新的剧集文件的链接
+  EditForm.value.episodesUrl = EditForm.value.NewEpisodesUrl   
   //然后调用更新接口
   EpisodesAPIResources.update(EditForm.value)
   .then(() => {
     ElMessage.success('更新成功')
   })
   .finally(() => {
-    
+    submitLoading.value = false
     cancel()
   })
 }
-
-//删除文件
-function handleRemove(file) {}
 
 //文件改变时,将新添加的文件加入到文件列表中
 function onChange(file) {
@@ -156,7 +167,8 @@ function uploadlPartFile() {
 
   //请求参数
   let param = new FormData()
-  param.append('fileName', currentFile.name)
+  let newFileName = new Date().getTime() +"."+currentFile.name
+  param.append('fileName', newFileName)
   param.append('bucketName', 'media-episodes-bucket')
   param.append('chunkNum', fileChunkList.length)
 
@@ -189,14 +201,12 @@ function uploadlPartFile() {
           }
         })
       }
-
       //如果最后一个分片文件上传完毕，那么就调用分片文件合并请求
       let obj = {
         bucketName: 'media-episodes-bucket',
-        fileName: currentFile.name,
+        fileName: newFileName,
         uploadId: uploadId
       }
-
       console.log('开始合并分片')
       OSSAPIResources.mergePartFile(obj).then((r) => {
         console.log('分片合并完成')

@@ -11,8 +11,20 @@
       <span>新增</span>
     </template>
     <el-form :model="form" ref="formRef">
-      <el-form-item label="媒体编号" prop="mediaId">
-        <el-input v-model="form.mediaId" placeholder="请输入" disabled />
+      <el-form-item label="选择媒体" prop="mediaId">
+        <el-select v-model="form.mediaId" placeholder="Select" style="width: 240px" filterable remote :remote-method="findAllMedia">
+          <el-option
+            v-for="item in mediaArray"
+            :key="item.mediaId"
+            :label="item.mediaName"
+            :value="item.mediaId"
+          >
+            <span style="float: left">{{ item.mediaName }}</span>
+            <span style="float: right; color: var(--el-text-color-secondary); font-size: 13px">媒体编号 {{
+              item.mediaId
+            }}</span>
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="剧集序号" prop="episodesNumber">
         <el-input-number v-model="form.episodesNumber" placeholder="请输入" :min="0" />
@@ -28,10 +40,13 @@
           :file-list="fileList"
           :on-change="onChange"
           :auto-upload="false"
-          accept="video/*"
+          accept=".mkv,.mp4"
         >
           <template #trigger>
             <el-button type="primary">选取文件</el-button>
+          </template>
+          <template #tip>
+              <div class="el-upload__tip" style="font-weight:bold">支持.mkv / .mp4文件。并且只支持上传一个文件。</div>
           </template>
           <el-button
             style="margin-left: 10px"
@@ -63,35 +78,43 @@
 import { ref, inject, watch } from 'vue'
 import EpisodesAPIResources from '@/api/episodes.service.js'
 import OSSAPIResources from '@/api/oss.service.js'
+import MediaAPIResources from '@/api/media.service.js'
 import { ElMessage } from 'element-plus'
 import axios from 'axios' //引入axios
 
 //接收父组件数据
 let DialogVisible = inject('AddDialogVisible')
-let MediaId = inject('MediaId')
 
 //表单对象
 let formRef = ref()
 let form = ref({
-  mediaId: MediaId,
+  mediaId:undefined,
   episodesNumber: 0
 })
 
-watch(
-  form,
-  (newValue, oldValue) => {
-    if (oldValue.episodesNumber > 0) {
+//监听form
+watch(form,(newValue, oldValue) => {
+    if (oldValue.episodesNumber >= 0) {
       newValue.episodesName = '第' + newValue.episodesNumber + '集'
     }
   },
   { deep: true }
 )
 
-//------------------------
+//选择媒体===========
+let mediaArray = ref([])
+function findAllMedia(obj){
+  let query = {
+    mediaName: obj
+  }
+  MediaAPIResources.findBy(query).then(res=>{
+    mediaArray.value = res.data
+  })
+}
 
 //添加操作
 function add() {
-  if (form.value.episodesName !== undefined) {
+  if (form.value.mediaId !== undefined) {
     //调用接口
     EpisodesAPIResources.add(form.value).then((res) => {
       if (res.code == 200) {
@@ -100,71 +123,36 @@ function add() {
       }
     })
   } else {
-    ElMessage.error('请上传文件')
+    ElMessage.warning('请填写剧集信息,并上传文件')
   }
 }
 
 //取消
 function cancel() {
   formRef.value.resetFields()
+  form.value = {
+    mediaId:undefined,
+    episodesNumber: 0
+  }
   DialogVisible.value = false
   isShowProgress.value = false
   fileList.value = []
 }
-
-let uploadRef = ref(undefined)
-let isShowProgress = ref(false) //是否显示进度条
-let progressPercent = ref(0) //进度条进度
-let fileList = ref([]) //文件列表
-let btnLoading = ref(false)
 
 //文件改变时,将新添加的文件加入到文件列表中
 function onChange(file) {
   fileList.value.push(file)
 }
 
-//自定义文件上传请求
-function uploadlFile() {
-  //判断文件列表中是否有文件再上传
-  if (fileList.value.length === 0) {
-    return ElMessage.error('请选择要上传的文件')
-  }
-  //按钮加载
-  btnLoading.value = true
-  //遍历文件列表，把列表中的每个文件都上传
-  fileList.value.forEach((file) => {
-    let param = new FormData()
-    param.append('file', file.raw)
-    param.append('bucketName', 'media-episodes-bucket')
-    //显示进度条
-    isShowProgress.value = true
-    //调接口
-    OSSAPIResources.uploadFile(param, (e) => {
-      progressPercent.value = Number(((e.loaded / e.total) * 100).toFixed(0))
-    }).then((res) => {
-      //按钮加载
-      btnLoading.value = false
-      //设置文件列表中该文件的状态，变为成功
-      file.url = res.data.fileName
-      file.status = 'success'
-      //隐藏进度条，并把进度清空
-      isShowProgress.value = false
-      progressPercent.value = 0
-      //获取上传文件的链接，作为剧集链接
-      form.value.episodesUrl = res.data.fileUrl
-    })
-  })
-}
-
-//=====================
-
-//进度条数组
+//自定义分片文件上传相关====
+let uploadRef = ref(undefined)
+let isShowProgress = ref(false) //是否显示进度条
+let fileList = ref([]) //文件列表
+let btnLoading = ref(false)
 let ProgressArray = ref([])
-//自定义分片文件上传请求
 function uploadlPartFile() {
   //按钮加载
   btnLoading.value = true
-
   //判断文件列表中是否有文件再上传
   if (fileList.value.length === 0) {
     return ElMessage.error('请选择要上传的文件')
@@ -180,16 +168,14 @@ function uploadlPartFile() {
     let a = { progressPercent: 0,id:(i+1) }
     ProgressArray.value.push(a)
   }
-
   //显示进度条
   isShowProgress.value = true
-
   //请求参数
   let param = new FormData()
-  param.append('fileName', currentFile.name)
+  let newFileName = new Date().getTime() +"."+currentFile.name
+  param.append('fileName', newFileName)
   param.append('bucketName', 'media-episodes-bucket')
   param.append('chunkNum', fileChunkList.length)
-
   //创建分片上传请求
   OSSAPIResources.createMultipartUpload(param).then(async (res) => {
     //uploadId
@@ -199,7 +185,6 @@ function uploadlPartFile() {
     //依次分片上传
     for (let i = 0; i < fileChunkList.length; i++) {
       console.log("开始上传第"+ (i + 1) + "个分片\n");
-
       //此处用axios发送put请求,该请求用于上传分片文件
       //请求参数就是分片文件和对应的预签名链接
       //注意该请求是同步的。即一个分片文件上传完毕之后，再上传下一个分片文件
@@ -218,14 +203,12 @@ function uploadlPartFile() {
         }
       })
     }
-
     //如果最后一个分片文件上传完毕，那么就调用分片文件合并请求
     let obj = {
       bucketName: 'media-episodes-bucket',
-      fileName: currentFile.name,
+      fileName: newFileName,
       uploadId: uploadId
     }
-
     console.log("开始合并分片");
     OSSAPIResources.mergePartFile(obj).then((r) => {
       console.log("分片合并完成");

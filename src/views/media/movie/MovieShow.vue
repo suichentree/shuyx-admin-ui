@@ -52,11 +52,19 @@
   <!--查询结果-->
   <el-space wrap style="padding: 10px 0px;">
     <div v-for="i in mediaList" :key="i" @click="showMovie(i.mediaId)">
-      <div style="height: auto; width: 200px">
+      <div>
         <el-image
-          src="https://img.zcool.cn/community/01edb95b0cd6fea8012181b049fca0.jpg@1280w_1l_2o_100sh.jpg"
+          :src="'http://localhost:39000/media-cover-bucket/'+i.mediaCover"
           fit="fill"
-        />
+          style="height: auto; width: 200px"
+        >
+        <template #error>
+          <div style="height:100px;width:100px">
+            <el-icon><icon-picture /></el-icon>
+            暂无图片
+          </div>
+        </template>
+      </el-image>
         <el-row justify="space-between">
           <el-col :span="20">{{ i.mediaName }}</el-col>
           <el-col :span="4" style="text-align: right">{{ i.mediaScore }}</el-col>
@@ -83,6 +91,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { Picture as IconPicture } from '@element-plus/icons-vue'
 import MediaAPIResources from '@/api/media.service.js'
 import TagAPIResources from '@/api/tag.service.js'
 import { useRouter } from 'vue-router'
@@ -119,7 +128,7 @@ onMounted(() => {
   search()
 })
 
-//查询全部类型，并进行分组
+//查询全部标签并进行分组
 function searchTag() {
   TagAPIResources.findBy().then((res) => {
     let a = res.data
@@ -144,7 +153,7 @@ function search() {
   tagIds = tagIds.filter((item) => {
     return item != 0
   })
-  MediaAPIResources.pageFindMediaAndTag({ tagIds }, pageData.value).then((res) => {
+  MediaAPIResources.pageFindMediaByTag({ tagIds }, pageData.value).then((res) => {
     mediaList.value = res.data.list
     pageData.value.total = res.data.total
   })
@@ -173,7 +182,9 @@ function showMovie(obj) {
   })
 }
 
-function changePageData() {}
+function changePageData() {
+  search()
+}
 </script>
 
 <style scoped>

@@ -16,10 +16,6 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)  //pinia使用持久化插件
 
-//引入视频播放器
-import VueVideoPlayer from '@videojs-player/vue'
-import 'video.js/dist/video-js.css'
-
 //创建根组件app
 const app = createApp(App)
 //elementplus图标注册到根组件app中
@@ -30,5 +26,4 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(pinia)
 app.use(router)
 app.use(ElementPlus)
-app.use(VueVideoPlayer)
 app.mount('#app')

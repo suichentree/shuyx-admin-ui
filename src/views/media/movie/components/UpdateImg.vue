@@ -20,7 +20,6 @@
       <div>
         <el-form-item label="封面图" prop="mediaCover">
           <el-upload
-            v-loading="imgloading"
             element-loading-text="获取图片封面中..."
             v-model:file-list="fileList"
             action="#"
@@ -78,7 +77,6 @@ let form = ref({})
 form.value = props.ImgForm
 
 //封面图相关=====================
-let imgloading = ref(false)
 let isShowProgress = ref(false)
 let progressPercent = ref(0)
 let fileList = ref([])
@@ -89,28 +87,14 @@ let handleRemove = () => {
 
 // onMounted生命周期
 onMounted(() => {
-  search()
-})
-
-//根据媒体的mediaCover，获取封面外链
-function search() {
-  imgloading.value = true
-  let mediaCover = form.value.mediaCover
-  if (mediaCover != null) {
-    let a = {
-      fileName: form.value.mediaCover,
-      bucketName: 'media-cover-bucket'
-    }
-    //获取封面外链接口
-    OSSAPIResources.getFileUrl(a).then((res) => {
-      fileList.value.push({
-        url: res.data,
-        status: 'success'
-      })
+  //拼接媒体封面访问链接
+  if(form.value.mediaCover != null){
+    fileList.value.push({
+      url: 'http://localhost:39000/media-cover-bucket/'+form.value.mediaCover,
+      status: 'success'
     })
   }
-  imgloading.value = false
-}
+})
 
 //点击确定操作
 function submit() {

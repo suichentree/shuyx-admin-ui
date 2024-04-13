@@ -1,14 +1,14 @@
 <template>
   <el-drawer
     v-model="UpdateVisible"
+    title="媒体标签配置"
     direction="rtl"
-    :with-header="false"
+    :before-close="handleClose"
     :destroy-on-close="true"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <el-form ref="formRef" :model="form">
-      <h4>媒体标签配置</h4>
       <el-form-item label="媒体编号" prop="mediaName">
         <el-input v-model="form.mediaId" placeholder="请输入" disabled />
       </el-form-item>
@@ -50,7 +50,6 @@
     </el-form>
     <div>
       <el-button type="primary" @click="submit">保存</el-button>
-      <el-button @click="cancel" >关闭</el-button>
       <el-button @click="reset" type="danger">重置</el-button>
     </div>
   </el-drawer>
@@ -173,16 +172,17 @@ function submit() {
       }
     })
   })
+  //保存
   MediaTagAPIResources.saveOrUpdateBatch(form.value).then((res) => {
     if (res.code == 200) {
       reset()
-      UpdateVisible.value = false
+      handleClose()
       ElMessage.success('更新成功')
     }
   })
 }
 
-function cancel(){
+function handleClose(){
   UpdateVisible.value = false
 }
 

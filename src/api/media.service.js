@@ -19,9 +19,9 @@ const APIResources = {
     })
   },
   //分页查询
-  pageFindMediaAndTag(queryData, pageData) {
+  pageFindMediaByTag(queryData, pageData) {
     return axiosService.request({
-      url: '/shuyx-media/media/pageFindMediaAndTag',
+      url: '/shuyx-media/media/pageFindMediaByTag',
       method: 'POST',
       data: Object.assign({}, queryData, pageData),
       headers: { 'Content-Type': 'application/json' }

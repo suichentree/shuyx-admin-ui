@@ -11,6 +11,15 @@ const APIResources = {
             headers: { 'Content-Type': 'application/json' }
         })
     },
+    //分页查询
+    pagelist(queryData,pageData) {
+        return axiosService.request({
+            url: '/shuyx-media/episodes/pagelist',
+            method: 'POST',
+            data: Object.assign({}, queryData, pageData),
+            headers: { 'Content-Type': 'application/json' }
+        })
+    },
     //添加
     add(queryData){
         return axiosService.request({
@@ -34,8 +43,8 @@ const APIResources = {
         return axiosService.request({
             url: '/shuyx-media/episodes/delete',
             method: 'DELETE',
-            params: queryData,
-            headers: { 'Content-Type': 'multipart/form-data' }
+            data: queryData,
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
         })
     }
   }

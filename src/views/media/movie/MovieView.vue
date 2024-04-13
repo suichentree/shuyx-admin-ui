@@ -1,8 +1,7 @@
 <template>
   <el-space direction="vertical" :fill="true" style="width: 100%">
     <!--查询条件-->
-    <el-card shadow="never" :body-style="{ padding: '0px' }">
-      <div class="card-div">
+    <el-card shadow="never" :body-style="{ padding: '10px' }">
         <el-row justify="space-between">
           <el-col :span="2"><el-tag>查询条件</el-tag></el-col>
           <el-col :span="6" style="text-align: right">
@@ -10,8 +9,6 @@
             <el-button @click="resetQuery">重置</el-button>
           </el-col>
         </el-row>
-      </div>
-      <div class="card-div">
         <el-form :inline="true" :model="queryform" ref="queryformRef">
           <el-form-item label="媒体名称" prop="mediaName">
             <el-input v-model="queryform.mediaName" placeholder="请输入" clearable />
@@ -27,19 +24,15 @@
             </el-select>
           </el-form-item>
         </el-form>
-      </div>
     </el-card>
     <!--查询结果-->
-    <el-card shadow="never" :body-style="{ padding: '0px' }">
-      <div class="card-div">
+    <el-card shadow="never" :body-style="{ padding: '10px' }">
         <el-row justify="space-between">
           <el-col :span="2"><el-tag>查询结果</el-tag></el-col>
           <el-col :span="6" style="text-align: right">
             <el-button type="success" @click="AddDialogVisible = true">新增</el-button>
           </el-col>
         </el-row>
-      </div>
-      <div class="card-div">
         <!--数据表格-->
         <el-table :data="tableData" border>
           <el-table-column label="媒体编号"  key="mediaId" prop="mediaId" />
@@ -74,8 +67,6 @@
             </template>
           </el-table-column>
         </el-table>
-      </div>
-      <div class="card-div">
         <!--表格分页-->
         <el-pagination
           @change="changePageData"
@@ -86,10 +77,8 @@
           layout="total, sizes, prev, pager, next, jumper"
           :total="pageData.total"
         />
-      </div>
     </el-card>
   </el-space>
-  
   <!--新增对话框-->
   <AddView v-if="AddDialogVisible" />
   <!--编辑对话框-->
@@ -224,7 +213,4 @@ function DateTimeformatter(row) {
 
 </script>
 <style scoped>
-.card-div {
-  padding: 10px;
-}
-</style>./episodes/EpisodesView.vue
+</style>
