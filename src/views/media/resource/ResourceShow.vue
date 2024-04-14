@@ -12,19 +12,28 @@
       </el-row>
     </div>
     <div style="padding: 10px">
-      <el-form :model="queryform">
-        <el-form-item label="风格:" prop="tagName">
+      <el-form :model="queryform" label-position="right">
+        <el-form-item label="媒体类型:">
           <el-space wrap>
-            <div v-for="i in movieTypeArray" :key="i" @click="handClick1(i)">
-              <el-tag size="small" :effect="queryform.movieType === i.tagId ? 'dark' : 'plain'">{{
+            <div v-for="i in mediaTypeDict" :key="i" @click="handClick0(i)">
+              <el-tag size="small" :effect="queryform.mediaType === i.value ? 'dark' : 'plain'">{{
+                i.label
+              }}</el-tag>
+            </div>
+          </el-space>
+        </el-form-item>
+        <el-form-item label="媒体风格:">
+          <el-space wrap>
+            <div v-for="i in StyleTagArray" :key="i" @click="handClick1(i)">
+              <el-tag size="small" :effect="queryform.styleType === i.tagId ? 'dark' : 'plain'">{{
                 i.tagName
               }}</el-tag>
             </div>
           </el-space>
         </el-form-item>
-        <el-form-item label="年代:">
+        <el-form-item label="媒体上映时间:">
           <el-space wrap>
-            <div v-for="i in releaseDateArray" :key="i" @click="handClick2(i)">
+            <div v-for="i in DateTagArray" :key="i" @click="handClick2(i)">
               <el-tag
                 size="small"
                 type="success"
@@ -34,9 +43,9 @@
             </div>
           </el-space>
         </el-form-item>
-        <el-form-item label="地区:">
+        <el-form-item label="媒体上映地区:">
           <el-space wrap>
-            <div v-for="i in regionArray" :key="i" @click="handClick3(i)">
+            <div v-for="i in RegionTagArray" :key="i" @click="handClick3(i)">
               <el-tag
                 size="small"
                 type="warning"
@@ -97,32 +106,6 @@ import TagAPIResources from '@/api/tag.service.js'
 import { useRouter } from 'vue-router'
 let router = useRouter()
 
-//媒体列表
-let mediaList = ref([])
-
-//电影类型数组
-let movieTypeArray = ref([{ tagId: 0, tagName: '全部', tagType: 'Movie' }])
-//上映时间数组
-let releaseDateArray = ref([{ tagId: 0, tagName: '全部', tagType: 'Time' }])
-//地区数组
-let regionArray = ref([{ tagId: 0, tagName: '全部', tagType: 'Region' }])
-
-//查询表单相关
-let queryform = ref({
-  movieType: 0,
-  releaseDate: 0,
-  region: 0
-})
-
-//分页配置数据
-let pageData = ref({
-  pageNum: 1,
-  pageSize: 10,
-  pageSizes: [10, 50, 100],
-  total: 100
-})
-
-//------------------
 onMounted(() => {
   searchTag()
   search()
@@ -133,49 +116,92 @@ function searchTag() {
   TagAPIResources.findBy().then((res) => {
     let a = res.data
     a.forEach((obj) => {
-      if (obj.tagType === 'Movie') {
-        movieTypeArray.value.push(obj)
+      if (obj.tagType === 'MediaStyle') {
+        StyleTagArray.value.push(obj)
       }
-      if (obj.tagType === 'Time') {
-        releaseDateArray.value.push(obj)
+      if (obj.tagType === 'MediaTime') {
+        DateTagArray.value.push(obj)
       }
-      if (obj.tagType === 'Region') {
-        regionArray.value.push(obj)
+      if (obj.tagType === 'MediaRegion') {
+        RegionTagArray.value.push(obj)
       }
     })
   })
 }
 
+//媒体类型字典数组
+import { useDictStore } from '@/stores/dictStore.js'
+let mediaTypeDict = ref([
+  {
+    label:'全部',
+    value:undefined
+  }
+])
+mediaTypeDict.value.push(...useDictStore().getBykey('media_type'))
+
+//风格标签数组
+let StyleTagArray = ref([{ tagId: 0, tagName: '全部', tagType: 'MediaStyle' }])
+//时间标签数组
+let DateTagArray = ref([{ tagId: 0, tagName: '全部', tagType: 'MediaTime' }])
+//地区标签数组
+let RegionTagArray = ref([{ tagId: 0, tagName: '全部', tagType: 'MediaRegion' }])
+
+//查询表单相关
+let queryform = ref({
+  mediaType:undefined,
+  styleType: 0,
+  releaseDate: 0,
+  region: 0
+})
+
+//点击媒体类型标签
+function handClick0(item) {
+  queryform.value.mediaType = item.value
+}
+//点击媒体风格标签
+function handClick1(item) {
+  queryform.value.styleType = item.tagId
+}
+//点击媒体上映时间标签
+function handClick2(item) {
+  queryform.value.releaseDate = item.tagId
+}
+//点击媒体上映地区标签
+function handClick3(item) {
+  queryform.value.region = item.tagId
+}
+
+
+//分页配置数据
+let pageData = ref({
+  pageNum: 1,
+  pageSize: 10,
+  pageSizes: [10, 50, 100],
+  total: 100
+})
+
 //分页查询
+let mediaList = ref([])
 function search() {
-  let tagIds = [queryform.value.movieType, queryform.value.releaseDate, queryform.value.region]
+  let tagIds = [queryform.value.styleType, queryform.value.releaseDate, queryform.value.region]
   //修饰数组
   tagIds = tagIds.filter((item) => {
     return item != 0
   })
-  MediaAPIResources.pageFindMediaByTag({ tagIds }, pageData.value).then((res) => {
+  let a = {
+    tagIds:tagIds,
+    mediaType:queryform.value.mediaType
+  }
+  MediaAPIResources.pageFindMediaByTag(a,pageData.value).then((res) => {
     mediaList.value = res.data.list
     pageData.value.total = res.data.total
   })
 }
 
-//点击电影类型标签
-function handClick1(item) {
-  queryform.value.movieType = item.tagId
-}
-//点击电影上映时间标签
-function handClick2(item) {
-  queryform.value.releaseDate = item.tagId
-}
-//点击电影上映地区标签
-function handClick3(item) {
-  queryform.value.region = item.tagId
-}
-
 //显示电影详细
 function showMovie(obj) {
   router.push({
-    path: '/media/movie/info',
+    path: '/media/resource/info',
     query: {
       id: obj
     }

@@ -28,7 +28,7 @@
       <el-table-column label="剧集ID" key="episodesId" prop="episodesId" />
       <el-table-column label="剧集序号" key="episodesNumber" prop="episodesNumber" />
       <el-table-column label="剧集名称" key="episodesName" prop="episodesName" />
-      <el-table-column label="剧集链接" key="episodesUrl" prop="episodesUrl" />
+      <el-table-column label="剧集链接" key="episodesUrl" prop="episodesUrl" show-overflow-tooltip/>
       <el-table-column label="操作">
         <template #default="scope">
           <el-tooltip content="修改" placement="top">
@@ -114,7 +114,6 @@ provide('EditForm', EditForm)
 
 function toEdit(obj) {
   EditForm.value = obj
-  console.log('EditForm111', EditForm.value)
   EditDialogVisible.value = true
 }
 

@@ -48,6 +48,16 @@ const APIResources = {
             data: queryData,
             headers: { 'Content-Type': 'multipart/form-data' }
         })
+    },
+    //下载文件
+    download(queryData){
+        return axiosService.request({
+            url: '/shuyx-minio/oss/download',
+            method: 'GET',
+            params: queryData,
+            responseType: 'blob',
+            headers:{ 'Content-Type': 'application/json; application/octet-stream'}
+        })
     }
   }
   

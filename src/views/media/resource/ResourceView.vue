@@ -14,7 +14,7 @@
             <el-input v-model="queryform.mediaName" placeholder="请输入" clearable />
           </el-form-item>
           <el-form-item label="媒体分类" prop="mediaType">
-            <el-select v-model="queryform.mediaType" placeholder="请选择" clearable style="width:200px" disabled>
+            <el-select v-model="queryform.mediaType" placeholder="请选择" clearable style="width:200px">
               <el-option
                 v-for="obj in options"
                 :key="obj.value"
@@ -132,7 +132,7 @@ let queryformRef = ref()
 let queryform = ref({
   mediaId: undefined,
   mediaName: undefined,
-  mediaType: "Movie"
+  mediaType: undefined
 })
 
 //分页配置数据
@@ -143,7 +143,7 @@ let pageData = ref({
   total: 0
 })
 
-//标签类型字典
+//媒体类型字典
 import { useDictStore } from '@/stores/dictStore.js'
 let options = ref([])
 options.value = useDictStore().getBykey('media_type')

@@ -72,7 +72,7 @@ let form = ref({
 //标签类型字典
 import { useDictStore } from '@/stores/dictStore.js'
 let options = ref([])
-options.value = useDictStore().getBykey('tag_type')
+options.value = useDictStore().getBykey('media_tag_type')
 
 //添加操作
 function add() {

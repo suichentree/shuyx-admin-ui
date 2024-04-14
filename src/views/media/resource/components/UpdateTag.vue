@@ -15,10 +15,10 @@
       <el-form-item label="媒体名称" prop="mediaName">
         <el-input v-model="form.mediaName" placeholder="请输入" disabled />
       </el-form-item>
-      <el-form-item label="风格分类" prop="mediaTagArray1">
-        <el-checkbox-group v-model="mediaTagArray1">
+      <el-form-item label="风格标签" prop="StyleTagArray">
+        <el-checkbox-group v-model="StyleTagArray">
           <el-checkbox
-            v-for="item in movieTypeArray"
+            v-for="item in mediaStyleArray"
             :key="item.tagId"
             :label="item.tagName"
             :value="item.tagId"
@@ -26,10 +26,10 @@
         </el-checkbox-group>
       </el-form-item>
       <div></div>
-      <el-form-item label="时间分类" prop="mediaTagArray2">
-        <el-radio-group v-model="mediaTagArray2">
+      <el-form-item label="上映时间标签" prop="DateTagArray">
+        <el-radio-group v-model="DateTagArray">
           <el-radio
-            v-for="item in releaseDateArray"
+            v-for="item in mediaReleaseDateArray"
             :key="item.tagId"
             :label="item.tagName"
             :value="item.tagId"
@@ -37,10 +37,10 @@
         </el-radio-group>
       </el-form-item>
       <div></div>
-      <el-form-item label="地区分类" prop="mediaTagArray3">
-        <el-radio-group v-model="mediaTagArray3">
+      <el-form-item label="上映地区标签" prop="RegionTagArray">
+        <el-radio-group v-model="RegionTagArray">
           <el-radio
-            v-for="item in regionArray"
+            v-for="item in mediaRegionArray"
             :key="item.tagId"
             :label="item.tagName"
             :value="item.tagId"
@@ -76,39 +76,39 @@ onMounted(() => {
 })
 
 //查询全部标签，并进行分组
-let mediaTagArray1 = ref([])
-let mediaTagArray2 = ref(undefined)
-let mediaTagArray3 = ref(undefined)
-let movieTypeArray = ref([])
-let releaseDateArray = ref([])
-let regionArray = ref([])
+let StyleTagArray = ref([])
+let DateTagArray = ref(undefined)
+let RegionTagArray = ref(undefined)
+let mediaStyleArray = ref([])
+let mediaReleaseDateArray = ref([])
+let mediaRegionArray = ref([])
 function searchTag() {
   //先查询store中是否存储了媒体标签数据
   if (useMediaTagStore().isSave) {
     //store已有媒体标签数据
-    movieTypeArray.value = useMediaTagStore().movieTypeArray
-    releaseDateArray.value = useMediaTagStore().releaseDateArray
-    regionArray.value = useMediaTagStore().regionArray
+    mediaStyleArray.value = useMediaTagStore().mediaStyleArray
+    mediaReleaseDateArray.value = useMediaTagStore().mediaReleaseDateArray
+    mediaRegionArray.value = useMediaTagStore().mediaRegionArray
   } else {
-    //store无媒体标签数据，调接口获取
+    //如果store中没有保存媒体标签数据，调接口获取
     TagAPIResources.findBy().then((res) => {
       let a = []
       a = res.data
       a.forEach((obj) => {
-        if (obj.tagType === 'Movie') {
-          movieTypeArray.value.push(obj)
+        if (obj.tagType === 'MediaStyle') {
+          mediaStyleArray.value.push(obj)
         }
-        if (obj.tagType === 'Time') {
-          releaseDateArray.value.push(obj)
+        if (obj.tagType === 'MediaTime') {
+          mediaReleaseDateArray.value.push(obj)
         }
-        if (obj.tagType === 'Region') {
-          regionArray.value.push(obj)
+        if (obj.tagType === 'MediaRegion') {
+          mediaRegionArray.value.push(obj)
         }
       })
       //将媒体标签数据，存储到store中
-      useMediaTagStore().movieTypeArray = movieTypeArray.value
-      useMediaTagStore().releaseDateArray = releaseDateArray.value
-      useMediaTagStore().regionArray = regionArray.value
+      useMediaTagStore().mediaStyleArray = mediaStyleArray.value
+      useMediaTagStore().mediaReleaseDateArray = mediaReleaseDateArray.value
+      useMediaTagStore().mediaRegionArray = mediaRegionArray.value
       useMediaTagStore().isSave = true
     })
   }
@@ -121,14 +121,14 @@ function search() {
     if (res.code == 200) {
       let b = res.data
       b.forEach((obj) => {
-        if (obj.tagType === 'Movie') {
-          mediaTagArray1.value.push(obj.tagId)
+        if (obj.tagType === 'MediaStyle') {
+          StyleTagArray.value.push(obj.tagId)
         }
-        if (obj.tagType === 'Time') {
-          mediaTagArray2.value = obj.tagId
+        if (obj.tagType === 'MediaTime') {
+          DateTagArray.value = obj.tagId
         }
-        if (obj.tagType === 'Region') {
-          mediaTagArray3.value = obj.tagId
+        if (obj.tagType === 'MediaRegion') {
+          RegionTagArray.value = obj.tagId
         }
       })
     }
@@ -138,35 +138,35 @@ function search() {
 //重置
 let formRef = ref(undefined)
 function reset() {
-  mediaTagArray1.value = []
-  mediaTagArray2.value = undefined
-  mediaTagArray3.value = undefined
+  StyleTagArray.value = []
+  DateTagArray.value = undefined
+  RegionTagArray.value = undefined
 }
 
 //保存
 function submit() {
   //拼接tagIds
-  form.value.tagIds = [...mediaTagArray1.value]
-  if (mediaTagArray2.value != undefined) {
-    form.value.tagIds.push(mediaTagArray2.value)
+  form.value.tagIds = [...StyleTagArray.value]
+  if (DateTagArray.value != undefined) {
+    form.value.tagIds.push(DateTagArray.value)
   }
-  if (mediaTagArray3.value != undefined) {
-    form.value.tagIds.push(mediaTagArray3.value)
+  if (RegionTagArray.value != undefined) {
+    form.value.tagIds.push(RegionTagArray.value)
   }
   //拼接tagList
   form.value.tagList = []
-  regionArray.value.forEach((i) => {
-    if (i.tagId == mediaTagArray3.value) {
+  mediaRegionArray.value.forEach((i) => {
+    if (i.tagId == RegionTagArray.value) {
       form.value.tagList.push(i)
     }
   })
-  releaseDateArray.value.forEach((i) => {
-    if (i.tagId == mediaTagArray2.value) {
+  mediaReleaseDateArray.value.forEach((i) => {
+    if (i.tagId == DateTagArray.value) {
       form.value.tagList.push(i)
     }
   })
-  movieTypeArray.value.forEach((i) => {
-    mediaTagArray1.value.forEach((j) => {
+  mediaStyleArray.value.forEach((i) => {
+    StyleTagArray.value.forEach((j) => {
       if (i.tagId == j) {
         form.value.tagList.push(i)
       }

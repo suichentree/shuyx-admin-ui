@@ -68,7 +68,7 @@ let rules = ref({
 //标签类型字典
 import { useDictStore } from '@/stores/dictStore.js'
 let options = ref([])
-options.value = useDictStore().getBykey('tag_type')
+options.value = useDictStore().getBykey('media_tag_type')
 
 //点击确定操作
 function submit() {

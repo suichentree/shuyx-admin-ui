@@ -54,8 +54,8 @@
         <!--数据表格-->
         <el-table :data="tableData" border>
           <el-table-column label="标签编号" align="center" key="tagId" prop="tagId" />
+          <el-table-column label="标签类型" align="center" key="tagType" prop="tagType" />
           <el-table-column label="标签名称" align="center" key="tagName" prop="tagName" />
-          <el-table-column label="标签分类" align="center" key="tagType" prop="tagType" />
           <el-table-column label="操作" align="center">
             <template #default="scope">
               <el-tooltip content="修改" placement="top">
@@ -124,7 +124,7 @@ let pageData = ref({
 //标签类型字典
 import { useDictStore } from '@/stores/dictStore.js'
 let options = ref([])
-options.value = useDictStore().getBykey('tag_type')
+options.value = useDictStore().getBykey('media_tag_type')
 
 //表格数据
 let tableData = ref([])

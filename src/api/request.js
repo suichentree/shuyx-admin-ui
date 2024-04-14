@@ -36,8 +36,8 @@ axiosService.interceptors.response.use(
   //当响应成功的时候。返回响应内容中的data数据
   (response) => {
     //如果响应成功，但是业务办理失败
-    if (response.data.code != 200) {
-      ElMessage.error('Code: ' + response.data.code + ',Message: ' + response.data.message)
+    if(response.data.code != undefined && response.data.code != 200){
+      ElMessage.error('ERROR_Code: ' + response.data.code + ',ERROR_Message: ' + response.data.message)
     }
     //响应成功且业务办理成功。
     return response.data

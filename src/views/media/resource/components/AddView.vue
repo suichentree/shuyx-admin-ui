@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="DialogVisible"
-    width="60%"
+    width="50%"
     :show-close="false"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
@@ -26,7 +26,6 @@
           placeholder="请选择"
           clearable
           style="width: 200px"
-          disabled
         >
           <el-option
             v-for="obj in options"
@@ -42,14 +41,6 @@
       <el-form-item label="演员" prop="actor">
         <el-input v-model="form.actor" placeholder="请输入" />
       </el-form-item>
-      <el-form-item label="简介" prop="description">
-        <el-input
-          v-model="form.description"
-          :autosize="{ minRows: 2, maxRows: 4 }"
-          type="textarea"
-          placeholder="请输入"
-        />
-      </el-form-item>
       <el-form-item label="上映日期" prop="releaseDate">
         <el-date-picker v-model="form.releaseDate" type="date" placeholder="请选择" />
       </el-form-item>
@@ -58,6 +49,14 @@
       </el-form-item>
       <el-form-item label="评分" prop="mediaScore">
         <el-input-number v-model="form.mediaScore" :precision="1" :step="0.1" :max="10" :min="1" />
+      </el-form-item>
+      <el-form-item label="简介" prop="description">
+        <el-input
+          v-model="form.description"
+          :autosize="{ minRows: 2, maxRows: 4 }"
+          type="textarea"
+          placeholder="请输入"
+        />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -79,11 +78,17 @@ const { proxy } = getCurrentInstance()
 //接收父组件传递的数据
 let DialogVisible = inject('AddDialogVisible')
 
+//媒体类型字典
+import { useDictStore } from '@/stores/dictStore.js'
+let options = ref([])
+options.value = useDictStore().getBykey('media_type')
+
+
 //表单对象
 let formRef = ref()
 let form = ref({
   mediaName: undefined,
-  mediaType: 'Movie',
+  mediaType: undefined,
   director: undefined,
   actor: undefined,
   description: undefined,

@@ -21,7 +21,7 @@
   </el-row>
   <el-row style="padding: 10px 0px">
     <el-col :span="24">
-      <el-descriptions title="电影简介" :column="1">
+      <el-descriptions title="简介" :column="1">
         <el-descriptions-item v-if="mediaList.description == null"> 暂无 </el-descriptions-item>
         <el-descriptions-item v-else>
           {{ mediaList.description }}
@@ -29,7 +29,7 @@
       </el-descriptions>
     </el-col>
     <el-col :span="24">
-      <h3>电影播放</h3>
+      <h3>剧集播放</h3>
       <el-button v-for="(item, index) in mediaList.episodesList" :key="index" @click="toPlay(item)">
       {{ item.episodesName }}
       </el-button>
