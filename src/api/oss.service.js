@@ -50,13 +50,14 @@ const APIResources = {
         })
     },
     //下载文件
-    download(queryData){
+    download(queryData,onDownloadProgress){
         return axiosService.request({
             url: '/shuyx-minio/oss/download',
             method: 'GET',
             params: queryData,
             responseType: 'blob',
-            headers:{ 'Content-Type': 'application/json; application/octet-stream'}
+            headers:{ 'Content-Type': 'application/json; application/octet-stream'},
+            onDownloadProgress:onDownloadProgress
         })
     }
   }

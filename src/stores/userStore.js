@@ -10,7 +10,6 @@ export const useUserStore = defineStore('userStore', () => {
       orgId: undefined,
       positionId: undefined,
       userName: undefined,
-      passWord: undefined,
       gender: undefined,
       birthday: undefined,
       avatar: undefined,
@@ -24,9 +23,5 @@ export const useUserStore = defineStore('userStore', () => {
   function setUserInfo(obj){
     userInfo.value = obj
   }
-  //获取用户信息
-  function getUserInfo(){
-    return userInfo.value
-  }
-  return {userInfo,setUserInfo,getUserInfo}
+  return {userInfo,setUserInfo}
 },{persist: true})

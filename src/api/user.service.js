@@ -46,6 +46,15 @@ const APIResources = {
             headers: { 'Content-Type': 'application/json' }
         })
     },
+    //更新用户
+    updateUserPassword(queryData) {
+        return axiosService.request({
+            url: '/shuyx-user/user/updateUserPassword',
+            method: 'POST',
+            data: queryData,
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+    },
     //删除用户
     deleteUser(queryData) {
         return axiosService.request({

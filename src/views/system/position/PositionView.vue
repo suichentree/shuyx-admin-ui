@@ -90,7 +90,7 @@
   </template>
   <script setup>
   import { ref, onMounted, provide } from 'vue'
-  import APIResources from '@/api/position.service.js'
+  import positionAPIResources from '@/api/position.service.js'
   import { ElMessage, ElMessageBox } from 'element-plus'
   
   // 组件注册
@@ -149,7 +149,7 @@
   //搜索按钮操作
   function search() {
     //分页查询接口
-    APIResources.pagelist(queryform.value, pageData.value).then((res) => {
+    positionAPIResources.pagelist(queryform.value, pageData.value).then((res) => {
       if (res.code != 200) {
         ElMessage.error('Code: ' + res.code + ',Message: ' + res.message)
       }
@@ -163,7 +163,7 @@
   //编辑操作
   function toEdit(positionId) {
     //调用接口
-    APIResources.selectById({ positionId }).then((res) => {
+    positionAPIResources.selectById({ positionId }).then((res) => {
       if (res.code != 200) {
         ElMessage.error('Code: ' + res.code + ',Message: ' + res.message)
       }
@@ -191,7 +191,7 @@
   //删除用户
   function doDelete(positionId) {
     //调用接口
-    APIResources.deletePosition({ positionId }).then((res) => {
+    positionAPIResources.deletePosition({ positionId }).then((res) => {
       if (res.code != 200) {
         ElMessage.error('Code: ' + res.code + ',Message: ' + res.message)
       }else{

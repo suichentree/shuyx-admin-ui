@@ -24,6 +24,12 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/resetPassword',
+    name: "重置密码",
+    component: () => import('@/views/resetPassword/ResetPassword.vue'),
+    hidden: true
+  },
+  {
     path: '/home',
     name: "首页",
     icon:"HomeFilled",
@@ -32,7 +38,7 @@ export const constantRoutes = [
     children: [
       {
         path: '/home/index',
-        name: '控制台',
+        name: '工作台',
         icon:"UserFilled",
         component: () => import('@/views/home/HomeView.vue')
       }
@@ -93,13 +99,14 @@ let isAddDynamicRouter = false
 //
 /**
  * router路由前置守卫，刷新页面后会重新执行一次beforeEach方法
- * 1. 如果访问login,则直接放行
+ * 1. 如果直接访问登录，注册，找回密码等不需要登录的页面,则直接放行
  * 2. 获取token，如果token获取不到，则表示尚未登录，重新访问login
  * 3. 如果访问的是其他页面，则判断是否已经添加动态路由。若没有添加，则添加动态路由。
  */
 router.beforeEach(async (to,from,next) => {
-  // 如果访问的是登录界面则直接放行
-  if (to.path === '/login') {
+  //白名单页面
+  let whiteMenu = ['/login','/register','/resetPassword']
+  if (whiteMenu.includes(to.path)) {
     return next()
   }
   // 如果本地存储中的token无法获取，表示用户尚未登录了。直接跳转到login页面，重新登录

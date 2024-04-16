@@ -192,7 +192,7 @@ function toEdit(userId) {
     //调用接口
     UserAPIResources.selectById({ userId }).then((res) => {
       //赋值编辑表单。会传值给编辑子组件
-      EditForm.value = res.data
+      EditForm.value = res.data[0]
     }).finally(() => {
       //打开编辑对话框
       EditUserDialogVisible.value = true

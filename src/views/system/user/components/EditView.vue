@@ -119,8 +119,6 @@ function submit() {
                 if (res.code == 200) {
                     ElMessage.success("更新成功")
                     cancel()
-                } else {
-                    ElMessage.error("Code: " + res.code + ",Message: " + res.message)
                 }
             });
         }

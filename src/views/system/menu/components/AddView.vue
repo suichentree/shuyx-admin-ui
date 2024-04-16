@@ -13,6 +13,8 @@
     <el-form :model="addform" :rules="rules" ref="addformRef">
           <el-form-item label="上级菜单" prop="parentId">
             <el-tree-select
+              @change="toChange"
+              ref="treeSelectRef"
               :props="{ value: 'menuId', label: 'menuName', children: 'children' }"
               v-model="addform.parentId"
               :data="menuTreeList"
@@ -22,6 +24,13 @@
               clearable
               style="width: 200px"
             />
+          </el-form-item>
+          <el-form-item v-if="addform.parentId != undefined">
+            <el-alert type="success" :closable="false">
+              <template #title>
+                上级菜单路径: {{ parentNode.menuPath }}
+              </template>
+            </el-alert>
           </el-form-item>
           <el-form-item label="菜单名称" prop="menuName">
             <el-input v-model="addform.menuName" placeholder="请输入" clearable />
@@ -110,7 +119,6 @@
 <script setup>
 import { ref, inject, getCurrentInstance } from 'vue'
 import { ElMessage } from 'element-plus'
-//api
 import APIResources from '@/api/menu.service.js'
 
 //菜单页面数组
@@ -155,10 +163,14 @@ const addform = ref({
   status: 0
 })
 
+let treeSelectRef = ref()
+let parentNode = ref({}) 
+function toChange(){
+  //获取上级菜单信息
+  parentNode.value = treeSelectRef.value.getCurrentNode()
+}
 
-//------------------------
-
-//添加操作
+//添加
 function add() {
   //表单校验
   proxy.$refs.addformRef.validate((valid) => {

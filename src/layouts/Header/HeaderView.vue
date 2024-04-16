@@ -32,24 +32,31 @@
 </template>
 <script setup>
 import { ref,watch } from 'vue';
-import avatarImg from '@/assets/avatar.jpg'
+import defalutAvatarImg from '@/assets/avatar.jpg'
 import APIResources from '@/api/login.service'
 //route
 import { useRoute } from "vue-router"
-const route = useRoute()
+let route = useRoute()
 //router
 import router from "@/router"
 //UserStore
 import { useUserStore } from '@/stores/userStore'
-const userStore = useUserStore()
+let userStore = useUserStore()
 //HeaderStore
 import { useHeaderStore } from '@/stores/headerStore'
-const headerStore = useHeaderStore()
+
+let avatarImg = ref(undefined)
+if(userStore.userInfo.avatar != null){
+    avatarImg.value = 'http://localhost:39000/user-avatar-bucket/'+userStore.userInfo.avatar
+}else{
+    avatarImg.value = defalutAvatarImg
+}
+
 //侧边栏扩展
-const sideIsExpand = ref(false)
-const changeExpand = () => {
+let sideIsExpand = ref(false)
+let changeExpand = () => {
     sideIsExpand.value = !sideIsExpand.value
-    headerStore.changeSideExpand()  //控制侧边栏伸展
+    useHeaderStore().changeSideExpand()  //控制侧边栏伸展
 }
 
 //监控当前路由，组成面包屑导航列表

@@ -49,7 +49,7 @@
     <!--进度条-->
     <div v-if="isShowProgress">
       <div v-for="(item, index) in ProgressArray" :key="index">
-        <span>文件分片 {{ item.id }} 进度条</span>
+        <span>文件分片 {{ item.id }} 上传进度条</span>
         <el-progress :text-inside="true" :stroke-width="20" :percentage="item.progressPercent" />
       </div>
     </div>

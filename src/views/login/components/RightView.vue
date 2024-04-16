@@ -49,7 +49,7 @@
               ><el-checkbox v-model="isRemember" label="记住账号" size="large"
             /></el-col>
             <el-col :span="12" style="text-align: right">
-              <el-link type="primary" :underline="false">忘记密码？</el-link>
+              <el-link type="primary" :underline="false" @click=toResetPassword>忘记密码？</el-link>
             </el-col>
           </el-form-item>
           <el-form-item>
@@ -64,7 +64,7 @@
           </el-form-item>
           <el-form-item>
             还没有账号？
-            <el-link type="primary" :underline="false">注册账号</el-link>
+            <el-link type="primary" :underline="false" @click="toRegister()">注册账号</el-link>
           </el-form-item>
         </el-form>
       </div>
@@ -234,6 +234,17 @@ function loadDict(){
     useDictStore().add(DictData)
   })
 }
+
+//注册=============
+function toRegister(){
+  router.push({ path: '/register' })
+}
+
+//重置密码=============
+function toResetPassword(){
+  router.push({ path: '/resetPassword' })
+}
+
 
 </script>
 

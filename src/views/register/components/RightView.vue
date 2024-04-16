@@ -1,11 +1,7 @@
 <template>
 <el-row class="row-bg" justify="center">
-    <el-col :span="12" style="margin:60px 40px">
-        <div class="login_a">
-            <el-image :src="loginimg" fit="fill" />
-            <label>SHUYX ADMIN UI</label>
-        </div>
-        <div style="text-align:center;font-size:20px;margin-bottom:10px">用户注册</div>
+    <el-col :span="12">
+        <h2 style="text-align:center;">用户注册</h2>
         <div class="login_b">
             <!-- 表单 -->
             <el-form :model="registerForm" label-width="100px" size="large" :rules="rules" ref="ruleFormRef">
@@ -55,29 +51,20 @@
                 <el-form-item>
                     <el-button style="width: 100%;" type="primary" @click="onSubmit" round>注册账号</el-button>
                 </el-form-item>
-                <el-form-item>
-                    已有账号？
-                    <el-link type="primary" :underline="false">登录账号</el-link>
-                </el-form-item>
             </el-form>
         </div>
     </el-col>
 </el-row>
 </template>
 <script setup>
-import { ref , getCurrentInstance} from 'vue'
-import loginimg from "@/assets/logo.png"
+import { ref} from 'vue'
 import { Lock , User } from '@element-plus/icons-vue'
 import APIResources from '@/api/register.service'
 import { ElMessage } from 'element-plus'
 import router from "@/router";
 
-
-//getCurrentInstance方法用于获取当前视图的实例。即proxy相当于this
-const { proxy } = getCurrentInstance();
-
 //登录表单
-const registerForm = ref({
+let registerForm = ref({
   userName:'',
   passWord:'',
   confirmPassword:'',
@@ -85,7 +72,7 @@ const registerForm = ref({
   birthday:''
 })
 
-const equalToPassword = (rule, value, callback) => {
+let equalToPassword = (rule, value, callback) => {
   if (registerForm.value.passWord !== value) {
     callback(new Error("两次输入的密码不一致"));
   } else {
@@ -94,7 +81,7 @@ const equalToPassword = (rule, value, callback) => {
 };
 
 //表单校验规则
-const rules = ref({
+let rules = ref({
   userName: [{ required: true, message: '请输入账号', trigger: 'blur' }],
   passWord:[{ required: true, message: '请输入密码', trigger: 'blur' }],
   confirmPassword:[{ required: true, message: '请输入确认密码', trigger: 'blur' },{ required: true, validator: equalToPassword, trigger: "blur" }],
@@ -102,9 +89,10 @@ const rules = ref({
   birthday:[{ required: true, message: '请选择出生日期', trigger: 'blur' }]
 })
 //登录
+let ruleFormRef =ref()
 function onSubmit() {
     //先进行表单校验
-    proxy.$refs.ruleFormRef.validate((valid) => {
+    ruleFormRef.value.validate((valid) => {
         //若前端校验成功
         if (valid) {
             //调用登录接口

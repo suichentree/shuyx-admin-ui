@@ -1,33 +1,23 @@
-<script setup>
-
-
-</script>
-
 <template>
-<div class="login_bg">
-    <div class="login_title">
-        <h2>SHUYX ADMIN UI</h2>
-        <h4>高性能 / 精致 / 优雅</h4>
-        <p>基于Vue3 + Element-Plus 的个人网站前端。</p>
-        <span><el-icon :size="40"><UserFilled /></el-icon></span>
-        <span><el-icon :size="30"><Plus /></el-icon></span>
-        <span><el-icon :size="40"><ElementPlus /></el-icon></span>
-    </div>
-    
-</div>  
+  <el-menu class="el-menu-demo" mode="horizontal" :ellipsis="false">
+    <el-menu-item index="0">
+      <el-image :src="loginimg" fit="fill" style="height: auto; width: 50px; padding: 10px" />
+      <label style="font-weight: bold">SHUYX ADMIN UI</label>
+    </el-menu-item>
+    <div class="flex-grow" />
+    <el-menu-item index="1" @click="tologin">返回登录</el-menu-item>
+  </el-menu>
 </template>
 
-
-<style scoped>
-.login_bg{ 
-    background-image: url('@/assets/auth_banner.jpg'); 
-    background-size: cover; /**图片填充方式 */
-    height: 100%;   
+<script setup>
+import loginimg from '@/assets/logo.png'
+import router from '@/router'
+function tologin(){
+    router.push({ path: '/login' })
 }
-
-.login_title{
-    color: #fff;
-    padding: 100px 40px;
+</script>
+<style>
+.flex-grow {
+  flex-grow: 1;
 }
-
 </style>

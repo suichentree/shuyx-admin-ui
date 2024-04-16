@@ -1,6 +1,7 @@
 <template>
+  <el-alert title="文件管理中只显示自己上传过的文件" type="warning" :closable="false" show-icon/>
   <!--查询条件-->
-  <el-card shadow="never" :body-style="{ padding: '10px' }">
+  <el-card shadow="never" :body-style="{ padding: '10px' }" style="margin-top:10px">
     <el-row justify="space-between">
       <el-col :span="2"><el-tag>查询条件</el-tag></el-col>
       <el-col :span="6" style="text-align: right">
@@ -13,6 +14,30 @@
         <el-input v-model="queryform.fileName" placeholder="请输入" clearable />
       </el-form-item>
     </el-form>
+  </el-card>
+  <!--文件下载进度条-->
+  <el-card
+    v-if="isShowProgress"
+    shadow="never"
+    :body-style="{ padding: '10px' }"
+    style="margin-top: 10px"
+  >
+    <el-dialog
+      v-model="isShowProgress"
+      title="文件下载中，请不要切换其他页面。"
+      :show-close="false"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      destroy-on-close
+    >
+      <el-progress
+        :text-inside="true"
+        :stroke-width="20"
+        :percentage="progressPercent"
+        striped
+        striped-flow
+      />
+    </el-dialog>
   </el-card>
   <!--查询结果-->
   <el-card shadow="never" :body-style="{ padding: '10px' }" style="margin-top: 10px">
@@ -52,6 +77,7 @@
       :total="pageData.total"
     />
   </el-card>
+
   <!--新增对话框-->
   <AddView />
 </template>
@@ -59,6 +85,7 @@
 import { ref, onMounted, provide } from 'vue'
 import FileAPIResources from '@/api/file.service.js'
 import OSSAPIResources from '@/api/oss.service.js'
+import { useUserStore } from '@/stores/userStore'
 import { ElMessage, ElMessageBox } from 'element-plus'
 // 组件注册
 import AddView from './components/AddView.vue'
@@ -66,6 +93,10 @@ import AddView from './components/AddView.vue'
 //新增对话框
 let AddDialogVisible = ref(false)
 provide('AddDialogVisible', AddDialogVisible)
+
+//通讯录对话框
+let ContactDialogVisible = ref(false)
+provide('ContactDialogVisible', ContactDialogVisible)
 
 //分页配置数据
 let pageData = ref({
@@ -88,7 +119,8 @@ function resetQuery() {
 //搜索
 let queryformRef = ref()
 let queryform = ref({
-  fileName: undefined
+  fileName: undefined,
+  userId: useUserStore().userInfo.userId
 })
 let tableData = ref([])
 function search() {
@@ -133,39 +165,41 @@ function doDelete(obj) {
 }
 
 //下载
+let isShowProgress = ref(false)
+let progressPercent = ref(0)
 function toDownload(obj) {
   ElMessageBox.confirm('是否确定要下载' + obj.fileName + '?', 'Warning', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning',
     closeOnClickModal: false
-  }).then(() => {
-    
-    //通过a标签来下载文件
-    // let alink = document.createElement("a");
-    //   alink.download=obj.fileName; 
-    //   //href会拼接服务器的前缀
-    //   alink.href="/shuyx-minio/oss/download?fileName="+obj.fileName+"&bucketName=file-service-bucket";
-    //   alink.click(); //自动点击
-
-    //调用接口
-    let a = {
-      fileName: obj.fileAddress,
-      bucketName: 'file-service-bucket'
-    }
-    OSSAPIResources.download(a).then((res) => {
-      let blob = new Blob([res])
-      // a标签下载
-      let elink = document.createElement('a')
-      elink.download = a.fileName
-      elink.style.display = 'none'
-      elink.href = URL.createObjectURL(blob)
-      document.body.appendChild(elink)
-      elink.click()
-      URL.revokeObjectURL(elink.href)
-      document.body.removeChild(elink)
-    })
   })
+    .then(() => {
+      isShowProgress.value = true
+      //调用下载接口
+      let a = {
+        fileName: obj.fileAddress,
+        bucketName: 'file-service-bucket'
+      }
+      OSSAPIResources.download(a, (e) => {
+        progressPercent.value = Number(((e.loaded / e.total) * 100).toFixed(1))
+      }).then((res) => {
+        isShowProgress.value = false
+        let blob = new Blob([res])
+        // a标签下载
+        let elink = document.createElement('a')
+        elink.download = a.fileName
+        elink.style.display = 'none'
+        elink.href = URL.createObjectURL(blob)
+        document.body.appendChild(elink)
+        elink.click()
+        URL.revokeObjectURL(elink.href)
+        document.body.removeChild(elink)
+      })
+    })
+    .finally(() => {
+      progressPercent.value = 0
+    })
 }
 
 //分页数据变化

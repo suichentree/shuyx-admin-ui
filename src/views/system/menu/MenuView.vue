@@ -1,8 +1,6 @@
 <template>
-  <el-space direction="vertical" :fill="true" style="width: 100%;">
   <!--查询条件-->
-  <el-card shadow="never" :body-style="{ padding: '0px' }">
-    <div style="padding:10px">
+  <el-card shadow="never" :body-style="{ padding: '10px' }">
       <el-row justify="space-between">
         <el-col :span="2"><el-tag>查询条件</el-tag></el-col>
         <el-col :span="6" style="text-align: right">
@@ -10,8 +8,6 @@
           <el-button @click="resetQuery">重置</el-button>
         </el-col>
       </el-row>
-    </div>
-    <div style="padding:10px">
       <el-form :inline="true" :model="queryform" ref="queryformRef">
         <el-form-item label="菜单名称" prop="menuName">
           <el-input v-model="queryform.menuName" placeholder="请输入" clearable />
@@ -27,21 +23,17 @@
           </el-select>
         </el-form-item>
       </el-form>
-    </div>
   </el-card>
   <!--查询结果-->
-  <el-card shadow="never" :body-style="{ padding: '0px' }">
-    <div style="padding:10px">
+  <el-card shadow="never" :body-style="{ padding: '10px' }" style="margin-top:10px">
       <el-row justify="space-between">
         <el-col :span="2"><el-tag>查询结果</el-tag></el-col>
         <el-col :span="6" style="text-align: right">
           <el-button type="success" @click="AddDialogVisible = true">新增</el-button>
         </el-col>
       </el-row>
-    </div>
-    <div style="padding:10px">
       <!--数据表格-->
-      <el-table :data="tableData" row-key="menuId" default-expand-all border>
+      <el-table :data="tableData" row-key="menuId" border>
         <el-table-column label="菜单编号"  key="menuId" prop="menuId"/>
         <el-table-column label="菜单名称"  key="menuName" prop="menuName" :show-overflow-tooltip="true"/>
         <el-table-column label="菜单路径"  key="menuPath" prop="menuPath" :show-overflow-tooltip="true"/>
@@ -87,9 +79,7 @@
           </template>
         </el-table-column>
       </el-table>
-    </div>
   </el-card>
-</el-space>
   <!--新增对话框-->
   <AddView />
   <!--编辑对话框-->
@@ -129,7 +119,7 @@ function buildtreeMenuData(obj){
         "menuId": 0,
         "menuName": "根目录",
         "parentId": -1,
-        "menuPath": "root",
+        "menuPath": undefined,
         "menuPage": null,
         "menuType": 0,
         "isLink":0,
@@ -222,7 +212,4 @@ function deleteMenu(menuId) {
 
 </script>
 <style scoped>
-.card-div {
-  padding: 10px;
-}
 </style>

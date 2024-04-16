@@ -3,6 +3,9 @@
     <el-form-item label="用户名称" prop="userName">
       <el-input v-model="form.userName" placeholder="请输入" clearable />
     </el-form-item>
+    <el-form-item label="用户头像" prop="userName">
+      <el-input v-model="form.userName" placeholder="请输入" clearable />
+    </el-form-item>
     <el-form-item label="手机号码" prop="phone">
       <el-input v-model="form.phone" placeholder="请输入" clearable />
     </el-form-item>
@@ -29,26 +32,10 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item label="组织机构" prop="orgId">
-      <el-tree-select
-        :props="{ value: 'orgId', label: 'orgName', children: 'children' }"
-        v-model="form.orgId"
-        :data="orgTreeOptions"
-        check-strictly
-        :render-after-expand="false"
-        placeholder="请选择"
-        clearable
-        style="width: 200px"
-      />
+      <el-input v-model="orgName" placeholder="请输入" disabled />
     </el-form-item>
     <el-form-item label="职位" prop="positionId">
-      <el-select v-model="form.positionId" placeholder="请选择" clearable style="width: 200px">
-        <el-option
-          v-for="obj in positionInfo"
-          :key="obj.positionId"
-          :label="obj.positionName"
-          :value="obj.positionId"
-        />
-      </el-select>
+      <el-input v-model="positionName" placeholder="请输入" disabled />
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">更新</el-button>
@@ -58,27 +45,35 @@
 <script setup>
 import { ref,onMounted} from 'vue'
 import { useUserStore } from '@/stores/userStore';
-import OrgAPIResources from '@/api/org.service'
-import PositionAPIResources from "@/api/position.service.js"
-
+import UserAPIResources from "@/api/user.service.js"
+import { ElMessage } from 'element-plus'
 //页面加载
 onMounted(()=>{
-  form.value = useUserStore().userInfo;
-  selectOrg()
-  selectPostInfo()
+  search()
 })
 
-
-//表单对象
 let formRef = ref()
 let form = ref({
+  userId:undefined,
   userName:undefined,
-  phone: undefined,
-  passWord: undefined,
-  gender:undefined,
+  phone:undefined,
   birthday:undefined,
-  email: undefined
+  email:undefined,
+  gender:undefined
 })
+let orgName = ref(undefined)
+let positionName = ref(undefined)
+//查询当前用户详细信息
+function search(){
+  let a = {
+    userId:useUserStore().userInfo.userId
+  }
+  UserAPIResources.selectById(a).then((res) => {
+    form.value = res.data[0]
+    orgName.value = res.data[0].org.orgName
+    positionName.value = res.data[0].position.positionName
+  })
+}
 
 //表单校验规则
 let rules = ref({
@@ -95,26 +90,13 @@ import { useDictStore } from '@/stores/dictStore.js'
 let userGenderDict = ref([])
 userGenderDict.value = useDictStore().getBykey('user_gender')
 
-//组织机构数据
-let orgTreeOptions = ref([])
-function selectOrg(){
-  OrgAPIResources.orgTreelist().then((res) => {
-      orgTreeOptions.value = res.data
+//更新
+let onSubmit = () => {
+  UserAPIResources.updateUser(form.value).then((res)=>{
+    if(res.code == 200){
+      ElMessage.success("更新成功!")
+    }
   })
-}
-
-//职位数据
-let positionInfo = ref([])
-function selectPostInfo(){
-  PositionAPIResources.postionlist().then((res) => {
-    positionInfo.value = res.data
-  })
-}
-
-
-
-const onSubmit = () => {
-  console.log('submit!')
 }
 
 </script>

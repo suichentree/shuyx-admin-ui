@@ -77,6 +77,7 @@ let form = ref({})
 form.value = props.ImgForm
 
 //封面图相关=====================
+let disabled = ref(false)
 let isShowProgress = ref(false)
 let progressPercent = ref(0)
 let fileList = ref([])
