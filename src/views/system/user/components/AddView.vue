@@ -71,20 +71,6 @@
             </el-select>
           </el-form-item>
       </el-col>
-      <el-col :span="12">
-        <el-form-item label="所属用户角色" prop="roleId">
-            <el-tree-select
-              :props="{ value: 'roleId', label: 'orgName', children: 'children' }"
-              v-model="addform.roleId"
-              :data="orgTreeOptions"
-              check-strictly
-              :render-after-expand="false"
-              placeholder="请选择"
-              clearable
-              style="width: 200px"
-            />
-          </el-form-item>
-      </el-col>
     </el-row>
     </el-form>
     <template #footer>

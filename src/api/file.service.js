@@ -46,6 +46,15 @@ const APIResources = {
             data: queryData,
             headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
         })
+    },
+    //上传文件
+    uploadFile(queryData){
+        return axiosService.request({
+            url: '/shuyx-file/ship/upload',
+            method: 'POST',
+            data: queryData,
+            headers: { 'Content-Type': 'multipart/form-data' },
+        })
     }
   }
   

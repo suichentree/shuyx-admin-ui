@@ -62,7 +62,7 @@
           <el-table-column label="邮箱" align="center" key="email" prop="email" />
           <el-table-column label="用户状态" align="center" key="status">
             <template #default="scope">
-              <el-switch v-model="scope.row.status" :active-value="0" :inactive-value="1" active-text="正常"
+              <el-switch v-model="scope.row.status" :active-value="'0'" :inactive-value="'1'" active-text="正常"
                 inactive-text="禁用" inline-prompt></el-switch>
             </template>
           </el-table-column>
@@ -105,25 +105,25 @@ import AddView from './components/AddView.vue'
 import EditView from './components/EditView.vue'
 
 //对话框显示变量-添加用户
-const AddUserDialogVisible = ref(false)
+let AddUserDialogVisible = ref(false)
 //将变量传递给子组件
 provide('AddUserDialogVisible', AddUserDialogVisible)
 
 //对话框显示变量-编辑用户
-const EditUserDialogVisible = ref(false)
+let EditUserDialogVisible = ref(false)
 provide('EditUserDialogVisible', EditUserDialogVisible)
-const EditForm = ref({})
+let EditForm = ref({})
 provide('EditForm', EditForm)
 
 //表单对象
-const queryformRef = ref()
-const queryform = ref({
+let queryformRef = ref()
+let queryform = ref({
   userName: undefined,
   status: undefined,
   phone: undefined
 })
 //分页配置数据
-const pageData = ref({
+let pageData = ref({
   pageNum: 1,
   pageSize: 10,
   pageSizes: [10, 50, 100],
@@ -136,17 +136,27 @@ let userStatusDict = ref([])
 userStatusDict.value = useDictStore().getBykey('user_status')
 
 //时间范围数组
-const dateRange = ref([])
+let dateRange = ref([])
 //表格数据
-const tableData = ref([])
+let tableData = ref([])
 
 //组织树
-const orgTreeOptions = ref([])
+let orgTreeOptions = ref([])
 provide('orgTreeOptions', orgTreeOptions)
+function selectOrgTree(){
+  OrgApiResources.orgTreelist().then((res) => {
+      orgTreeOptions.value = res.data
+  })
+}
 
 //职位信息
-const positionInfo = ref([])
+let positionInfo = ref([])
 provide('positionInfo', positionInfo)
+function selectPostInfo(){
+  PositionAPIResources.postionlist().then((res) => {
+    positionInfo.value = res.data
+  })
+}
 
 /**--------------------- */
 
@@ -160,9 +170,9 @@ onMounted(() => {
   selectPostInfo()
 })
 //日期表头格式化操作
-const DateTimeformatter = (row) => {
+let DateTimeformatter = (row) => {
   // 将ISO时间字符串 格式化一下
-  const localDateTimeStr = new Date(row.createTime).toLocaleString()
+  let localDateTimeStr = new Date(row.createTime).toLocaleString()
   return localDateTimeStr
 }
 //重置按钮操作
@@ -226,20 +236,7 @@ function changePageData() {
   search()
 }
 
-//查询组织机构树
-function selectOrgTree(){
-  //全查接口
-  OrgApiResources.orgTreelist().then((res) => {
-      orgTreeOptions.value = res.data
-  })
-}
 
-//查询职位
-function selectPostInfo(){
-  PositionAPIResources.postionlist().then((res) => {
-    positionInfo.value = res.data
-  })
-}
 
 
 </script>

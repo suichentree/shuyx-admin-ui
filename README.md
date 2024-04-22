@@ -1,5 +1,9 @@
 # shuyx-admin-ui
 
+![登录_20240422165312.png](./src/assets/登录_20240422165312.png)
+![后台关于_20240422165226.png](./src/assets/后台关于_20240422165226.png)
+
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup

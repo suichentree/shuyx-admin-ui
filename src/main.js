@@ -1,5 +1,7 @@
 //引入element-plus icon图标
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+//引入mockjs
+import './mock/index'
 //引入vue
 import { createApp } from 'vue'
 //引入主视图App.vue
@@ -15,6 +17,8 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)  //pinia使用持久化插件
+
+
 
 //创建根组件app
 const app = createApp(App)

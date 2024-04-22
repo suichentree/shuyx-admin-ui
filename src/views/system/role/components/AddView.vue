@@ -32,6 +32,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
+          <el-form-item label="角色编码" prop="roleCode">
+            <el-input v-model="addform.roleCode" placeholder="请输入" clearable />
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
           <el-form-item label="角色状态" prop="status">
             <el-radio-group v-model="addform.status">
               <el-radio
@@ -70,6 +75,7 @@ roleTreeData.value = inject('roleTreeData')
 const rules = ref({
   parentId: [{ required: true, message: '请选择', trigger: 'blur' }],
   roleName: [{ required: true, message: '请输入', trigger: 'blur' }],
+  roleCode: [{ required: true, message: '请输入', trigger: 'blur' }],
   status: [{ required: true, message: '请选择', trigger: 'blur' }]
 })
 

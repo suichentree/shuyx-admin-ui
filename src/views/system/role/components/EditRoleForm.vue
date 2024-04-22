@@ -18,6 +18,9 @@
         <el-form-item label="角色名称" prop="roleName" style="width: 100%">
             <el-input v-model="formData.roleName" placeholder="请输入" clearable />
         </el-form-item>
+        <el-form-item label="角色编码" prop="roleCode">
+          <el-input v-model="formData.roleCode" placeholder="请输入" clearable />
+        </el-form-item>
         <el-form-item label="角色状态" prop="status">
             <el-radio-group v-model="formData.status">
               <el-radio
@@ -50,6 +53,7 @@ const rules = ref({
   roleId: [{ required: true, message: '请输入', trigger: 'blur' }],
   parentId: [{ required: true, message: '请选择', trigger: 'blur' }],
   roleName: [{ required: true, message: '请输入', trigger: 'blur' }],
+  roleCode: [{ required: true, message: '请输入', trigger: 'blur' }],
   status: [{ required: true, message: '请选择', trigger: 'blur' }]
 })
 
