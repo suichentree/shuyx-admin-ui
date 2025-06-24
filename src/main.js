@@ -1,7 +1,5 @@
 //引入element-plus icon图标
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-//引入mockjs
-import './mock/index'
 //引入vue
 import { createApp } from 'vue'
 //引入主视图App.vue

@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig,loadEnv} from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { viteMockServe } from 'vite-plugin-mock'
 
 // https://vitejs.dev/config/
 export default defineConfig(({mode}) =>  {
@@ -9,7 +10,13 @@ export default defineConfig(({mode}) =>  {
   const env = loadEnv(mode, process.cwd(), "")
   return {
     plugins: [
-      vue()
+      vue(),
+      viteMockServe({
+        mockPath: 'src/mock', // Mock 文件存放的目录
+        localEnabled: true, // 开发环境开启 Mock
+        prodEnabled: false, // 生产环境关闭 Mock
+        watchFiles: true, // 监听 Mock 文件变化
+      }),
     ],
     resolve: {
       alias: {

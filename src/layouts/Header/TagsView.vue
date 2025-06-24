@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar style="height: auto;padding:2px">
+  <el-scrollbar style="height: auto;padding:2px;border: 0.2px solid rgb(241, 242, 243);">
     <div class="scrollbar-flex-content">
       <el-tag
         v-for="(item,index) in tagViewList"
