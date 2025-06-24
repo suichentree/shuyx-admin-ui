@@ -1,6 +1,6 @@
 <template>
   <el-row justify="center" align="middle">
-    <el-col :span="12">
+    <el-col :span="24">
       <div class="login_a">
         <el-image :src="loginimg" fit="fill" style="height: 50px; width: 50px; padding: 10px" />
         <label>SHUYX ADMIN UI</label>

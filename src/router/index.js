@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useMenuStore } from '@/stores/menuStore'
-
 // 布局页面（包含侧边栏，头部导航栏）。 除了注册登录等少数页面，其他页面都会嵌套在布局页面的main区域中展示。
 import LayoutView from '@/layouts/LayoutView.vue'
 //常规路由,任何用户都可访问的路由
@@ -95,8 +94,6 @@ const router = createRouter({
 
 //是否已加载过动态路由
 let isAddDynamicRouter = false
-
-//
 /**
  * router路由前置守卫，刷新页面后会重新执行一次beforeEach方法
  * 1. 如果直接访问登录，注册，找回密码等不需要登录的页面,则直接放行
@@ -105,7 +102,8 @@ let isAddDynamicRouter = false
  */
 router.beforeEach(async (to,from,next) => {
   //白名单页面
-  let whiteMenu = ['/login','/register','/resetPassword']
+  let whiteMenu = ['/login','/register','/resetPassword','/home']
+  //若访问的是白名单页面，直接放行。
   if (whiteMenu.includes(to.path)) {
     return next()
   }

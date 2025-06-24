@@ -7,7 +7,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-
 import * as echarts from 'echarts'
 /// 声明定义一下echart
 let echart = echarts
