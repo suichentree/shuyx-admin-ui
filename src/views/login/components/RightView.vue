@@ -47,7 +47,7 @@
               <el-button type="primary" @click="getCodeIMG" :loading="btnLoad"
                 >获取验证码</el-button
               >
-              <!-- <img :src="codeURL" /> -->
+              <img :src="codeURL" />
               <!-- 用canvas替代img，用于自定义绘制 -->
 
               <canvas
@@ -87,7 +87,7 @@
   </el-row>
 </template>
 <script setup>
-import { ref, getCurrentInstance,onMounted} from 'vue'
+import { ref, getCurrentInstance,onMounted,nextTick } from 'vue'
 import loginimg from '@/assets/logo.png'
 import { Lock, User } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
@@ -103,7 +103,8 @@ const { proxy } = getCurrentInstance()
 //表单校验规则
 const rules = ref({
   userName: [{ required: true, message: '请输入账号', trigger: 'blur' }],
-  passWord: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+  passWord: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  verifyCode: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
 })
 
 //页面加载=========
@@ -122,9 +123,9 @@ onMounted(()=>{
 
 //登录相关=====================
 let loginform = ref({
-  userName: undefined,
-  passWord: undefined,
-  verifyCode: undefined
+  userName: "",
+  passWord: "",
+  verifyCode: ""
 })
 let loginLoading = ref(false)
 function onSubmit() {
@@ -201,22 +202,20 @@ let codeURL = ref(undefined)
 let yzm_code = ref(undefined)
 let btnLoad = ref(false)     //按钮加载
 function getCodeIMG() {
-  if (loginform.value.userName != undefined) {
+  if (loginform.value.userName != "") {
     btnLoad.value = true
     //获取用户名
     let userName = loginform.value.userName
     LoginAPIResources.verifyCode({ userName })
       .then((res) => {
-        // codeURL.value = res.data.img
-
         //显示验证码区域
         hasVerifyCode.value = true
         //获取验证码
-        yzm_code.value = res.data.code
-        
-
-        // 绘制验证码
-        drawVerifyCode(yzm_code.value) 
+        yzm_code.value = res.data.verifyCode
+        // 确保 canvas 渲染完成后再绘制验证码
+        nextTick(() => {
+          drawVerifyCode(yzm_code.value) 
+        })
       })
       .finally(() => {
         btnLoad.value = false
@@ -244,26 +243,40 @@ function drawVerifyCode(codeText) {
   ctx.fillStyle = '#f8f9fa' // 浅灰色背景
   ctx.fillRect(0, 0, width, height)
 
-  // 绘制验证码文本（自定义样式）
-  ctx.font = 'bold 24px Arial'
-  ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
-  
-  // 随机颜色和位置
-  codeText.split('').forEach((char, index) => {
-    ctx.fillStyle = `hsl(${Math.random() * 360}, 60%, 50%)` // 随机色相
-    ctx.translate(Math.random() * 2 - 1, Math.random() * 2 - 1) // 轻微偏移
-    ctx.fillText(char, (width / codeText.length) * (index + 0.5), height / 2)
-  })
+  // 绘制干扰点
+  for (let i = 0; i < 100; i++) {
+    ctx.fillStyle = `hsl(${Math.random() * 360}, 60%, 50%)`
+    ctx.fillRect(Math.random() * width, Math.random() * height, 2, 2)
+  }
 
-  // 添加干扰线
+  // 绘制干扰线
   ctx.strokeStyle = '#ddd'
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 5; i++) {
     ctx.beginPath()
     ctx.moveTo(Math.random() * width, Math.random() * height)
     ctx.lineTo(Math.random() * width, Math.random() * height)
     ctx.stroke()
   }
+
+  // 绘制验证码文本（自定义样式）
+  const charWidth = width / codeText.length
+  codeText.split('').forEach((char, index) => {
+    // 随机字体大小和颜色
+    const fontSize = Math.floor(Math.random() * 6) + 20
+    ctx.font = `bold ${fontSize}px Arial`
+    ctx.fillStyle = `hsl(${Math.random() * 360}, 60%, 50%)`
+
+    // 随机旋转角度
+    const rotate = (Math.random() - 0.5) * 0.4 // -0.2 到 0.2 弧度
+    ctx.save()
+    ctx.translate((charWidth * index) + charWidth / 2, height / 2)
+    ctx.rotate(rotate)
+
+    // 随机垂直偏移
+    const verticalOffset = (Math.random() - 0.5) * 10
+    ctx.fillText(char, 0, verticalOffset)
+    ctx.restore()
+  })
 }
 
 
