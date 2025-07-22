@@ -6,10 +6,10 @@ import RightView from './components/RightView.vue'
 
 <template>
   <el-row>
-    <el-col :span="10">
+    <el-col :span="12">
       <LeftView/>
     </el-col>
-    <el-col :span="14">
+    <el-col :span="12">
       <RightView/>
     </el-col>
   </el-row>

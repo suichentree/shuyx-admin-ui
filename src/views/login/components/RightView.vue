@@ -3,7 +3,7 @@
     <el-col :span="24">
       <div class="login_a">
         <el-image :src="loginimg" fit="fill" style="height: 50px; width: 50px; padding: 10px" />
-        <label>SHUYX ADMIN UI</label>
+        <label>登录</label>
       </div>
       <div class="login_b">
         <!-- 表单 -->
@@ -13,35 +13,50 @@
           size="large"
           :rules="rules"
           ref="ruleFormRef"
-          style="width: 60%"
+          style="width: 70%"
         >
+          <!-- 用户名 -->
           <el-form-item prop="userName">
             <el-input
               v-model="loginform.userName"
-              placeholder="用户名 / 手机 / 邮箱"
+              placeholder="用户名"
               :prefix-icon="User"
               clearable
             />
           </el-form-item>
+
+          <!-- 密码 -->
           <el-form-item prop="passWord">
             <el-input
               v-model="loginform.passWord"
-              placeholder="请输入密码"
+              placeholder="密码"
               :prefix-icon="Lock"
               type="password"
               show-password
+              clearable
             />
           </el-form-item>
+
+          <!-- 验证码 -->
           <el-form-item prop="verifyCode">
-            <el-input v-model="loginform.verifyCode" placeholder="请输入验证码" :prefix-icon="Lock">
+            <el-input v-model="loginform.verifyCode" placeholder="验证码" :prefix-icon="Lock">
             </el-input>
           </el-form-item>
           <el-form-item>
-            <div style="display: flex">
+            <div style="display: flex;gap: 8px;">
               <el-button type="primary" @click="getCodeIMG" :loading="btnLoad"
                 >获取验证码</el-button
               >
-              <img :src="codeURL" />
+              <!-- <img :src="codeURL" /> -->
+              <!-- 用canvas替代img，用于自定义绘制 -->
+
+              <canvas
+                v-if="hasVerifyCode"
+                ref="verifyCanvas"
+                width="120"
+                height="40"
+                style="border: 1px solid #dcdfe6; border-radius: 4px; cursor: pointer;"
+              />
             </div>
           </el-form-item>
           <el-form-item>
@@ -82,7 +97,6 @@ import LoginAPIResources from '@/api/login.service'
 import CryptoJS from 'crypto-js'
 // 引入Cookies
 import Cookies from 'js-cookie'
-
 //getCurrentInstance方法用于获取当前视图的实例。即proxy相当于this
 const { proxy } = getCurrentInstance()
 
@@ -182,7 +196,9 @@ function getUserMenuInfo() {
 }
 
 //验证码相关==============================
+const hasVerifyCode = ref(false)  // 验证码存在状态
 let codeURL = ref(undefined)
+let yzm_code = ref(undefined)
 let btnLoad = ref(false)     //按钮加载
 function getCodeIMG() {
   if (loginform.value.userName != undefined) {
@@ -191,13 +207,62 @@ function getCodeIMG() {
     let userName = loginform.value.userName
     LoginAPIResources.verifyCode({ userName })
       .then((res) => {
-        codeURL.value = res.data.img
+        // codeURL.value = res.data.img
+
+        //显示验证码区域
+        hasVerifyCode.value = true
+        //获取验证码
+        yzm_code.value = res.data.code
+        
+
+        // 绘制验证码
+        drawVerifyCode(yzm_code.value) 
       })
       .finally(() => {
         btnLoad.value = false
       })
   } else {
     ElMessage.error('获取验证码，需要先输入用户名。')
+  }
+}
+
+
+// 新增canvas引用
+const verifyCanvas = ref(null)
+//绘制验证码
+function drawVerifyCode(codeText) {
+  const canvas = verifyCanvas.value
+  if (!canvas) {
+    return
+  }
+
+  const ctx = canvas.getContext('2d')
+  const width = canvas.width
+  const height = canvas.height
+
+  // 清空画布
+  ctx.fillStyle = '#f8f9fa' // 浅灰色背景
+  ctx.fillRect(0, 0, width, height)
+
+  // 绘制验证码文本（自定义样式）
+  ctx.font = 'bold 24px Arial'
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  
+  // 随机颜色和位置
+  codeText.split('').forEach((char, index) => {
+    ctx.fillStyle = `hsl(${Math.random() * 360}, 60%, 50%)` // 随机色相
+    ctx.translate(Math.random() * 2 - 1, Math.random() * 2 - 1) // 轻微偏移
+    ctx.fillText(char, (width / codeText.length) * (index + 0.5), height / 2)
+  })
+
+  // 添加干扰线
+  ctx.strokeStyle = '#ddd'
+  for (let i = 0; i < 2; i++) {
+    ctx.beginPath()
+    ctx.moveTo(Math.random() * width, Math.random() * height)
+    ctx.lineTo(Math.random() * width, Math.random() * height)
+    ctx.stroke()
   }
 }
 

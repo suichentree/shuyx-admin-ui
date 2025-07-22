@@ -23,12 +23,6 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/resetPassword',
-    name: "重置密码",
-    component: () => import('@/views/resetPassword/ResetPassword.vue'),
-    hidden: true
-  },
-  {
     path: '/home',
     name: "首页",
     icon:"HomeFilled",
