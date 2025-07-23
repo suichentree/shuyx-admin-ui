@@ -68,19 +68,29 @@
   </el-row>
 
   <!-- 优化后的图表容器 -->
-  <div class="echarts-container">
+  <div style="padding: 10px 16px;">
     <div class="chart-box" id="myEcharts"></div>
     <div class="chart-box" id="myEcharts2"></div>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <div class="chart-box" id="myPieChart"></div>
+      </el-col>
+      <el-col :span="12">
+        <div class="chart-box" id="myLineChart"></div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import * as echarts from 'echarts'
 
 onMounted(() => {
   initChart()
   initChart2()
+  initPieChart()
+  initLineChart()
 })
 
 // 折线图优化
@@ -222,6 +232,139 @@ function initChart2() {
   })
   window.addEventListener('resize', () => chart.resize())
 }
+
+
+// 饼图初始化
+function initPieChart() {
+  const chart = echarts.init(document.getElementById('myPieChart'))
+  chart.setOption({
+    title: {
+      text: '用户类型分布',
+      left: 'left',
+      textStyle: {
+        color: 'var(--el-text-color-primary)',
+        fontSize: 16
+      }
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: '{a} <br/>{b}: {c} ({d}%)'
+    },
+    legend: {
+      orient: 'vertical',
+      right: 10,
+      top: 20
+    },
+    series: [
+      {
+        name: '用户类型',
+        type: 'pie',
+        radius: ['40%', '70%'],
+        avoidLabelOverlap: false,
+        itemStyle: {
+          borderRadius: 10,
+          borderColor: '#fff',
+          borderWidth: 2
+        },
+        label: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: '30',
+            fontWeight: 'bold'
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data: [
+          { value: 1048, name: '普通用户' },
+          { value: 735, name: 'VIP用户' },
+          { value: 580, name: 'SVIP用户' },
+          { value: 484, name: '企业用户' }
+        ]
+      }
+    ]
+  })
+  window.addEventListener('resize', () => chart.resize())
+}
+
+// 新增折线图初始化
+function initLineChart() {
+  const chart = echarts.init(document.getElementById('myLineChart'))
+  chart.setOption({
+    title: {
+      text: '月度活跃用户数',
+      left: 'left',
+      textStyle: {
+        color: 'var(--el-text-color-primary)',
+        fontSize: 16
+      }
+    },
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: 'rgba(230, 162, 60, 0.9)', // 橙色辅助色
+      textStyle: { color: '#fff' },
+      axisPointer: { type: 'line' }
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'category',
+      data: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+      axisLabel: {
+        color: 'var(--el-text-color-regular)',
+        fontSize: 12
+      },
+      axisLine: { lineStyle: { color: '#e6ebf5' } },
+      splitLine: { show: false }
+    },
+    yAxis: {
+      type: 'value',
+      axisLabel: {
+        color: 'var(--el-text-color-regular)',
+        fontSize: 12,
+        formatter: '{value} 人'
+      },
+      axisLine: { lineStyle: { color: '#e6ebf5' } },
+      splitLine: {
+        lineStyle: {
+          color: '#f0f2f5',
+          type: 'dashed'
+        }
+      }
+    },
+    series: [
+      {
+        data: [500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600],
+        type: 'line',
+        smooth: true,
+        lineStyle: {
+          color: '#e6a23c', // 橙色辅助色
+          width: 2
+        },
+        itemStyle: {
+          color: '#e6a23c',
+          borderWidth: 2
+        },
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: 'rgba(230, 162, 60, 0.1)' },
+            { offset: 1, color: 'rgba(230, 162, 60, 0)' }
+          ])
+        }
+      }
+    ]
+  })
+  window.addEventListener('resize', () => chart.resize())
+}
 </script>
 
 <style scoped>
@@ -240,10 +383,6 @@ function initChart2() {
 }
 
 /* 图表容器样式优化 */
-.echarts-container {
-  padding: 0 16px;
-  margin-top: 20px;
-}
 .chart-box {
   width: 100%;
   height: 300px; /* 统一高度 */
@@ -252,5 +391,6 @@ function initChart2() {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); /* 与卡片阴影一致 */
   padding: 16px;
   margin-bottom: 20px;
+  box-sizing: border-box; /* 新增样式，让内边距和边框包含在总宽度内 */
 }
 </style>

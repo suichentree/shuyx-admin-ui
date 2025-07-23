@@ -72,12 +72,6 @@ export const constantRoutes = [
         component: () => import('@/views/other/AboutView.vue')
       },
       {
-        path: '/other/about2',
-        name: '关于2',
-        icon:"UserFilled",
-        component: () => import('@/views/other/AboutView2.vue')
-      },
-      {
         path: '/other/404',
         name: '404页面',
         icon:"UserFilled",
