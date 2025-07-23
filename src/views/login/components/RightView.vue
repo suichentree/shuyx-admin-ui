@@ -44,7 +44,7 @@
           </el-form-item>
           <el-form-item>
             <div style="display: flex;gap: 8px;">
-              <el-button type="primary" @click="getCodeIMG" :loading="btnLoad"
+              <el-button type="primary" @click="getCode" :loading="btnLoad"
                 >获取验证码</el-button
               >
               <img :src="codeURL" />
@@ -64,7 +64,7 @@
               ><el-checkbox v-model="isRemember" label="记住账号" size="large"
             /></el-col>
             <el-col :span="12" style="text-align: right">
-              <el-link type="primary" :underline="false" @click=toResetPassword>忘记密码？</el-link>
+              <el-link type="primary" :underline="false" @click=forgetPassword>忘记密码？</el-link>
             </el-col>
           </el-form-item>
           <el-form-item>
@@ -79,7 +79,7 @@
           </el-form-item>
           <el-form-item>
             还没有账号？
-            <el-link type="primary" :underline="false" @click="toRegister()">注册账号</el-link>
+            <el-link type="primary" :underline="false" @click="toRegister()">去注册账号</el-link>
           </el-form-item>
         </el-form>
       </div>
@@ -145,7 +145,7 @@ function onSubmit() {
             getUserInfo()
             //获取用户菜单信息
             getUserMenuInfo()
-            //加载字典数据
+            //获取字典数据
             loadDict()
           }
         })
@@ -201,7 +201,7 @@ const hasVerifyCode = ref(false)  // 验证码存在状态
 let codeURL = ref(undefined)
 let yzm_code = ref(undefined)
 let btnLoad = ref(false)     //按钮加载
-function getCodeIMG() {
+function getCode() {
   if (loginform.value.userName != "") {
     btnLoad.value = true
     //获取用户名
@@ -226,7 +226,7 @@ function getCodeIMG() {
 }
 
 
-// 新增canvas引用
+// canvas引用
 const verifyCanvas = ref(null)
 //绘制验证码
 function drawVerifyCode(codeText) {
@@ -234,7 +234,6 @@ function drawVerifyCode(codeText) {
   if (!canvas) {
     return
   }
-
   const ctx = canvas.getContext('2d')
   const width = canvas.width
   const height = canvas.height
@@ -319,8 +318,8 @@ function toRegister(){
 }
 
 //重置密码=============
-function toResetPassword(){
-  router.push({ path: '/resetPassword' })
+function forgetPassword(){
+  router.push({ path: '/forgetPassword' })
 }
 
 

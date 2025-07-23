@@ -72,6 +72,12 @@ export const constantRoutes = [
         component: () => import('@/views/other/AboutView.vue')
       },
       {
+        path: '/other/about2',
+        name: '关于2',
+        icon:"UserFilled",
+        component: () => import('@/views/other/AboutView2.vue')
+      },
+      {
         path: '/other/404',
         name: '404页面',
         icon:"UserFilled",
@@ -96,7 +102,7 @@ let isAddDynamicRouter = false
  */
 router.beforeEach(async (to,from,next) => {
   //白名单页面
-  let whiteMenu = ['/login','/register','/resetPassword','/home']
+  let whiteMenu = ['/login','/register','/home']
   //若访问的是白名单页面，直接放行。
   if (whiteMenu.includes(to.path)) {
     return next()
@@ -110,19 +116,22 @@ router.beforeEach(async (to,from,next) => {
   if(!isAddDynamicRouter){
     //获取menuStore中存储的动态路由信息
     let dynamicRoute = useMenuStore().dynamicRouteInfo
-    if (dynamicRoute.length !== 0) {
+    if (dynamicRoute.length > 0) {
+        //手动添加动态路由
         await dynamicRoute.forEach(obj =>{
             router.addRoute(obj)
         })
-        //手动添加，若路由路径无法匹配，就会自动匹配到404页面
-        router.addRoute({
-            path: '/:catchAll(.*)',
-            name: '404',
-            component: () => import('@/views/other/404View.vue')
-        })   
     }
+
+    //最后手动404添加，若路由路径无法匹配，就会自动匹配到404页面
+    router.addRoute({
+        path: '/:catchAll(.*)',
+        name: '404',
+        component: () => import('@/views/other/404View.vue')
+    })
+
     isAddDynamicRouter = true
-    //中断此次的路由，重新进行下一次路由。即重新执行beforeEach
+    //中断此次的路由，重新进行下一次路由。即重新执行beforeEach。重新触发路由匹配
     next({ ...to, replace: true })
   }else{
     //放行当前路由

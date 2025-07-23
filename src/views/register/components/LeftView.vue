@@ -21,14 +21,14 @@
       />
       <p class="middle-text">SHUYX ADMIN UI</p>
       <p class="middle-text">高性能 · 精致 · 优雅</p>
-      <p class="middle-text">基于 Vue3 + Element-Plus + JS 的个人网站前端</p>
+      <p class="middle-text">基于 Vue3 + Element-Plus + JS 的个人网站管理模板</p>
     </div>
 </div>  
 </template>
 
 <script setup>
 import logoImg from '@/assets/logo.png' //logo图片 
-import loginBoxBg from '@/assets/login-box-bg.svg' //背景图片
+import loginBoxBg from '@/assets/boxbg1.svg' //背景图片
 </script>
 
 <style scoped>

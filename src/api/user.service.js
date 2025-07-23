@@ -46,7 +46,7 @@ const APIResources = {
             headers: { 'Content-Type': 'application/json' }
         })
     },
-    //更新用户
+    //更新用户密码
     updateUserPassword(queryData) {
         return axiosService.request({
             url: '/shuyx-user/user/updateUserPassword',
