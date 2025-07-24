@@ -64,7 +64,7 @@
               ><el-checkbox v-model="isRemember" label="记住账号" size="large"
             /></el-col>
             <el-col :span="12" style="text-align: right">
-              <el-link type="primary" :underline="false" @click=forgetPassword>忘记密码？</el-link>
+              <el-link type="primary" :underline="false" @click=forgetPassword()>忘记密码？</el-link>
             </el-col>
           </el-form-item>
           <el-form-item>

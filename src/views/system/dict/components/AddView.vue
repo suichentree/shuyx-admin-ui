@@ -10,7 +10,7 @@
     <template #header>
       <span>新增</span>
     </template>
-    <el-form :model="form" :rules="rules" ref="formRef" label-position="right">
+    <el-form :model="form" ref="formRef" label-position="right" >
       <el-row>
         <el-form-item label="字典名称" prop="dictName">
           <el-input v-model="form.dictName" placeholder="请输入" clearable />

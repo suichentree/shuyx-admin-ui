@@ -34,8 +34,8 @@
         <el-col :span="24">
           <el-form-item label="组织机构状态" prop="status">
             <el-radio-group v-model="addform.status">
-              <el-radio :label="0">正常</el-radio>
-              <el-radio :label="1">禁用</el-radio>
+              <el-radio value="0">正常</el-radio>
+              <el-radio value="1">禁用</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>

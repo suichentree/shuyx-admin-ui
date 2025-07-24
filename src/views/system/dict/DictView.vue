@@ -1,49 +1,57 @@
 <template>
   <el-space direction="vertical" :fill="true" style="width: 100%">
     <!--查询条件-->
-    <el-card shadow="never" :body-style="{ padding: '10px' }">
-      <el-row justify="space-between">
-        <el-col :span="2"><el-tag>查询条件</el-tag></el-col>
-        <el-col :span="6" style="text-align: right">
-          <el-button type="primary" @click="search">搜索</el-button>
-          <el-button @click="resetQuery">重置</el-button>
-        </el-col>
-      </el-row>
-      <el-form :inline="true" :model="queryform" ref="queryformRef">
-        <el-form-item label="字典名称" prop="dictName">
-          <el-input v-model="queryform.dictName" placeholder="请输入" clearable />
-        </el-form-item>
-        <el-form-item label="字典编码" prop="dictCode">
-          <el-input v-model="queryform.dictCode" placeholder="请输入" clearable />
-        </el-form-item>
-      </el-form>
+    <el-card shadow="never" :body-style="{ padding: '0px' }">
+      <div class="card-div">
+        <el-row justify="space-between">
+          <el-col :span="2"><el-tag>查询条件</el-tag></el-col>
+          <el-col :span="6" style="text-align: right">
+            <el-button type="primary" @click="search">搜索</el-button>
+            <el-button @click="resetQuery">重置</el-button>
+          </el-col>
+        </el-row>
+      </div>
+      <div class="card-div">
+        <el-form :inline="true" :model="queryform" ref="queryformRef">
+          <el-form-item label="字典名称" prop="dictName">
+            <el-input v-model="queryform.dictName" placeholder="请输入" clearable />
+          </el-form-item>
+          <el-form-item label="字典编码" prop="dictCode">
+            <el-input v-model="queryform.dictCode" placeholder="请输入" clearable />
+          </el-form-item>
+        </el-form>
+      </div>
     </el-card>
     <!--查询结果-->
-    <el-card shadow="never" :body-style="{ padding: '10px' }">
-      <el-row justify="space-between">
-        <el-col :span="2"><el-tag>查询结果</el-tag></el-col>
-        <el-col :span="6" style="text-align: right">
-          <el-button type="success" @click="AddDialogVisible = true">新增</el-button>
-        </el-col>
-      </el-row>
-      <!--数据表格-->
-      <el-table :data="tableData" border>
-        <el-table-column label="字典编号" key="dictId" prop="dictId" />
-        <el-table-column label="字典名称" key="dictName" prop="dictName" />
-        <el-table-column label="字典编码" key="dictCode" prop="dictCode" />
-        <el-table-column label="字典标签" key="dictLabel" prop="dictLabel" />
-        <el-table-column label="字典值" key="dictValue" prop="dictValue" />
-        <el-table-column label="操作">
-          <template #default="scope">
-            <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="toEdit(scope.row)" />
-            </el-tooltip>
-            <el-tooltip content="删除" placement="top">
-              <el-button link type="primary" icon="Delete" @click="toDelete(scope.row.dictId)" />
-            </el-tooltip>
-          </template>
-        </el-table-column>
-      </el-table>
+    <el-card shadow="never" :body-style="{ padding: '0px' }">
+      <div class="card-div">
+        <el-row justify="space-between">
+          <el-col :span="2"><el-tag>查询结果</el-tag></el-col>
+          <el-col :span="6" style="text-align: right">
+            <el-button type="success" @click="AddDialogVisible = true">新增</el-button>
+          </el-col>
+        </el-row>
+      </div>
+      <div class="card-div">
+        <!--数据表格-->
+        <el-table :data="tableData" border>
+          <el-table-column label="字典编号" key="dictId" prop="dictId" />
+          <el-table-column label="字典名称" key="dictName" prop="dictName" />
+          <el-table-column label="字典编码" key="dictCode" prop="dictCode" />
+          <el-table-column label="字典标签" key="dictLabel" prop="dictLabel" />
+          <el-table-column label="字典值" key="dictValue" prop="dictValue" />
+          <el-table-column label="操作">
+            <template #default="scope">
+              <el-tooltip content="修改" placement="top">
+                <el-button link type="primary" icon="Edit" @click="toEdit(scope.row)" />
+              </el-tooltip>
+              <el-tooltip content="删除" placement="top">
+                <el-button link type="primary" icon="Delete" @click="toDelete(scope.row.dictId)" />
+              </el-tooltip>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
       <div class="card-div">
         <!--表格分页-->
         <el-pagination

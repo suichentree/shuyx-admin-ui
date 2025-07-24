@@ -33,6 +33,427 @@ export default [
       }
     }
   },
+  //条件查询
+  {
+    url: '/api/shuyx-user/menu/menulist', 
+    method: 'GET', 
+    response: () => {
+      return  {
+          "code": 200,
+          "data": [
+              {
+                  "menuId": 2,
+                  "menuName": "系统管理",
+                  "parentId": 0,
+                  "menuPath": "/system",
+                  "menuPage": null,
+                  "menuType": 0,
+                  "visible": 0,
+                  "isLink": 0,
+                  "status": "0",
+                  "icon": "Setting",
+                  "createTime": "2024-01-10T01:21:14.000+08:00",
+                  "updateTime": "2024-01-10T01:21:19.000+08:00",
+                  "children": null
+              }
+          ],
+          "message": "请求成功"
+      }
+    }
+  },
+  //获取用户的菜单信息
+  {
+    url: '/api/shuyx-user/menu/userMenuInfo', 
+    method: 'GET', 
+    response: () => {
+      return{
+          "code": 200,
+          "data": [
+              {
+                  "menuId": 2,
+                  "menuName": "系统管理",
+                  "parentId": 0,
+                  "menuPath": "/system",
+                  "menuPage": null,
+                  "menuType": 0,
+                  "visible": 0,
+                  "isLink": 0,
+                  "status": null,
+                  "icon": "Setting",
+                  "createTime": null,
+                  "updateTime": null,
+                  "children": [
+                      {
+                          "menuId": 3,
+                          "menuName": "用户管理",
+                          "parentId": 2,
+                          "menuPath": "/system/user",
+                          "menuPage": "/src/views/system/user/UserView.vue",
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "UserFilled",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      },
+                      {
+                          "menuId": 4,
+                          "menuName": "菜单管理",
+                          "parentId": 2,
+                          "menuPath": "/system/menu",
+                          "menuPage": "/src/views/system/menu/MenuView.vue",
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "Collection",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      },
+                      {
+                          "menuId": 8,
+                          "menuName": "组织机构管理",
+                          "parentId": 2,
+                          "menuPath": "/system/org",
+                          "menuPage": "/src/views/system/org/OrgView.vue",
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "OfficeBuilding",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      },
+                      {
+                          "menuId": 9,
+                          "menuName": "职位管理",
+                          "parentId": 2,
+                          "menuPath": "/system/position",
+                          "menuPage": "/src/views/system/position/PositionView.vue",
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "Avatar",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      },
+                      {
+                          "menuId": 10,
+                          "menuName": "角色管理",
+                          "parentId": 2,
+                          "menuPath": "/system/role",
+                          "menuPage": "/src/views/system/role/RoleView.vue",
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "Avatar",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      },
+                      {
+                          "menuId": 24,
+                          "menuName": "字典管理",
+                          "parentId": 2,
+                          "menuPath": "/system/dict",
+                          "menuPage": "/src/views/system/dict/DictView.vue",
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "Collection",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      }
+                  ]
+              },
+              {
+                  "menuId": 16,
+                  "menuName": "媒体管理",
+                  "parentId": 0,
+                  "menuPath": "/media",
+                  "menuPage": null,
+                  "menuType": 0,
+                  "visible": 0,
+                  "isLink": 0,
+                  "status": null,
+                  "icon": "Platform",
+                  "createTime": null,
+                  "updateTime": null,
+                  "children": [
+                      {
+                          "menuId": 20,
+                          "menuName": "标签维护",
+                          "parentId": 16,
+                          "menuPath": "/media/tag",
+                          "menuPage": "/src/views/media/tag/TagView.vue",
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "Document",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      },
+                      {
+                          "menuId": 23,
+                          "menuName": "剧集维护",
+                          "parentId": 16,
+                          "menuPath": "/media/epsiodes",
+                          "menuPage": "/src/views/media/episodes/EpisodesView.vue",
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "Coin",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      },
+                      {
+                          "menuId": 31,
+                          "menuName": "信息维护",
+                          "parentId": 16,
+                          "menuPath": "/media/resource",
+                          "menuPage": null,
+                          "menuType": 0,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "Camera",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": [
+                              {
+                                  "menuId": 17,
+                                  "menuName": "媒体展示",
+                                  "parentId": 31,
+                                  "menuPath": "/media/resource/show",
+                                  "menuPage": "/src/views/media/resource/ResourceShow.vue",
+                                  "menuType": 1,
+                                  "visible": 0,
+                                  "isLink": 0,
+                                  "status": null,
+                                  "icon": "Camera",
+                                  "createTime": null,
+                                  "updateTime": null,
+                                  "children": []
+                              },
+                              {
+                                  "menuId": 18,
+                                  "menuName": "媒体详情",
+                                  "parentId": 31,
+                                  "menuPath": "/media/resource/info",
+                                  "menuPage": "/src/views/media/resource/ResourceInfo.vue",
+                                  "menuType": 1,
+                                  "visible": 1,
+                                  "isLink": 0,
+                                  "status": null,
+                                  "icon": "Film",
+                                  "createTime": null,
+                                  "updateTime": null,
+                                  "children": []
+                              },
+                              {
+                                  "menuId": 21,
+                                  "menuName": "媒体列表",
+                                  "parentId": 31,
+                                  "menuPath": "/media/resource/list",
+                                  "menuPage": "/src/views/media/resource/ResourceView.vue",
+                                  "menuType": 1,
+                                  "visible": 0,
+                                  "isLink": 0,
+                                  "status": null,
+                                  "icon": "Cellphone",
+                                  "createTime": null,
+                                  "updateTime": null,
+                                  "children": []
+                              }
+                          ]
+                      }
+                  ]
+              },
+              {
+                  "menuId": 25,
+                  "menuName": "监控管理",
+                  "parentId": 0,
+                  "menuPath": "/monitor",
+                  "menuPage": null,
+                  "menuType": 0,
+                  "visible": 0,
+                  "isLink": 0,
+                  "status": null,
+                  "icon": "Aim",
+                  "createTime": null,
+                  "updateTime": null,
+                  "children": [
+                      {
+                          "menuId": 26,
+                          "menuName": "Nacos监控",
+                          "parentId": 25,
+                          "menuPath": "http://localhost:38848/nacos/index.html#/login",
+                          "menuPage": null,
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 1,
+                          "status": null,
+                          "icon": "DataLine",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      },
+                      {
+                          "menuId": 27,
+                          "menuName": "MinIO监控",
+                          "parentId": 25,
+                          "menuPath": "http://localhost:39001/login",
+                          "menuPage": null,
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 1,
+                          "status": null,
+                          "icon": "DataLine",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      }
+                  ]
+              },
+              {
+                  "menuId": 28,
+                  "menuName": "博客管理",
+                  "parentId": 0,
+                  "menuPath": "/blog/index",
+                  "menuPage": "/src/views/blog/BlogView.vue",
+                  "menuType": 1,
+                  "visible": 0,
+                  "isLink": 0,
+                  "status": null,
+                  "icon": "Memo",
+                  "createTime": null,
+                  "updateTime": null,
+                  "children": []
+              },
+              {
+                  "menuId": 34,
+                  "menuName": "个人管理",
+                  "parentId": 0,
+                  "menuPath": "/personal",
+                  "menuPage": null,
+                  "menuType": 0,
+                  "visible": 0,
+                  "isLink": 0,
+                  "status": null,
+                  "icon": "User",
+                  "createTime": null,
+                  "updateTime": null,
+                  "children": [
+                      {
+                          "menuId": 30,
+                          "menuName": "用户信息",
+                          "parentId": 34,
+                          "menuPath": "/personal/userinfo",
+                          "menuPage": "/src/views/personal/userinfo/UserInfo.vue",
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "Avatar",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      },
+                      {
+                          "menuId": 32,
+                          "menuName": "文件管理",
+                          "parentId": 34,
+                          "menuPath": "/personal/file",
+                          "menuPage": "/src/views/personal/file/FileView.vue",
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "Folder",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      },
+                      {
+                          "menuId": 33,
+                          "menuName": "通讯录管理",
+                          "parentId": 34,
+                          "menuPath": "/personal/contactbook",
+                          "menuPage": "/src/views/personal/contactBook/ContactBookView.vue",
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "Document",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      },
+                      {
+                          "menuId": 35,
+                          "menuName": "用户头像",
+                          "parentId": 34,
+                          "menuPath": "/personal/avatar",
+                          "menuPage": "/src/views/personal/userAvatar/UserAvatar.vue",
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "Microphone",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      },
+                      {
+                          "menuId": 36,
+                          "menuName": "用户密码",
+                          "parentId": 34,
+                          "menuPath": "/personal/password",
+                          "menuPage": "/src/views/personal/userPassword/UserPassword.vue",
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "Key",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      },
+                      {
+                          "menuId": 37,
+                          "menuName": "导入文档",
+                          "parentId": 34,
+                          "menuPath": "/personal/importFile",
+                          "menuPage": "/src/views/personal/file/ImportFile.vue",
+                          "menuType": 1,
+                          "visible": 0,
+                          "isLink": 0,
+                          "status": null,
+                          "icon": "Apple",
+                          "createTime": null,
+                          "updateTime": null,
+                          "children": []
+                      }
+                  ]
+              }
+          ],
+          "message": "请求成功"
+      }
+    }
+  },
   //查询用户菜单信息
   {
     url: '/api/shuyx-user/menu/updateMenu',

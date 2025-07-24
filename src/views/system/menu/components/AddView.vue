@@ -37,8 +37,8 @@
           </el-form-item>
           <el-form-item label="菜单类型" prop="menuType">
             <el-radio-group v-model="addform.menuType">
-              <el-radio :label="0">目录</el-radio>
-              <el-radio :label="1">菜单</el-radio>
+              <el-radio :value="0">目录</el-radio>
+              <el-radio :value="1">菜单</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="菜单路径" prop="menuPath">
@@ -91,20 +91,20 @@
               </span>
             </template>
             <el-radio-group v-model="addform.isLink">
-              <el-radio :label="0">不是</el-radio>
-              <el-radio :label="1">是</el-radio>
+              <el-radio value="0">不是</el-radio>
+              <el-radio value="1">是</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="菜单侧边栏" prop="visible">
             <el-radio-group v-model="addform.visible">
-              <el-radio :label="0">可见</el-radio>
-              <el-radio :label="1">隐藏</el-radio>
+              <el-radio :value="0">可见</el-radio>
+              <el-radio :value="1">隐藏</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="菜单状态" prop="status">
             <el-radio-group v-model="addform.status">
-              <el-radio :label="0">正常</el-radio>
-              <el-radio :label="1">禁用</el-radio>
+              <el-radio :value="0">正常</el-radio>
+              <el-radio :value="1">禁用</el-radio>
             </el-radio-group>
           </el-form-item>
     </el-form>

@@ -431,5 +431,53 @@ export default [
       }
     },
   },
+  //条件查询2
+  {
+    url: '/api/shuyx-media/media/findMediaAndEpisodes',
+    method: 'POST',
+    response: () => {
+      return {
+                    "code": 200,
+                    "data": [
+                        {
+                            "mediaId": 11,
+                            "mediaName": "你的名字",
+                            "mediaType": "Movie",
+                            "mediaTag": "/大陆/2024/科幻",
+                            "mediaCover": "1712984771955.adsa.jpg",
+                            "director": "你的名字",
+                            "actor": "你的名字",
+                            "description": "你的名字你的名字你的名字",
+                            "releaseDate": "2024-04-01",
+                            "region": "日本",
+                            "mediaScore": 9.5,
+                            "createTime": null,
+                            "updateTime": null,
+                            "pageNum": null,
+                            "pageSize": null,
+                            "tagIds": null,
+                            "tagList": null,
+                            "episodesList": [
+                                {
+                                    "episodesId": 11,
+                                    "mediaId": null,
+                                    "episodesNumber": 1,
+                                    "episodesName": "第1集",
+                                    "episodesUrl": "1711950414585.oceans.mp4"
+                                },
+                                {
+                                    "episodesId": 19,
+                                    "mediaId": null,
+                                    "episodesNumber": 2,
+                                    "episodesName": "第2集",
+                                    "episodesUrl": "青蛙王子.1984.HD1080p.国粤双语中字.mp4"
+                                }
+                            ]
+                        }
+                    ],
+                    "message": "请求成功"
+                }
+    },
+  },
 ];
 

@@ -64,7 +64,7 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import headimg from '@/assets/user.jpg'
+import headimg from '@/assets/avatar.jpg'
 import ArticleList from './components/ArticleList.vue';
 import AuthorInfo from './components/AuthorInfo.vue';
 

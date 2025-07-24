@@ -223,6 +223,6 @@ function deleteMenu(menuId) {
 </script>
 <style scoped>
 .card-div {
-  padding: 5px;
+  padding: 10px;
 }
 </style>

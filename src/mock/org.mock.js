@@ -33,6 +33,29 @@ export default [
       }
     }
   },
+  //条件查询
+  {
+    url: '/api/shuyx-user/org/orglist',
+    method: 'GET',
+    response: () => {
+      return {
+          "code": 200,
+          "data": [
+              {
+                  "orgId": 2,
+                  "parentId": 1,
+                  "orgName": "湖北总公司",
+                  "orgPath": "1/2/",
+                  "status": "0",
+                  "createTime": "2024-01-08T17:39:10.000+08:00",
+                  "updateTime": "2024-01-08T17:39:10.000+08:00",
+                  "children": null
+              }
+          ],
+          "message": "请求成功"
+      }
+    }
+  },
   //查询树形组织机构列表
   {
     url: '/api/shuyx-user/org/orgTreelist', 

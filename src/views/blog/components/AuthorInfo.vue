@@ -55,6 +55,6 @@
   </el-space>
 </template>
 <script setup>
-import avatarImg from '@/assets/user2.png'
+import avatarImg from '@/assets/avatar.jpg'
 </script>
 <style></style>

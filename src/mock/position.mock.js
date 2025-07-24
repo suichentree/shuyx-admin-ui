@@ -149,5 +149,24 @@ export default [
       }
     },
   },
+  // 查询
+  {
+    url: '/api/shuyx-user/position/selectById',
+    method: 'GET',
+    response: () => {
+      return {
+            "code": 200,
+            "data": {
+                "positionId": 1,
+                "positionName": "java工程师",
+                "positionCode": "javaEng",
+                "status": "0",
+                "createTime": "2024-01-09T23:31:02.000+08:00",
+                "updateTime": "2024-01-09T23:31:02.000+08:00"
+            },
+            "message": "请求成功"
+        }
+    },
+  },
 ];
 
