@@ -183,6 +183,6 @@ function deleteOrg(orgId) {
 </script>
 <style scoped>
 .card-div {
-  padding: 10px;
+  padding: 5px;
 }
 </style>

@@ -37,7 +37,7 @@ const APIResources = {
             headers: { 'Content-Type': 'application/json' }
         })
     },
-    //添加
+    //更新
     updateMenu(queryData){
         return axiosService.request({
             url: '/shuyx-user/menu/updateMenu',

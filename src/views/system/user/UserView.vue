@@ -49,27 +49,27 @@
         <el-row justify="space-between">
           <el-col :span="2"><el-tag>查询结果</el-tag></el-col>
           <el-col :span="6" style="text-align: right">
-            <el-button type="success" @click="AddUserDialogVisible = true">新增</el-button>
+            <el-button type="success" @click="AddUserDialogVisible = true" >新增</el-button>
           </el-col>
         </el-row>
       </div>
       <div class="card-div">
         <!--数据表格-->
-        <el-table :data="tableData" border>
-          <el-table-column label="用户编号" align="center" key="userId" prop="userId" />
-          <el-table-column label="用户名称" align="center" key="userName" prop="userName" />
-          <el-table-column label="手机号码" align="center" key="phone" prop="phone" />
-          <el-table-column label="邮箱" align="center" key="email" prop="email" />
-          <el-table-column label="用户状态" align="center" key="status">
+        <el-table :data="tableData" border stripe>
+          <el-table-column label="用户编号" align="center" key="userId" prop="userId" show-overflow-tooltip/>
+          <el-table-column label="用户名称" align="center" key="userName" prop="userName" show-overflow-tooltip/>
+          <el-table-column label="手机号码" align="center" key="phone" prop="phone" show-overflow-tooltip/>
+          <el-table-column label="邮箱" align="center" key="email" prop="email" show-overflow-tooltip/>
+          <el-table-column label="用户状态" align="center" key="status" show-overflow-tooltip>
             <template #default="scope">
               <el-switch v-model="scope.row.status" :active-value="'0'" :inactive-value="'1'" active-text="正常"
                 inactive-text="禁用" inline-prompt></el-switch>
             </template>
           </el-table-column>
-          <el-table-column label="所属组织机构" align="center" key="orgName" prop="org.orgName" />
-          <el-table-column label="职位" align="center" key="positionName" prop="position.positionName" />
-          <el-table-column label="创建时间" align="center" prop="createTime" :formatter="DateTimeformatter" />
-          <el-table-column label="操作" align="center">
+          <el-table-column label="所属组织机构" align="center" key="orgName" prop="org.orgName" show-overflow-tooltip/>
+          <el-table-column label="职位" align="center" key="positionName" prop="position.positionName" show-overflow-tooltip/>
+          <el-table-column label="创建时间" align="center" prop="createTime" :formatter="DateTimeformatter" show-overflow-tooltip/>
+          <el-table-column label="操作" align="center" show-overflow-tooltip>
             <template #default="scope">
               <el-tooltip content="修改" placement="top">
                 <el-button link type="primary" icon="Edit" @click="toEdit(scope.row.userId)" />
@@ -81,9 +81,9 @@
           </el-table-column>
         </el-table>
       </div>
+      <!--表格分页-->
       <div class="card-div">
-        <!--表格分页-->
-        <el-pagination @change="changePageData" v-model:current-page="pageData.pageNum"
+        <el-pagination @change="changePageData" v-model:current-page="pageData.pageNum" 
           v-model:page-size="pageData.pageSize" :page-sizes="pageData.pageSizes" :background="true"
           layout="total, sizes, prev, pager, next, jumper" :total="pageData.total" />
       </div>
@@ -236,12 +236,9 @@ function changePageData() {
   search()
 }
 
-
-
-
 </script>
 <style scoped>
 .card-div {
-  padding: 10px;
+  padding: 5px;
 }
 </style>

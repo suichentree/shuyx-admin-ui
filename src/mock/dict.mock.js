@@ -277,5 +277,38 @@ export default [
       }
     },
   },
+  // 添加
+  {
+    url: '/api/shuyx-user/dict/add',
+    method: 'POST', 
+    response: () => {
+      return{
+          "code": 200,
+          "message": "请求成功"
+      }
+    },
+  },
+  // 更新
+  {
+    url: '/api/shuyx-user/dict/update',
+    method: 'POST',
+    response: () => {
+      return{
+          "code": 200,
+          "message": "请求成功"
+      }
+    },
+  },
+  // 删除
+  {
+    url: '/api/shuyx-user/dict/delete',
+    method: 'DELETE',
+    response: () => {
+      return{
+          "code": 200,
+          "message": "请求成功"
+      }
+    },
+  },
 ];
 

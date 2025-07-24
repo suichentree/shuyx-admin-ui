@@ -343,49 +343,49 @@ export default [
     method: 'GET',
     response: () => {
       return{
-            code: 200,
-            data: [
-                {
-                    userId: 1,
-                    orgId: 1,
-                    positionId: null,
-                    userName: "xiaoming",
-                    passWord: "$2a$10$n9aYf0EvKAUZzdptsGWTcOQKbI0si.tK3UwvLNfi95vi4v.8SaEUu",
-                    gender: "0",
-                    birthday: "2024-01-09",
-                    avatar: null,
-                    email: "xiaoming2",
-                    phone: "13256565858",
-                    status: "0",
-                    createTime: "2025-07-21T15:23:27.000+08:00",
-                    updateTime: null,
-                    org: {
-                        orgId: 1,
-                        parentId: null,
-                        orgName: "shuyx科技集团",
-                        orgPath: null,
-                        status: "0",
-                        createTime: null,
-                        updateTime: null,
-                        children: null
-                    },
-                    position: {
-                        positionId: null,
-                        positionName: null,
-                        positionCode: null,
-                        status: "0",
-                        createTime: null,
-                        updateTime: null
-                    },
-                    verifyCode: null,
-                    pageNum: null,
-                    pageSize: null,
-                    beginTime: null,
-                    endTime: null
-                }
-            ],
-            message: "请求成功"
-      }
+                "code": 200,
+                "data": [
+                    {
+                        "userId": 178,
+                        "orgId": 1,
+                        "positionId": 4,
+                        "userName": "admin",
+                        "passWord": "$2a$10$n9aYf0EvKAUZzdptsGWTcOQKbI0si.tK3UwvLNfi95vi4v.8SaEUu",
+                        "gender": "0",
+                        "birthday": "2024-04-03",
+                        "avatar": "1713261936649.8f39fcd0e2ab620fc686f28d36df7e6a.jpg",
+                        "email": "admin@example.com",
+                        "phone": "18271801652",
+                        "status": "0",
+                        "createTime": "2024-04-16T10:05:36.000+08:00",
+                        "updateTime": null,
+                        "org": {
+                            "orgId": 1,
+                            "parentId": null,
+                            "orgName": "shuyx科技集团",
+                            "orgPath": null,
+                            "status": "0",
+                            "createTime": null,
+                            "updateTime": null,
+                            "children": null
+                        },
+                        "position": {
+                            "positionId": 4,
+                            "positionName": "老板",
+                            "positionCode": null,
+                            "status": "0",
+                            "createTime": null,
+                            "updateTime": null
+                        },
+                        "verifyCode": null,
+                        "pageNum": null,
+                        "pageSize": null,
+                        "beginTime": null,
+                        "endTime": null
+                    }
+                ],
+                "message": "请求成功"
+            }
     }
   },
   // 更新用户

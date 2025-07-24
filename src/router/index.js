@@ -60,22 +60,34 @@ export const constantRoutes = [
   },
   {
     path: '/other',
-    name: "其他",
+    name: "其他页面",
     icon:"Tools",
     component: LayoutView,
     hidden: false,
     children: [
       {
         path: '/other/about',
-        name: '关于',
-        icon:"UserFilled",
+        name: '关于系统',
+        icon:"InfoFilled",
         component: () => import('@/views/other/AboutView.vue')
       },
       {
         path: '/other/404',
         name: '404页面',
-        icon:"UserFilled",
+        icon:"WarnTriangleFilled",
         component: () => import('@/views/other/404View.vue')
+      },
+      {
+        path: '/other/403',
+        name: '403页面',
+        icon:"WarnTriangleFilled",
+        component: () => import('@/views/other/403View.vue')
+      },
+      {
+        path: '/other/500',
+        name: '500页面',
+        icon:"WarnTriangleFilled",
+        component: () => import('@/views/other/500View.vue')
       }
     ]
   }

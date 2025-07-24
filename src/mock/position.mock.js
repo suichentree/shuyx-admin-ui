@@ -116,6 +116,38 @@ export default [
       }
     },
   },
-  
+  // 新增职位
+  {
+    url: '/api/shuyx-user/position/addPosition',
+    method: 'POST', 
+    response: () => {
+      return {
+          code: 200,
+          message: "请求成功"
+      }
+    },
+  },
+  // 更新职位
+  {
+    url: '/api/shuyx-user/position/updatePosition',
+    method: 'POST', 
+    response: () => {
+      return {
+          code: 200,
+          message: "请求成功"
+      }
+    },
+  },
+  // 删除职位
+  {
+    url: '/api/shuyx-user/position/deletePosition',
+    method: 'DELETE',
+    response: () => {
+      return {
+          code: 200,
+          message: "请求成功"
+      }
+    },
+  },
 ];
 

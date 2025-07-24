@@ -4,7 +4,7 @@
         <template #header>
             <span>编辑用户</span>
         </template>
-        <el-form :inline="true" :model="form" :rules="rules" ref="formRef">
+        <el-form :inline="true" :model="form" :rules="rules" ref="formRef" label-width="100px" label-position="top">
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="用户名称" prop="userName">
@@ -29,7 +29,7 @@
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="邮箱" prop="email">
-                        <el-input v-model="form.email" placeholder="请输入"><template #append>.com</template></el-input>
+                        <el-input v-model="form.email" placeholder="请输入"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">

@@ -23,7 +23,7 @@
                 <el-icon :size="20"><Setting/></el-icon>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
+                        <el-dropdown-item @click="logout">退出系统</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
@@ -45,9 +45,14 @@ let userStore = useUserStore()
 //HeaderStore
 import { useHeaderStore } from '@/stores/headerStore'
 
+//用户头像
 let avatarImg = ref(undefined)
 if(userStore.userInfo.avatar != null){
-    avatarImg.value = 'http://localhost:39000/user-avatar-bucket/'+userStore.userInfo.avatar
+    // 远程的用户头像
+    // avatarImg.value = 'http://localhost:39000/user-avatar-bucket/'+userStore.userInfo.avatar
+
+    // 本地的用户头像
+    avatarImg.value = defalutAvatarImg
 }else{
     avatarImg.value = defalutAvatarImg
 }

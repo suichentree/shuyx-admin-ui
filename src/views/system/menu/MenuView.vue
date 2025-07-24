@@ -1,6 +1,8 @@
 <template>
+  <el-space direction="vertical" :fill="true" style="width: 100%;">
   <!--查询条件-->
-  <el-card shadow="never" :body-style="{ padding: '10px' }">
+  <el-card shadow="never" :body-style="{ padding: '0px' }">
+    <div class="card-div">
       <el-row justify="space-between">
         <el-col :span="2"><el-tag>查询条件</el-tag></el-col>
         <el-col :span="6" style="text-align: right">
@@ -8,6 +10,8 @@
           <el-button @click="resetQuery">重置</el-button>
         </el-col>
       </el-row>
+    </div>
+    <div class="card-div">
       <el-form :inline="true" :model="queryform" ref="queryformRef">
         <el-form-item label="菜单名称" prop="menuName">
           <el-input v-model="queryform.menuName" placeholder="请输入" clearable />
@@ -23,67 +27,73 @@
           </el-select>
         </el-form-item>
       </el-form>
+    </div>
   </el-card>
   <!--查询结果-->
-  <el-card shadow="never" :body-style="{ padding: '10px' }" style="margin-top:10px">
-      <el-row justify="space-between">
-        <el-col :span="2"><el-tag>查询结果</el-tag></el-col>
-        <el-col :span="6" style="text-align: right">
-          <el-button type="success" @click="AddDialogVisible = true">新增</el-button>
-        </el-col>
-      </el-row>
-      <!--数据表格-->
-      <el-table :data="tableData" row-key="menuId" border>
-        <el-table-column label="菜单编号"  key="menuId" prop="menuId"/>
-        <el-table-column label="菜单名称"  key="menuName" prop="menuName" :show-overflow-tooltip="true"/>
-        <el-table-column label="菜单路径"  key="menuPath" prop="menuPath" :show-overflow-tooltip="true"/>
-        <el-table-column label="菜单页面"  key="menuPage" prop="menuPage" :show-overflow-tooltip="true"/>
-        <el-table-column label="菜单图标"  key="icon" prop="icon" :show-overflow-tooltip="true">
-          <template #default="scope">
-            <el-icon ><component :is="scope.row.icon"></component></el-icon>
-            <span>{{ scope.row.icon }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="菜单类型"  key="menuType" prop="menuType">
-          <template #default="scope">
-            <el-tag v-if=" scope.row.menuType == 0 " type="success">目录</el-tag>
-            <el-tag v-else>菜单</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="是否外链"  key="isLink">
-          <template #default="scope">
-            <el-tag v-if=" scope.row.isLink == 0 ">不是</el-tag>
-            <el-tag v-else type="danger">是</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="侧边栏可见"  key="visible">
-          <template #default="scope">
-            <el-tag v-if=" scope.row.visible == 0 ">可见</el-tag>
-            <el-tag v-else type="danger">隐藏</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="菜单状态"  key="status">
-          <template #default="scope">
-            <el-tag v-if=" scope.row.status == 0 ">正常</el-tag>
-            <el-tag v-else type="danger">禁用</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作">
-          <template #default="scope">
-            <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="toEdit(scope.row)" />
-            </el-tooltip>
-            <el-tooltip content="删除" placement="top">
-              <el-button link type="primary" icon="Delete" @click="toDelete(scope.row.menuId)" />
-            </el-tooltip>
-          </template>
-        </el-table-column>
-      </el-table>
+  <el-card shadow="never" :body-style="{ padding: '0px' }" style="margin-top:10px">
+    <div class="card-div">
+        <el-row justify="space-between">
+          <el-col :span="2"><el-tag>查询结果</el-tag></el-col>
+          <el-col :span="6" style="text-align: right">
+            <el-button type="success" @click="AddDialogVisible = true">新增</el-button>
+          </el-col>
+        </el-row>
+    </div>
+    <div class="card-div">
+        <!--数据表格-->
+        <el-table :data="tableData" row-key="menuId" border stripe>
+          <el-table-column label="菜单编号"  key="menuId" prop="menuId"/>
+          <el-table-column label="菜单名称"  key="menuName" prop="menuName" :show-overflow-tooltip="true"/>
+          <el-table-column label="菜单路径"  key="menuPath" prop="menuPath" :show-overflow-tooltip="true"/>
+          <el-table-column label="菜单页面"  key="menuPage" prop="menuPage" :show-overflow-tooltip="true"/>
+          <el-table-column label="菜单图标"  key="icon" prop="icon" :show-overflow-tooltip="true">
+            <template #default="scope">
+              <el-icon ><component :is="scope.row.icon"></component></el-icon>
+              <span>{{ scope.row.icon }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="菜单类型"  key="menuType" prop="menuType">
+            <template #default="scope">
+              <el-tag v-if=" scope.row.menuType == 0 " type="success">目录</el-tag>
+              <el-tag v-else>菜单</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="是否外链"  key="isLink">
+            <template #default="scope">
+              <el-tag v-if=" scope.row.isLink == 0 ">不是</el-tag>
+              <el-tag v-else type="danger">是</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="侧边栏可见"  key="visible">
+            <template #default="scope">
+              <el-tag v-if=" scope.row.visible == 0 ">可见</el-tag>
+              <el-tag v-else type="danger">隐藏</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="菜单状态"  key="status">
+            <template #default="scope">
+              <el-tag v-if=" scope.row.status == 0 ">正常</el-tag>
+              <el-tag v-else type="danger">禁用</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作">
+            <template #default="scope">
+              <el-tooltip content="修改" placement="top">
+                <el-button link type="primary" icon="Edit" @click="toEdit(scope.row)" />
+              </el-tooltip>
+              <el-tooltip content="删除" placement="top">
+                <el-button link type="primary" icon="Delete" @click="toDelete(scope.row.menuId)" />
+              </el-tooltip>
+            </template>
+          </el-table-column>
+        </el-table>
+    </div>
   </el-card>
   <!--新增对话框-->
   <AddView />
   <!--编辑对话框-->
   <EditView />
+  </el-space>
 </template>
 <script setup>
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -212,4 +222,7 @@ function deleteMenu(menuId) {
 
 </script>
 <style scoped>
+.card-div {
+  padding: 5px;
+}
 </style>

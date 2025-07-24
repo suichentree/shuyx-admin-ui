@@ -10,7 +10,7 @@
   <template #header>
       <span>新增用户</span>
     </template>
-  <el-form :inline="true" :model="addform" :rules="rules" ref="addformRef">
+  <el-form :inline="true" :model="addform" :rules="rules" ref="addformRef" label-width="100px" label-position="top">
     <el-row>
       <el-col :span="12">
         <el-form-item label="用户名称" prop="userName">
@@ -39,7 +39,7 @@
       </el-col>
       <el-col :span="12">
         <el-form-item label="邮箱" prop="email">
-          <el-input v-model="addform.email" placeholder="请输入"><template #append>.com</template></el-input>
+          <el-input v-model="addform.email" placeholder="请输入"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="12">
@@ -60,13 +60,13 @@
             :render-after-expand="false"
             placeholder="请选择"
             clearable
-            style="width: 200px"
+            style="width: 200px;"
           />
         </el-form-item>
       </el-col>
       <el-col :span="12">
         <el-form-item label="职位" prop="positionId">
-            <el-select v-model="addform.positionId" placeholder="请选择" clearable style="width: 200px">
+            <el-select v-model="addform.positionId" placeholder="请选择" clearable style="width: 200px;">
               <el-option v-for="obj in positionInfo" :key="obj.positionId" :label="obj.positionName" :value="obj.positionId" />
             </el-select>
           </el-form-item>

@@ -1,10 +1,43 @@
 export default [
-  //查询树形组织机构列表
+  //添加组织机构
   {
-    url: '/api/shuyx-user/org/orgTreelist', // 接口路径
-    method: 'GET', // 请求方法
+    url: '/api/shuyx-user/org/addOrg', // 接口路径
+    method: 'POST', // 请求方法
     response: () => {
       // 模拟响应数据
+      return {
+          code: 200,
+          message: "请求成功"
+      }
+    }
+  },
+  //更新组织机构
+  {
+    url: '/api/shuyx-user/org/updateOrg', 
+    method: 'POST', 
+    response: () => {
+      return {
+          code: 200,
+          message: "请求成功"
+      }
+    }
+  },
+  //删除组织机构
+  {
+    url: '/api/shuyx-user/org/deleteOrg',
+    method: 'DELETE',
+    response: () => {
+      return {
+          code: 200,
+          message: "请求成功"
+      }
+    }
+  },
+  //查询树形组织机构列表
+  {
+    url: '/api/shuyx-user/org/orgTreelist', 
+    method: 'GET', 
+    response: () => {
       return {
         code: 200,
         data: [

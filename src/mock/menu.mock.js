@@ -1,10 +1,43 @@
 export default [
-  //查询用户菜单信息
+  //新增菜单
   {
-    url: '/api/shuyx-user/menu/userMenuInfo', // 接口路径
-    method: 'GET', // 请求方法
+    url: '/api/shuyx-user/menu/addMenu', // 接口路径
+    method: 'POST', // 请求方法
     response: () => {
       // 模拟响应数据
+      return{
+          code: 200,
+          message: "请求成功"
+      }
+    }
+  },
+  //更新菜单
+  {
+    url: '/api/shuyx-user/menu/updateMenu', 
+    method: 'POST', 
+    response: () => {
+      return{
+          code: 200,
+          message: "请求成功"
+      }
+    }
+  },
+  //删除菜单
+  {
+    url: '/api/shuyx-user/menu/deleteMenu', 
+    method: 'DELETE', 
+    response: () => {
+      return{
+          code: 200,
+          message: "请求成功"
+      }
+    }
+  },
+  //查询用户菜单信息
+  {
+    url: '/api/shuyx-user/menu/updateMenu',
+    method: 'GET', 
+    response: () => {
       return{
                 "code": 200,
                 "data": [

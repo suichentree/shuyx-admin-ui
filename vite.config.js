@@ -13,7 +13,7 @@ export default defineConfig(({mode}) =>  {
       vue(),
       viteMockServe({
         mockPath: 'src/mock', // Mock 文件存放的目录
-        enable: false,        // 开启关闭mock服务，默认开启
+        enable: true,        // 开启关闭mock服务，默认开启
         watchFiles: true,     // 监听 Mock 文件变化
       }),
     ],

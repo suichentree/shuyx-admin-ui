@@ -69,8 +69,6 @@
 
   <!-- 优化后的图表容器 -->
   <div style="padding: 10px 16px;">
-    <div class="chart-box" id="myEcharts"></div>
-    <div class="chart-box" id="myEcharts2"></div>
     <el-row :gutter="20">
       <el-col :span="12">
         <div class="chart-box" id="myPieChart"></div>
@@ -79,6 +77,8 @@
         <div class="chart-box" id="myLineChart"></div>
       </el-col>
     </el-row>
+    <div class="chart-box" id="myEcharts"></div>
+    <div class="chart-box" id="myEcharts2"></div>
   </div>
 </template>
 
@@ -98,11 +98,19 @@ function initChart() {
   const chart = echarts.init(document.getElementById('myEcharts'))
   chart.setOption({
     title: {
-      text: '用户增长趋势',
-      left: 'left',
+      text: '用户增长趋势', // 主标题
+      subtext: '2025年度用户数量月度变化统计（单位：人）', //副标题（说明）
+      left: 'left',     // 标题居左
+      top: 1,           // 标题距离顶部10px（避免被容器padding遮挡）
       textStyle: {
-        color: 'var(--el-text-color-primary)', // 与页面标题颜色一致
-        fontSize: 16
+        color: '#303133', // 主标题颜色（深灰）
+        fontSize: 16,
+        fontWeight: 600 // 主标题加粗
+      },
+      subtextStyle: {
+        color: '#606266', // Element Plus次文本色
+        fontSize: 14,
+        padding: [4, 0] // 副标题与主标题间距
       }
     },
     tooltip: {
@@ -174,15 +182,23 @@ function initChart2() {
   chart.setOption({
     title: {
       text: '功能模块使用统计',
+      subtext: '2025年各功能模块月度使用次数对比（单位：次）', // 新增说明
       left: 'left',
+      top: 1,
       textStyle: {
-        color: 'var(--el-text-color-primary)',
-        fontSize: 16
+        color: '#303133',
+        fontSize: 16,
+        fontWeight: 600
+      },
+      subtextStyle: {
+        color: '#606266',
+        fontSize: 14,
+        padding: [4, 0]
       }
     },
     tooltip: {
       trigger: 'item',
-      backgroundColor: 'rgba(103, 194, 58, 0.9)', // 绿色辅助色
+      backgroundColor: '#79bbff', // 蓝色辅助色
       textStyle: { color: '#fff' }
     },
     grid: {
@@ -224,7 +240,7 @@ function initChart2() {
         data: [35, 28, 42, 19, 30, 25],
         barWidth: '35%', // 柱子宽度
         itemStyle: {
-          color: '#67c23a', // 绿色辅助色
+          color: '#409eff', // 蓝色柱子
           borderRadius: [4, 4, 0, 0] // 柱子圆角
         }
       }
@@ -240,10 +256,18 @@ function initPieChart() {
   chart.setOption({
     title: {
       text: '用户类型分布',
+      subtext: '当前系统用户类型占比', // 新增说明
       left: 'left',
+      top: 1,
       textStyle: {
-        color: 'var(--el-text-color-primary)',
-        fontSize: 16
+        color: '#303133',
+        fontSize: 16,
+        fontWeight: 600
+      },
+      subtextStyle: {
+        color: '#606266',
+        fontSize: 14,
+        padding: [4, 0]
       }
     },
     tooltip: {
@@ -298,10 +322,18 @@ function initLineChart() {
   chart.setOption({
     title: {
       text: '月度活跃用户数',
+      subtext: '2025年月度活跃用户数变化趋势（单位：人）', // 新增说明
       left: 'left',
+      top: 1,
       textStyle: {
-        color: 'var(--el-text-color-primary)',
-        fontSize: 16
+        color: '#303133',
+        fontSize: 16,
+        fontWeight: 600
+      },
+      subtextStyle: {
+        color: '#606266',
+        fontSize: 14,
+        padding: [4, 0]
       }
     },
     tooltip: {

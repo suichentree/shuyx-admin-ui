@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="DialogVisible"
-    width="30%"
+    width="50%"
     :show-close="false"
     :close-on-click-modal="false"
     :close-on-press-escape="false"

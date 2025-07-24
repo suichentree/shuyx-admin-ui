@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="DialogVisible"
-    width="30%"
+    width="50%"
     :show-close="false"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
@@ -95,7 +95,7 @@
               <el-radio :label="1">是</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="菜单侧边栏可见" prop="visible">
+          <el-form-item label="菜单侧边栏" prop="visible">
             <el-radio-group v-model="addform.visible">
               <el-radio :label="0">可见</el-radio>
               <el-radio :label="1">隐藏</el-radio>

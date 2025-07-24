@@ -18,7 +18,7 @@ const APIResources = {
       headers: { 'Content-Type': 'application/json' }
     })
   },
-  //分页查询
+  //分页标签查询
   pageFindMediaByTag(queryData, pageData) {
     return axiosService.request({
       url: '/shuyx-media/media/pageFindMediaByTag',
