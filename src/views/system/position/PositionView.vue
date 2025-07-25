@@ -41,7 +41,7 @@
       </div>
       <div class="card-div">
         <!--数据表格-->
-        <el-table :data="tableData" border>
+        <el-table :data="tableData" border stripe  :header-cell-style="{ background: '#f8f9fa', color: '#303133', height: '48px' }">
           <el-table-column label="职位编号" align="center" key="positionId" prop="positionId" />
           <el-table-column label="职位名称" align="center" key="positionName" prop="positionName" />
           <el-table-column label="职位编码" align="center" key="positionCode" prop="positionCode" />

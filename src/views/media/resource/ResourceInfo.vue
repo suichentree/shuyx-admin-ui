@@ -12,7 +12,7 @@
         >
           <template #error>
             <div class="error-cover">
-              <el-icon size="48" color="#666"><IconPicture /></el-icon>
+              <el-icon size="48" color="#666"><Picture /></el-icon>
               <div class="error-text">暂无图片</div>
             </div>
           </template>
@@ -59,7 +59,7 @@
               size="small"
               class="episode-button"
             >
-              <el-icon><IconPicture /></el-icon>
+              <el-icon><Picture /></el-icon>
               {{ item.episodesName }}
             </el-button>
           </el-space>
@@ -77,7 +77,7 @@ import { ref, onMounted, provide } from 'vue'
 import MediaAPIResources from '@/api/media.service.js'
 import { useRoute } from 'vue-router'
 import PlayVideo from './components/PlayVideo.vue'
-import { Picture as IconPicture } from '@element-plus/icons-vue'
+import { Picture } from '@element-plus/icons-vue'
 
 // 接收 router 传参
 let mediaId = useRoute().query.id

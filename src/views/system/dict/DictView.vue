@@ -34,7 +34,7 @@
       </div>
       <div class="card-div">
         <!--数据表格-->
-        <el-table :data="tableData" border>
+        <el-table :data="tableData" border stripe  :header-cell-style="{ background: '#f8f9fa', color: '#303133', height: '48px' }">
           <el-table-column label="字典编号" key="dictId" prop="dictId" />
           <el-table-column label="字典名称" key="dictName" prop="dictName" />
           <el-table-column label="字典编码" key="dictCode" prop="dictCode" />

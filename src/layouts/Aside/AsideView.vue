@@ -1,39 +1,46 @@
 <template>
-  <el-scrollbar style="background-color: #304156;height:100%">
-    <!-- 侧边栏 -->
-    <el-menu
-      style="border: none;"
-      :collapse="isCollapse"
-      mode="vertical"
-      :router="true"
-      background-color="#304156"
-      active-text-color="#ffd04b"
-      text-color="#bfcbd9"
+  <!-- PC端：显示传统侧边栏（由LayoutView控制是否渲染） -->
+  <!-- 移动端：显示抽屉 -->
+  <template v-if="isMobile">
+    <el-drawer
+      :open="!isCollapse"
+      placement="left"
+      size="200px"
+      :before-close="handleDrawerClose"
+      style="background-color: #304156;"
     >
-      <!--LogoTitle-->
-      <LogoTitle />
-      <!--菜单-->
-      <SidebarItem v-for="route in sideMenuList" :key="route.path" :item="route" />
-    </el-menu>
-  </el-scrollbar>
+      <el-menu
+        mode="vertical"
+        :router="true"
+        background-color="#304156"
+        active-text-color="#ffd04b"
+        text-color="#bfcbd9"
+      >
+        <LogoTitle />
+        <SidebarItem v-for="route in sideMenuList" :key="route.path" :item="route" />
+      </el-menu>
+    </el-drawer>
+  </template>
 </template>
+
 <script setup>
 import LogoTitle from './LogoTitle.vue'
 import SidebarItem from './SidebarItem.vue'
 import { computed } from 'vue'
-//导入headerStore，从headerStore中获取侧边栏伸展变量
 import { useHeaderStore } from '@/stores/headerStore'
-// isCollapse需要设置为计算属性，计算属性才会实时更新
-const isCollapse = computed(() => {
-  return useHeaderStore().sideIsExpand
-})
-
-//导入MenuStore，获取侧边栏菜单信息
 import { useMenuStore } from '@/stores/menuStore'
-let sideMenuList = useMenuStore().sideBarMenuInfo
 
+// 获取Store状态
+const headerStore = useHeaderStore()
+const menuStore = useMenuStore()
 
+// 侧边栏折叠状态（PC端使用）
+const isCollapse = computed(() => headerStore.sideIsExpand)
+// 移动端检测（窗口宽度<768px）
+const isMobile = computed(() => window.innerWidth < 768)
 
+// 抽屉关闭时更新折叠状态
+const handleDrawerClose = () => {
+  headerStore.changeSideExpand()
+}
 </script>
-<style scoped>
-</style>

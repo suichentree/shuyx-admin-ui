@@ -1,28 +1,52 @@
 <template>
   <el-space direction="vertical" :fill="true" style="width: 100%;">
-    <!--查询条件-->
-    <el-card shadow="never" :body-style="{ padding: '0px' }">
+    <!-- 查询条件卡片 -->
+    <el-card 
+      shadow="always" 
+      :body-style="{ padding: '10px 10px' }" 
+      style="border-radius: 8px;"
+    >
       <div class="card-div">
-        <el-row justify="space-between">
-          <el-col :span="2"><el-tag>查询条件</el-tag></el-col>
+        <el-row justify="space-between" style="margin-bottom: 12px;">
+          <el-col :span="2"><el-tag type="info" effect="light">查询条件</el-tag></el-col>
           <el-col :span="6" style="text-align: right">
-            <el-button type="primary" @click="search">搜索</el-button>
-            <el-button @click="resetQuery">重置</el-button>
+            <el-button 
+              type="primary" 
+              @click="search"
+            >搜索</el-button>
+            <el-button 
+              @click="resetQuery"
+            >重置</el-button>
           </el-col>
         </el-row>
       </div>
       <div class="card-div">
         <el-form :inline="true" :model="queryform" ref="queryformRef">
           <el-form-item label="用户名称" prop="userName">
-            <el-input v-model="queryform.userName" placeholder="请输入" clearable />
+            <el-input 
+              v-model="queryform.userName" 
+              placeholder="请输入用户名称" 
+              clearable 
+              style="border-radius: 6px; width: 200px;"
+            />
           </el-form-item>
           <el-form-item label="用户状态" prop="status">
-            <el-select v-model="queryform.status" placeholder="请选择" clearable style="width: 200px">
+            <el-select 
+              v-model="queryform.status" 
+              placeholder="请选择用户状态" 
+              clearable 
+              style="width: 200px; border-radius: 6px;"
+            >
               <el-option v-for="obj in userStatusDict" :key="obj.value" :label="obj.label" :value="obj.value" />
             </el-select>
           </el-form-item>
           <el-form-item label="手机号码" prop="phone">
-            <el-input v-model="queryform.phone" placeholder="请输入" clearable />
+            <el-input 
+              v-model="queryform.phone" 
+              placeholder="请输入手机号码" 
+              clearable 
+              style="border-radius: 6px; width: 200px;"
+            />
           </el-form-item>
           <el-form-item label="所属组织机构" prop="orgId">
             <el-tree-select
@@ -31,39 +55,68 @@
               :data="orgTreeOptions"
               check-strictly
               :render-after-expand="false"
-              placeholder="请选择"
+              placeholder="请选择组织机构"
               clearable
-              style="width: 200px"
+              style="width: 240px; border-radius: 6px;"
             />
           </el-form-item>
           <el-form-item label="创建时间" prop="dateRange">
-            <el-date-picker v-model="dateRange" value-format="YYYY-MM-DD" type="daterange" range-separator="-"
-              start-placeholder="开始日期" end-placeholder="结束日期" clearable></el-date-picker>
+            <el-date-picker 
+              v-model="dateRange" 
+              value-format="YYYY-MM-DD" 
+              type="daterange" 
+              range-separator="-"
+              start-placeholder="开始日期" 
+              end-placeholder="结束日期" 
+              clearable
+              style="width: 280px; border-radius: 6px;"
+            />
           </el-form-item>
         </el-form>
       </div>
     </el-card>
-    <!--查询结果-->
-    <el-card shadow="never" :body-style="{ padding: '0px' }" style="">
+
+    <!-- 查询结果卡片 -->
+    <el-card 
+      shadow="always" 
+      :body-style="{ padding: '10px 10px' }" 
+      style="border-radius: 8px;"
+    >
       <div class="card-div">
         <el-row justify="space-between">
-          <el-col :span="2"><el-tag>查询结果</el-tag></el-col>
+          <el-col :span="2"><el-tag type="info" effect="light">查询结果</el-tag></el-col>
           <el-col :span="6" style="text-align: right">
-            <el-button type="success" @click="AddUserDialogVisible = true" >新增</el-button>
+            <el-button 
+              type="success" 
+              @click="AddUserDialogVisible = true"
+            >新增</el-button>
           </el-col>
         </el-row>
       </div>
       <div class="card-div">
-        <!--数据表格-->
-        <el-table :data="tableData" border stripe>
+        <!-- 数据表格 -->
+        <el-table 
+          :data="tableData" 
+          border 
+          stripe
+          style="border-radius: 6px; overflow: hidden;"
+          :header-cell-style="{ background: '#f8f9fa', color: '#303133', height: '48px' }"
+          :row-style="{ height: '48px' }"
+        >
           <el-table-column label="用户编号" align="center" key="userId" prop="userId" show-overflow-tooltip/>
           <el-table-column label="用户名称" align="center" key="userName" prop="userName" show-overflow-tooltip/>
           <el-table-column label="手机号码" align="center" key="phone" prop="phone" show-overflow-tooltip/>
           <el-table-column label="邮箱" align="center" key="email" prop="email" show-overflow-tooltip/>
           <el-table-column label="用户状态" align="center" key="status" show-overflow-tooltip>
             <template #default="scope">
-              <el-switch v-model="scope.row.status" :active-value="'0'" :inactive-value="'1'" active-text="正常"
-                inactive-text="禁用" inline-prompt></el-switch>
+              <el-switch 
+                v-model="scope.row.status" 
+                :active-value="'0'" 
+                :inactive-value="'1'" 
+                active-text="正常"
+                inactive-text="禁用" 
+                inline-prompt
+              />
             </template>
           </el-table-column>
           <el-table-column label="所属组织机构" align="center" key="orgName" prop="org.orgName" show-overflow-tooltip/>
@@ -72,20 +125,36 @@
           <el-table-column label="操作" align="center" show-overflow-tooltip>
             <template #default="scope">
               <el-tooltip content="修改" placement="top">
-                <el-button link type="primary" icon="Edit" @click="toEdit(scope.row.userId)" />
+                <el-button 
+                  link 
+                  type="primary" 
+                  icon="Edit" 
+                  @click="toEdit(scope.row.userId)"
+                />
               </el-tooltip>
               <el-tooltip content="删除" placement="top">
-                <el-button link type="primary" icon="Delete" @click="toDelete(scope.row.userId)" />
+                <el-button 
+                  link 
+                  type="danger" 
+                  icon="Delete" 
+                  @click="toDelete(scope.row.userId)"
+                />
               </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
       </div>
-      <!--表格分页-->
+      <!-- 表格分页 -->
       <div class="card-div">
-        <el-pagination @change="changePageData" v-model:current-page="pageData.pageNum" 
-          v-model:page-size="pageData.pageSize" :page-sizes="pageData.pageSizes" :background="true"
-          layout="total, sizes, prev, pager, next, jumper" :total="pageData.total" />
+        <el-pagination
+          @change="changePageData"
+          v-model:current-page="pageData.pageNum"
+          v-model:page-size="pageData.pageSize"
+          :page-sizes="pageData.pageSizes"
+          :background="true"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="pageData.total"
+        />
       </div>
     </el-card>
   </el-space>
@@ -94,6 +163,7 @@
   <!--编辑用户对话框-->
   <EditView />
 </template>
+
 <script setup>
 import { ref, onMounted, provide } from 'vue'
 import UserAPIResources from '@/api/user.service.js'
@@ -238,7 +308,34 @@ function changePageData() {
 
 </script>
 <style scoped>
+/* 输入框/选择器聚焦效果 */
+.el-input:focus, .el-input:hover,
+.el-select:focus, .el-select:hover,
+.el-date-picker:focus, .el-date-picker:hover,
+.el-tree-select:focus, .el-tree-select:hover {
+  border-color: #409eff;
+  box-shadow: 0 0 0 2px rgba(64,158,255,0.1);
+}
+
+/* 按钮悬停动画 */
+.el-button:not(.is-disabled):hover {
+  transform: translateY(-1px);
+  transition: transform 0.1s ease;
+}
+
+/* 表格行悬停样式 */
+.el-table__body tr:hover > td {
+  background-color: #f8f9fa !important;
+}
+
+/* 标签样式调整 */
+.el-tag {
+  font-weight: 500;
+  padding: 4px 8px;
+}
+
+/* 原有card-div样式优化 */
 .card-div {
-  padding: 5px;
+  padding: 8px 0; /* 调整内边距与卡片整体风格一致 */
 }
 </style>

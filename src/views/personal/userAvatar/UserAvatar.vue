@@ -1,12 +1,32 @@
 <template>
-  <el-form :model="form" label-width="auto" label-position="right">
-    <el-form-item label="用户编号" prop="userId">
-      <el-input v-model="form.userId" placeholder="请输入" disabled />
-    </el-form-item>
-    <el-form-item label="用户名称" prop="userName">
-      <el-input v-model="form.userName" placeholder="请输入" disabled />
-    </el-form-item>
-    <div>
+  <!-- 主容器卡片 -->
+  <el-card 
+    shadow="always" 
+    :body-style="{ padding: '24px 32px' }" 
+    style="max-width: 100%; margin: 0px auto; border-radius: 8px;"
+  >
+    <el-form :model="form" label-width="auto" label-position="right">
+      <!-- 用户编号 -->
+      <el-form-item label="用户编号" prop="userId">
+        <el-input 
+          v-model="form.userId" 
+          placeholder="请输入" 
+          disabled 
+          style="background: #f8f9fa; border-radius: 6px;"
+        />
+      </el-form-item>
+
+      <!-- 用户名称 -->
+      <el-form-item label="用户名称" prop="userName">
+        <el-input 
+          v-model="form.userName" 
+          placeholder="请输入" 
+          disabled 
+          style="background: #f8f9fa; border-radius: 6px;"
+        />
+      </el-form-item>
+
+      <!-- 头像上传 -->
       <el-form-item label="用户头像" prop="avatar">
         <el-upload
           element-loading-text="获取用户头像中..."
@@ -15,40 +35,65 @@
           :limit="1"
           list-type="picture-card"
           :auto-upload="false"
+          style="max-width: 400px;"
         >
           <el-icon><Plus /></el-icon>
+          <!-- 自定义文件项样式 -->
           <template #file="{ file }">
-            <div>
-              <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+            <div class="custom-upload-item">
+              <img 
+                class="el-upload-list__item-thumbnail" 
+                :src="file.url" 
+                alt="" 
+                style="border-radius: 6px;"
+              />
               <span class="el-upload-list__item-actions">
                 <span
                   v-if="!disabled"
                   class="el-upload-list__item-delete"
                   @click="handleRemove(file)"
+                  style="background: rgba(0,0,0,0.5); border-radius: 50%;"
                 >
                   <el-icon><Delete /></el-icon>
                 </span>
               </span>
             </div>
           </template>
+          <!-- 提示与进度条 -->
           <template #tip>
-            <div class="el-upload__tip" style="font-weight: bold">
-              只支持.png / .jpg / .jpeg 文件。并且只支持上传一个文件。
+            <div class="el-upload__tip" style="font-weight: bold; color: #606266;">
+              只支持.png / .jpg / .jpeg 文件，仅允许上传1个文件
             </div>
-            <!--进度条-->
-            <div v-if="isShowProgress">
-              <span>文件进度条</span>
-              <el-progress :text-inside="true" :stroke-width="20" :percentage="progressPercent" />
+            <div v-if="isShowProgress" style="margin-top: 8px;">
+              <el-progress 
+                :text-inside="true" 
+                :stroke-width="20" 
+                :percentage="progressPercent" 
+                color="#409eff"
+                style="width: 100%;"
+              />
+              <div style="text-align: center; color: #606266; font-size: 12px;">
+                上传进度：{{ progressPercent }}%
+              </div>
             </div>
           </template>
         </el-upload>
       </el-form-item>
+    </el-form>
+
+    <!-- 保存按钮 -->
+    <div style="margin-top: 24px; text-align: left;">
+      <el-button 
+        type="primary" 
+        @click="submit"
+        style="padding: 8px 24px; border-radius: 6px;"
+      >
+        保存
+      </el-button>
     </div>
-  </el-form>
-  <span>
-    <el-button type="primary" @click="submit">保存</el-button>
-  </span>
+  </el-card>
 </template>
+
 <script setup>
 import { ref,onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
@@ -134,4 +179,45 @@ function submit() {
 }
 
 </script>
-<style scoped></style>
+
+<style scoped>
+/* 上传文件项自定义样式 */
+.custom-upload-item {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.el-upload-list__item-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 输入框禁用样式优化 */
+.el-input[disabled] {
+  background-color: #f8f9fa;
+  border-color: #e4e7ed;
+  color: #606266;
+}
+
+/* 按钮悬停动画 */
+.el-button:not(.is-disabled):hover {
+  transform: translateY(-1px);
+  transition: transform 0.1s ease;
+}
+
+/* 上传组件样式调整 */
+.el-upload--picture-card {
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  border-radius: 6px;
+  margin-right: 16px;
+}
+
+.el-upload--picture-card:hover {
+  border-color: #409eff;
+  color: #409eff;
+}
+</style>

@@ -56,4 +56,10 @@ function handClick(item){
 .scrollbar-flex-content {
   display: flex;
 }
+
+/* 标签悬停效果 */
+.el-tag:hover {
+  transform: translateY(-1px);  /* 微上移动画 */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* 添加阴影 */
+}
 </style>

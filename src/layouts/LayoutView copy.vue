@@ -1,20 +1,18 @@
 <script setup>
 // 组件注册
-import { computed } from 'vue'
 import Header from './Header/HeaderView.vue'
 import Aside from './Aside/AsideView.vue'
 import TagsView from "./Header/TagsView.vue"
 
-// 移动端检测（窗口宽度<768px）
-const isMobile = computed(() => window.innerWidth < 768)
 </script>
 
 <template>
   <!--最外层容器高宽都为100%-->
   <el-container style="width: 100%;height: 100%;">
     <!--左边区域高100%,宽auto自适应,宽度会随着侧边栏的折叠而变化-->
-    <el-aside v-if="!isMobile" style="padding: 0px;width: auto;height: 100%;">
-      <Aside></Aside>  <!-- 恢复Aside组件引用 -->
+    <el-aside style="padding: 0px;width: auto;height: 100%;">
+      <!-- 侧边栏组件 -->
+      <Aside></Aside>
     </el-aside>
     <!--右边区域高100%,宽auto自适应-->
     <el-container style="height: 100%;width: auto;">

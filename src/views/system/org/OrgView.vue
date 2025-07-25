@@ -36,7 +36,8 @@
       </div>
       <div class="card-div">
         <!--数据表格-->
-        <el-table :data="tableData" row-key="orgId" default-expand-all border>
+        <el-table :data="tableData" row-key="orgId" default-expand-all border stripe 
+          :header-cell-style="{ background: '#f8f9fa', color: '#303133', height: '48px' }">
           <el-table-column label="组织机构编号" align="left" key="orgId" prop="orgId" />
           <el-table-column label="组织机构名称" align="center" key="orgName" prop="orgName" />
           <el-table-column label="组织机构路径" align="center" key="orgPath" prop="orgPath" />
