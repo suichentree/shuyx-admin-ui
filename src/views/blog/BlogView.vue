@@ -55,7 +55,7 @@
         <el-icon><UserFilled /></el-icon>
         suichentree
         <el-icon><Timer /></el-icon>
-        2024/03/18
+        2025/06/18
         <el-icon><PriceTag /></el-icon>
         java
       </el-text>

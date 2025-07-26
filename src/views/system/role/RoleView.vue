@@ -7,7 +7,7 @@
           <div class="card-div">
             <el-row justify="space-between" align="middle">
               <el-tag type="info">角色树</el-tag>
-              <el-button  type="success"   @click="toAdd" size="small">
+              <el-button  type="success"   @click="toAdd">
                 新增角色
               </el-button>
             </el-row>
@@ -42,10 +42,10 @@
                 <el-tab-pane label="角色信息维护">
                   <EditRoleForm/>
                 </el-tab-pane>
-                <el-tab-pane label="角色菜单维护" lazy="true">
+                <el-tab-pane label="角色菜单维护" :lazy="true">
                   <EditRoleMenu/>
                 </el-tab-pane>
-                <el-tab-pane label="角色用户维护" lazy="true">
+                <el-tab-pane label="角色用户维护" :lazy="true">
                   <EditRoleUser/>
                 </el-tab-pane>
               </el-tabs>

@@ -14,7 +14,7 @@
   </el-dialog>
 </template>
 <script setup>
-import { ref,onMounted,inject } from 'vue'
+import { onMounted,inject } from 'vue'
 
 //接收父组件传递的数据
 let DialogVisible = inject('PlayerVisible')

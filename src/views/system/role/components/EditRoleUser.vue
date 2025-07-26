@@ -1,9 +1,9 @@
 <template>
   <el-form>
       <el-form-item>
-        <el-button type="primary" size="small" @click="search">查询</el-button>
-        <el-button type="success" size="small" @click="addUserRole">新增</el-button>
-        <el-button type="danger" size="small" @click="deleteUserRole">删除</el-button>
+        <el-button type="primary" @click="search">查询</el-button>
+        <el-button type="success"  @click="addUserRole">新增</el-button>
+        <el-button type="danger"  @click="deleteUserRole">删除</el-button>
       </el-form-item>
       <el-form-item>
         <!--数据表格-->

@@ -6,7 +6,7 @@
     :rules="rules" 
     ref="formRef"
   >
-    <!-- 头像部分优化 -->
+    <!-- 头像 -->
     <el-form-item label="用户头像" prop="avatar">
       <el-image
         style="width: 100px; height: 100px; border-radius: 8px;"
@@ -34,7 +34,6 @@
         v-model="form.userId" 
         placeholder="请输入" 
         clearable 
-        style="border-radius: 6px;"
       />
     </el-form-item>
 
@@ -43,7 +42,6 @@
         v-model="form.userName" 
         placeholder="请输入" 
         clearable 
-        style="border-radius: 6px;"
       />
     </el-form-item>
 
@@ -52,18 +50,16 @@
         v-model="form.phone" 
         placeholder="请输入" 
         clearable 
-        style="border-radius: 6px;"
       />
     </el-form-item>
 
-    <!-- 密码字段样式优化 -->
+    <!-- 密码 -->
     <el-form-item label="用户密码" prop="passWord">
       <el-input 
         v-model="form.passWord" 
         placeholder="请输入密码" 
         type="password" 
         disabled 
-        style="background: #f8f8f8; border-radius: 6px;"
       />
     </el-form-item>
 
@@ -73,7 +69,6 @@
         type="date"
         placeholder="选择出生日期"
         value-format="YYYY-MM-DD"
-        style="border-radius: 6px;"
       />
     </el-form-item>
 
@@ -81,19 +76,17 @@
       <el-input 
         v-model="form.email" 
         placeholder="请输入" 
-        style="border-radius: 6px;"
       >
-        <template #append>.com</template>
       </el-input>
     </el-form-item>
 
-    <!-- 性别单选按钮升级 -->
+    <!-- 性别单选按钮 -->
     <el-form-item label="性别" prop="gender">
       <el-radio-group v-model="form.gender" size="large">
         <el-radio-button 
           v-for="(item, index) in userGenderDict" 
           :key="index" 
-          :label="item.value"
+          :value="item.value"
         >
           {{ item.label }}
         </el-radio-button>
@@ -105,7 +98,6 @@
         v-model="orgName" 
         placeholder="请输入" 
         disabled 
-        style="background: #f8f8f8; border-radius: 6px;"
       />
     </el-form-item>
 
@@ -114,7 +106,6 @@
         v-model="positionName" 
         placeholder="请输入" 
         disabled 
-        style="background: #f8f8f8; border-radius: 6px;"
       />
     </el-form-item>
 
@@ -122,8 +113,6 @@
       <el-button 
         type="primary" 
         @click="onSubmit"
-        style="padding: 10px 24px; border-radius: 6px;"
-        :hover-style="{ transform: 'translateY(-1px)' }"
       >
         更新
       </el-button>
@@ -194,16 +183,5 @@ let onSubmit = () => {
 
 </script>
 <style scoped>
-/* 调整表单标签样式 */
-.el-form-item__label {
-  font-size: 14px;
-  color: #333;
-}
 
-/* 优化输入框聚焦效果 */
-.el-input:focus, .el-input:hover,
-.el-date-picker:focus, .el-date-picker:hover {
-  border-color: #409eff;
-  box-shadow: 0 0 0 2px rgba(64,158,255,0.1);
-}
 </style>

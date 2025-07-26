@@ -338,7 +338,7 @@ export default [
                   "visible": 0,
                   "isLink": 0,
                   "status": null,
-                  "icon": "Memo",
+                  "icon": "DataLine",
                   "createTime": null,
                   "updateTime": null,
                   "children": []

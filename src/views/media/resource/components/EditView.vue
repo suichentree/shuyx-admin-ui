@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="DialogVisible"
-    width="60%"
+    width="50%"
     :show-close="false"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
@@ -64,7 +64,6 @@
 <script setup>
 import { ref, inject, getCurrentInstance,onMounted} from 'vue'
 import MediaAPIResources from '@/api/media.service.js'
-import OSSAPIResources from '@/api/oss.service.js'
 import { ElMessage } from 'element-plus'
 //this
 const { proxy } = getCurrentInstance()

@@ -18,7 +18,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="标签分类" prop="type">
+          <el-form-item label="标签分类" prop="tagType">
             <el-select v-model="form.tagType" placeholder="Select" style="width: 200px">
               <el-option
                 v-for="item in options"
@@ -26,10 +26,8 @@
                 :label="item.label"
                 :value="item.value"
               >
-                <span style="float: left">{{ item.label }}</span>
-                <span
-                  style="float: right; color: var(--el-text-color-secondary); font-size: 13px"
-                  >{{ item.value }}</span
+                <span>{{ item.label }}</span>
+                <span>{{ item.value }}</span
                 >
               </el-option>
             </el-select>

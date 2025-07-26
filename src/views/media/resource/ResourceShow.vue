@@ -1,33 +1,29 @@
 <template>
   <!--查询条件-->
   <el-card shadow="never" :body-style="{ padding: '0px'}">
-    <div style="padding: 10px">
+    <div class="card-div">
       <el-row justify="space-between">
         <el-col :span="2">
-          <el-tag>查询条件</el-tag>
+          <el-tag type="info">查询条件</el-tag>
         </el-col>
         <el-col :span="6" style="text-align: right">
           <el-button type="primary" @click="search">搜索</el-button>
         </el-col>
       </el-row>
     </div>
-    <div style="padding: 10px">
+    <div class="card-div">
       <el-form :model="queryform" label-position="right"  class="query-form">
         <el-form-item label="媒体类型:">
           <el-space wrap>
             <div v-for="i in mediaTypeDict" :key="i" @click="handClick0(i)">
-              <el-tag size="small" :effect="queryform.mediaType === i.value ? 'dark' : 'plain'">{{
-                i.label
-              }}</el-tag>
+              <el-tag size="small" :effect="queryform.mediaType === i.value ? 'dark' : 'plain'">{{i.label}}</el-tag>
             </div>
           </el-space>
         </el-form-item>
         <el-form-item label="媒体风格:">
           <el-space wrap>
             <div v-for="i in StyleTagArray" :key="i" @click="handClick1(i)">
-              <el-tag size="small" :effect="queryform.styleType === i.tagId ? 'dark' : 'plain'">{{
-                i.tagName
-              }}</el-tag>
+              <el-tag size="small" :effect="queryform.styleType === i.tagId ? 'dark' : 'plain'">{{i.tagName}}</el-tag>
             </div>
           </el-space>
         </el-form-item>
@@ -58,11 +54,10 @@
       </el-form>
     </div>
   </el-card>
-  <!--查询结果-->
   <!-- 查询结果 -->
-  <div style="display: flex; flex-wrap: wrap; gap: 16px; padding: 10px 0;">  <!-- 替换原el-space为flex容器 -->
+  <div style="display: flex; flex-wrap: wrap; gap: 16px; padding: 10px 0;"> 
     <div v-for="i in mediaList" :key="i" @click="showMovie(i.mediaId)">
-      <!-- 统一卡片容器（调整margin为0，使用外层gap控制间距） -->
+      <!-- 统一卡片容器（调整margin为0，使用外层gap来控制间距） -->
       <div style="
         border: 1px solid #e5e7eb;
         border-radius: 8px;
@@ -237,8 +232,15 @@ function changePageData() {
 </script>
 
 <style scoped>
-.el-card {
-  --el-card-padding: 1px;
+/* 按钮悬停动画 */
+.el-button:not(.is-disabled):hover {
+  transform: translateY(-1px);
+  transition: transform 0.1s ease;
+}
+
+/* 卡片内边距样式 */
+.card-div {
+  padding: 10px; 
 }
 
 /* 新增查询表单行间距控制 */

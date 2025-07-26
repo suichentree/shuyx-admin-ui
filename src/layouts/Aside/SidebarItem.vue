@@ -26,7 +26,7 @@
         </template>
       </el-menu-item>
       <!--外链菜单-->
-      <el-menu-item @click="toLink(route.path)"  v-else>
+      <el-menu-item @click="toLink(route.path)" v-else>
         <template #title>
           <el-icon ><component :is="route.icon"></component></el-icon>
           <span>{{ route.name }}</span>

@@ -4,7 +4,7 @@
     <el-card shadow="never" :body-style="{ padding: '0px' }">
       <div class="card-div">
         <el-row justify="space-between">
-          <el-col :span="2"><el-tag>查询条件</el-tag></el-col>
+          <el-col :span="2"><el-tag type="info">查询条件</el-tag></el-col>
           <el-col :span="6" style="text-align: right">
             <el-button type="primary" @click="search">搜索</el-button>
             <el-button @click="resetQuery">重置</el-button>
@@ -29,10 +29,8 @@
                 :label="item.label"
                 :value="item.value"
               >
-                <span style="float: left">{{ item.label }}</span>
-                <span
-                  style="float: right; color: var(--el-text-color-secondary); font-size: 13px"
-                  >{{ item.value }}</span
+                <span>{{ item.label }}</span>
+                <span>{{ item.value }}</span
                 >
               </el-option>
             </el-select>
@@ -44,7 +42,7 @@
     <el-card shadow="never" :body-style="{ padding: '0px' }">
       <div class="card-div">
         <el-row justify="space-between">
-          <el-col :span="2"><el-tag>查询结果</el-tag></el-col>
+          <el-col :span="2"><el-tag type="info">查询结果</el-tag></el-col>
           <el-col :span="6" style="text-align: right">
             <el-button type="success" @click="AddDialogVisible = true">新增</el-button>
           </el-col>
@@ -186,7 +184,14 @@ function changePageData() {
 }
 </script>
 <style scoped>
+/* 按钮悬停动画 */
+.el-button:not(.is-disabled):hover {
+  transform: translateY(-1px);
+  transition: transform 0.1s ease;
+}
+
+/* 卡片内边距样式 */
 .card-div {
-  padding: 10px;
+  padding: 10px; 
 }
 </style>

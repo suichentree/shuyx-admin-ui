@@ -3,14 +3,13 @@
   <el-card 
     shadow="always" 
     :body-style="{ padding: '24px 32px' }" 
-    style="max-width: 100%; border-radius: 8px;"
   >
     <el-alert 
       title="注意：重置密码后，将会自动退出系统。用户需要重新登录。" 
       type="warning" 
       :closable="false" 
       show-icon
-      style="margin-bottom: 20px; border-radius: 6px; padding: 12px 16px;"
+      style="margin-bottom: 1%;"
     />
 
     <el-form 
@@ -19,7 +18,6 @@
       :rules="rules" 
       ref="FormRef" 
       label-position="left"
-      style="max-width: 480px;"
     >
       <!-- 用户编号（禁用） -->
       <el-form-item label="用户编号" prop="userId">
@@ -27,7 +25,6 @@
           v-model="form.userId" 
           placeholder="请输入" 
           disabled 
-          style="background: #f8f9fa; border-radius: 6px;"
         />
       </el-form-item>
 
@@ -37,7 +34,6 @@
           v-model="form.userName" 
           placeholder="请输入" 
           disabled 
-          style="background: #f8f9fa; border-radius: 6px;"
         />
       </el-form-item>
 
@@ -49,7 +45,6 @@
           :prefix-icon="Lock"
           type="password"
           show-password
-          style="border-radius: 6px;"
         />
       </el-form-item>
 
@@ -61,7 +56,6 @@
           :prefix-icon="Lock"
           type="password"
           show-password
-          style="border-radius: 6px;"
         />
       </el-form-item>
 
@@ -73,17 +67,15 @@
           :prefix-icon="Lock"
           type="password"
           show-password
-          style="border-radius: 6px;"
         />
       </el-form-item>
     </el-form>
 
     <!-- 保存按钮 -->
-    <div style="margin-top: 24px; text-align: left;">
+    <div style="text-align: left;">
       <el-button 
         type="primary" 
         @click="submit"
-        style="padding: 8px 24px; border-radius: 6px;"
       >
         保存
       </el-button>
@@ -164,37 +156,11 @@ function logout(){
     });
 }
 
-
 </script>
 <style scoped>
-/* 输入框聚焦效果 */
-.el-input:focus, .el-input:hover {
-  border-color: #409eff;
-  box-shadow: 0 0 0 2px rgba(64,158,255,0.1);
-}
-
-/* 禁用输入框样式优化 */
-.el-input[disabled] {
-  background-color: #f8f9fa;
-  border-color: #e4e7ed;
-  color: #606266;
-}
-
 /* 按钮悬停动画 */
 .el-button:not(.is-disabled):hover {
   transform: translateY(-1px);
   transition: transform 0.1s ease;
-}
-
-/* 表单标签样式 */
-.el-form-item__label {
-  font-size: 14px;
-  color: #303133;
-}
-
-/* 校验错误提示样式 */
-.el-form-item__error {
-  padding-top: 4px;
-  font-size: 12px;
 }
 </style>

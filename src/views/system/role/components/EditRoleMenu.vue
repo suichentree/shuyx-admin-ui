@@ -2,8 +2,8 @@
   <el-form>
       <el-form-item>
         <el-col>
-            <el-button type="primary" @click="search" size="small">查询菜单</el-button>
-            <el-button type="primary" @click="toupdate" size="small">更新菜单</el-button>
+            <el-button type="primary" @click="search" >查询菜单</el-button>
+            <el-button type="primary" @click="toupdate" >更新菜单</el-button>
         </el-col>
       </el-form-item>
       <el-form-item>

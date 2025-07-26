@@ -55,7 +55,7 @@
   </template>
 </template>
 <script setup>
-import { computed, onMounted, onUnmounted,watch,ref } from 'vue'
+import { computed } from 'vue'
 //导入headerStore
 import { useHeaderStore } from '@/stores/headerStore'
 //导入MenuStore

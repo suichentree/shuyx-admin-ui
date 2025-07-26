@@ -1,56 +1,68 @@
 <template>
+  <el-space direction="vertical" :fill="true" style="width: 100%">
   <!--查询条件-->
-  <el-card shadow="never" :body-style="{ padding: '10px' }">
-    <el-row justify="space-between">
-      <el-col :span="12"><el-tag>查询条件</el-tag></el-col>
-      <el-col :span="12" style="text-align: right">
-        <el-button type="primary" @click="search()">搜索</el-button>
-      </el-col>
-    </el-row>
-    <el-form :inline="true" ref="formRef" :model="queryform">
-      <el-form-item label="媒体名称" prop="mediaName">
-        <el-input v-model="queryform.mediaName" placeholder="请输入" clearable />
-      </el-form-item>
-    </el-form>
+  <el-card shadow="never" :body-style="{ padding: '0px' }">
+    <div class="card-div">
+      <el-row justify="space-between">
+        <el-col :span="12"><el-tag type="info">查询条件</el-tag></el-col>
+        <el-col :span="12" style="text-align: right">
+          <el-button type="primary" @click="search()">搜索</el-button>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="card-div">
+      <el-form :inline="true" ref="formRef" :model="queryform">
+        <el-form-item label="媒体名称" prop="mediaName">
+          <el-input v-model="queryform.mediaName" placeholder="请输入" clearable/>
+        </el-form-item>
+      </el-form>
+    </div>
   </el-card>
   <!--查询结果-->
-  <el-card shadow="never" :body-style="{ padding: '10px'}" style="margin-top:10px">
-    <el-row justify="space-between">
-      <el-col :span="12"><el-tag>查询结果</el-tag></el-col>
-      <el-col :span="12" style="text-align: right">
-        <el-button type="success" @click="toAdd()">新增</el-button>
-      </el-col>
-    </el-row>
-    <!--数据表格-->
-    <el-table :data="tableData" border>
-      <el-table-column label="媒体ID" key="mediaId" prop="media.mediaId" />
-      <el-table-column label="媒体名称" key="mediaName" prop="media.mediaName" />
-      <el-table-column label="剧集ID" key="episodesId" prop="episodesId" />
-      <el-table-column label="剧集序号" key="episodesNumber" prop="episodesNumber" />
-      <el-table-column label="剧集名称" key="episodesName" prop="episodesName" />
-      <el-table-column label="剧集链接" key="episodesUrl" prop="episodesUrl" show-overflow-tooltip/>
-      <el-table-column label="操作">
-        <template #default="scope">
-          <el-tooltip content="修改" placement="top">
-            <el-button link type="primary" icon="Edit" @click="toEdit(scope.row)" />
-          </el-tooltip>
-          <el-tooltip content="删除" placement="top">
-            <el-button link type="primary" icon="Delete" @click="toDelete(scope.row)" />
-          </el-tooltip>
-        </template>
-      </el-table-column>
-    </el-table>
-    <!--表格分页-->
-    <el-pagination
-          @change="changePageData"
-          v-model:current-page="pageData.pageNum"
-          v-model:page-size="pageData.pageSize"
-          :page-sizes="pageData.pageSizes"
-          :background="true"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="pageData.total"
-        />
+  <el-card shadow="never" :body-style="{ padding: '0px'}">
+    <div class="card-div">
+      <el-row justify="space-between">
+        <el-col :span="12"><el-tag type="info">查询结果</el-tag></el-col>
+        <el-col :span="12" style="text-align: right">
+          <el-button type="success" @click="toAdd()">新增</el-button>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="card-div">
+      <!--数据表格-->
+      <el-table :data="tableData" border>
+        <el-table-column label="媒体ID" key="mediaId" prop="media.mediaId" show-overflow-tooltip/>
+        <el-table-column label="媒体名称" key="mediaName" prop="media.mediaName" show-overflow-tooltip/>
+        <el-table-column label="剧集ID" key="episodesId" prop="episodesId" show-overflow-tooltip/>
+        <el-table-column label="剧集序号" key="episodesNumber" prop="episodesNumber" show-overflow-tooltip/>
+        <el-table-column label="剧集名称" key="episodesName" prop="episodesName" show-overflow-tooltip/>
+        <el-table-column label="剧集链接" key="episodesUrl" prop="episodesUrl" show-overflow-tooltip/>
+        <el-table-column label="操作">
+          <template #default="scope">
+            <el-tooltip content="修改" placement="top">
+              <el-button link type="primary" icon="Edit" @click="toEdit(scope.row)" />
+            </el-tooltip>
+            <el-tooltip content="删除" placement="top">
+              <el-button link type="primary" icon="Delete" @click="toDelete(scope.row)" />
+            </el-tooltip>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+    <div class="card-div">
+        <!--表格分页-->
+        <el-pagination
+              @change="changePageData"
+              v-model:current-page="pageData.pageNum"
+              v-model:page-size="pageData.pageSize"
+              :page-sizes="pageData.pageSizes"
+              :background="true"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="pageData.total"
+            />
+      </div>
   </el-card>
+  </el-space>
   <!--新增对话框-->
   <AddView />
   <!--编辑对话框-->
@@ -144,4 +156,15 @@ function doDelete(obj) {
     })
 }
 </script>
-<style scoped></style>
+<style scoped>
+/* 按钮悬停动画 */
+.el-button:not(.is-disabled):hover {
+  transform: translateY(-1px);
+  transition: transform 0.1s ease;
+}
+
+/* 卡片内边距样式 */
+.card-div {
+  padding: 10px; 
+}
+</style>

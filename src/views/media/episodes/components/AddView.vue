@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="DialogVisible"
-    width="40%"
+    width="50%"
     :show-close="false"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
@@ -12,17 +12,15 @@
     </template>
     <el-form :model="form" ref="formRef">
       <el-form-item label="选择媒体" prop="mediaId">
-        <el-select v-model="form.mediaId" placeholder="Select" style="width: 240px" filterable remote :remote-method="findAllMedia">
+        <el-select v-model="form.mediaId" placeholder="Select" style="width: 200px" filterable remote :remote-method="findAllMedia">
           <el-option
             v-for="item in mediaArray"
             :key="item.mediaId"
             :label="item.mediaName"
             :value="item.mediaId"
           >
-            <span style="float: left">{{ item.mediaName }}</span>
-            <span style="float: right; color: var(--el-text-color-secondary); font-size: 13px">媒体编号 {{
-              item.mediaId
-            }}</span>
+            <span>{{ item.mediaName }}</span>
+            <span>媒体编号 {{item.mediaId}}</span>
           </el-option>
         </el-select>
       </el-form-item>

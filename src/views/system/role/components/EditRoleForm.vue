@@ -1,9 +1,9 @@
 <template>
     <el-form :model="formData" :rules="rules" ref="formDataRef">
-        <el-form-item label="角色编号" prop="roleId" style="width: 100%">
+        <el-form-item label="角色编号" prop="roleId" >
             <el-input v-model="formData.roleId" disabled />
         </el-form-item>
-        <el-form-item label="上级角色" prop="parentId" style="width: 100%">
+        <el-form-item label="上级角色" prop="parentId">
             <el-tree-select
             :props="{ value: 'roleId', label: 'roleName', children: 'children' }"
             v-model="formData.parentId"
@@ -15,7 +15,7 @@
             style="width: 200px"
             />
         </el-form-item>
-        <el-form-item label="角色名称" prop="roleName" style="width: 100%">
+        <el-form-item label="角色名称" prop="roleName" >
             <el-input v-model="formData.roleName" placeholder="请输入" clearable />
         </el-form-item>
         <el-form-item label="角色编码" prop="roleCode">

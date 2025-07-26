@@ -39,8 +39,8 @@
                 </el-form-item>
                 <el-form-item prop="gender">
                     <el-radio-group  v-model="registerForm.gender">
-                        <el-radio label="0">男</el-radio>
-                        <el-radio label="1">女</el-radio>
+                        <el-radio :value="0">男</el-radio>
+                        <el-radio :value="1">女</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item prop="birthday">

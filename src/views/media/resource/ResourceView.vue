@@ -1,14 +1,17 @@
 <template>
   <el-space direction="vertical" :fill="true" style="width: 100%">
     <!--查询条件-->
-    <el-card shadow="never" :body-style="{ padding: '10px' }">
-        <el-row justify="space-between">
-          <el-col :span="2"><el-tag>查询条件</el-tag></el-col>
-          <el-col :span="6" style="text-align: right">
-            <el-button type="primary" @click="search">搜索</el-button>
-            <el-button @click="resetQuery">重置</el-button>
-          </el-col>
-        </el-row>
+    <el-card shadow="never" :body-style="{ padding: '0px' }">
+      <div class="card-div">
+          <el-row justify="space-between">
+            <el-col :span="2"><el-tag type="info">查询条件</el-tag></el-col>
+            <el-col :span="6" style="text-align: right">
+              <el-button type="primary" @click="search">搜索</el-button>
+              <el-button @click="resetQuery">重置</el-button>
+            </el-col>
+          </el-row>
+      </div>
+      <div class="card-div">
         <el-form :inline="true" :model="queryform" ref="queryformRef">
           <el-form-item label="媒体名称" prop="mediaName">
             <el-input v-model="queryform.mediaName" placeholder="请输入" clearable />
@@ -24,23 +27,31 @@
             </el-select>
           </el-form-item>
         </el-form>
+      </div>
     </el-card>
     <!--查询结果-->
-    <el-card shadow="never" :body-style="{ padding: '10px' }">
+    <el-card shadow="never" :body-style="{ padding: '0px' }">
+      <div class="card-div">
         <el-row justify="space-between">
-          <el-col :span="2"><el-tag>查询结果</el-tag></el-col>
+          <el-col :span="2"><el-tag type="info">查询结果</el-tag></el-col>
           <el-col :span="6" style="text-align: right">
             <el-button type="success" @click="AddDialogVisible = true">新增</el-button>
           </el-col>
         </el-row>
+      </div>
+      <div class="card-div">
         <!--数据表格-->
-        <el-table :data="tableData" border>
-          <el-table-column label="媒体编号"  key="mediaId" prop="mediaId" />
-          <el-table-column label="媒体名称"  key="mediaName" prop="mediaName" />
-          <el-table-column label="媒体分类" key="mediaType" prop="mediaType" />
+        <el-table :data="tableData" 
+          border 
+          stripe
+          :header-cell-style="{ background: '#f8f9fa', color: '#303133',}"
+        >
+          <el-table-column label="媒体编号"  key="mediaId" prop="mediaId" show-overflow-tooltip/>
+          <el-table-column label="媒体名称"  key="mediaName" prop="mediaName" show-overflow-tooltip/>
+          <el-table-column label="媒体分类" key="mediaType" prop="mediaType" show-overflow-tooltip/>
           <el-table-column label="媒体标签"  key="mediaTag" prop="mediaTag" show-overflow-tooltip/>
-          <el-table-column label="导演"  key="director" prop="director" />
-          <el-table-column label="演员"  key="actor" prop="actor" />
+          <el-table-column label="导演"  key="director" prop="director" show-overflow-tooltip/>
+          <el-table-column label="演员"  key="actor" prop="actor" show-overflow-tooltip/>
           <el-table-column
             label="上映日期"
             key="releaseDate"
@@ -67,6 +78,8 @@
             </template>
           </el-table-column>
         </el-table>
+      </div>
+      <div class="card-div">
         <!--表格分页-->
         <el-pagination
           @change="changePageData"
@@ -77,6 +90,7 @@
           layout="total, sizes, prev, pager, next, jumper"
           :total="pageData.total"
         />
+      </div>
     </el-card>
   </el-space>
   <!--新增对话框-->
@@ -213,4 +227,14 @@ function DateTimeformatter(row) {
 
 </script>
 <style scoped>
+/* 按钮悬停动画 */
+.el-button:not(.is-disabled):hover {
+  transform: translateY(-1px);
+  transition: transform 0.1s ease;
+}
+
+/* 卡片内边距样式 */
+.card-div {
+  padding: 10px; 
+}
 </style>

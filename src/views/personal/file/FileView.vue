@@ -1,53 +1,100 @@
 <template>
+  <el-space direction="vertical" :fill="true" style="width: 100%;">
   <!-- 查询条件卡片 -->
-  <el-card 
-    shadow="always" 
-    :body-style="{ padding: '16px 20px' }" 
-    style="margin-top: 16px; border-radius: 8px;"
-  >
-    <el-row justify="space-between" style="margin-bottom: 12px;">
-      <el-col :span="2"><el-tag type="info" effect="light">查询条件</el-tag></el-col>
-      <el-col :span="6" style="text-align: right">
-        <el-button 
-          type="primary" 
-          @click="search"
-          style="padding: 8px 16px; border-radius: 6px;"
-        >搜索</el-button>
-        <el-button 
-          @click="resetQuery"
-          style="padding: 8px 16px; border-radius: 6px; margin-left: 8px;"
-        >重置</el-button>
-      </el-col>
-    </el-row>
-    <el-form :inline="true" :model="queryform" ref="queryformRef">
-      <el-form-item label="文件名称" prop="fileName">
-        <el-input 
-          v-model="queryform.fileName" 
-          placeholder="请输入文件名称" 
-          clearable 
-          style="border-radius: 6px; width: 240px;"
-        />
-      </el-form-item>
-    </el-form>
+  <el-card shadow="always" :body-style="{ padding: '0px' }" >
+    <div class="card-div">
+      <el-row justify="space-between">
+        <el-col :span="2"><el-tag type="info">查询条件</el-tag></el-col>
+        <el-col :span="6" style="text-align: right">
+          <el-button type="primary"  @click="search">搜索</el-button>
+          <el-button @click="resetQuery">重置</el-button>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="card-div">
+      <el-form :inline="true" :model="queryform" ref="queryformRef">
+        <el-form-item label="文件名称" prop="fileName">
+          <el-input 
+            v-model="queryform.fileName" 
+            placeholder="请输入文件名称" 
+            clearable 
+          />
+        </el-form-item>
+      </el-form>
+    </div>
   </el-card>
-
-  <!-- 下载进度条 -->
-  <el-card
-    v-if="isShowProgress"
-    shadow="always"
-    :body-style="{ padding: '16px 20px' }"
-    style="margin-top: 16px; border-radius: 8px;"
-  >
+  <!-- 查询结果卡片 -->
+  <el-card shadow="always" :body-style="{ padding: '0px' }" >
+    <div class="card-div">
+      <el-row justify="space-between" >
+        <el-col :span="2"><el-tag type="info">查询结果</el-tag></el-col>
+        <el-col :span="6" style="text-align: right">
+          <el-button type="success" @click="AddDialogVisible = true">上传文件</el-button>
+          <el-button type="primary"  @click="AddDialogVisible = true">分享文件</el-button>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="card-div">
+        <!-- 数据表格 -->
+        <el-table 
+          :data="tableData" 
+          border 
+          :header-cell-style="{ background: '#f8f9fa', color: '#303133' }"
+        >
+          <el-table-column label="文件编号" key="fileId" prop="fileId" show-overflow-tooltip/>
+          <el-table-column label="文件名称" key="fileName" prop="fileName" show-overflow-tooltip />
+          <el-table-column label="文件大小(单位MB)" key="fileSize" prop="fileSize" show-overflow-tooltip/>
+          <el-table-column label="文件地址" key="fileAddress" prop="fileAddress" show-overflow-tooltip />
+          <el-table-column label="备注" key="remark" prop="remark" show-overflow-tooltip />
+          <el-table-column label="操作">
+            <template #default="scope">
+              <el-tooltip content="下载文件" placement="top">
+                <el-button 
+                  link 
+                  type="primary" 
+                  icon="Download" 
+                  @click="toDownload(scope.row)"
+                />
+              </el-tooltip>
+              <el-tooltip content="删除" placement="top">
+                <el-button 
+                  link 
+                  type="danger" 
+                  icon="Delete" 
+                  @click="toDelete(scope.row)"
+                />
+              </el-tooltip>
+            </template>
+          </el-table-column>
+        </el-table>
+    </div>
+    <div class="card-div">
+      <!-- 表格分页 -->
+      <el-pagination
+        @change="changePageData"
+        v-model:current-page="pageData.pageNum"
+        v-model:page-size="pageData.pageSize"
+        :page-sizes="pageData.pageSizes"
+        :background="true"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="pageData.total"
+      />
+    </div>
+  </el-card>
+  </el-space>
+  <!-- 新增对话框 -->
+  <AddView />
+   <!-- 下载进度条 -->
+  <el-card v-if="isShowProgress" shadow="always" :body-style="{ padding: '0px' }" >
     <el-dialog
       v-model="isShowProgress"
       title="文件下载中"
       :show-close="false"
-      :close-on-click-modal="false"
+      :close-on-click-modal="true"
       :close-on-press-escape="false"
       destroy-on-close
-      style="--el-dialog-width: 400px;"
     >
-      <div style="text-align: center; margin: 16px 0;">
+      <div style="text-align: center;">
         <el-progress
           :text-inside="true"
           :stroke-width="24"
@@ -56,85 +103,10 @@
           striped
           striped-flow
         />
-        <div style="margin-top: 8px; color: #606266;">{{ progressPercent }}%</div>
+        <div>{{ progressPercent }}%</div>
       </div>
     </el-dialog>
   </el-card>
-
-  <!-- 查询结果卡片 -->
-  <el-card 
-    shadow="always" 
-    :body-style="{ padding: '16px 20px' }" 
-    style="margin-top: 16px; border-radius: 8px;"
-  >
-    <el-row justify="space-between" style="margin-bottom: 12px;">
-      <el-col :span="2"><el-tag type="info" effect="light">查询结果</el-tag></el-col>
-      <el-col :span="6" style="text-align: right">
-        <el-button 
-          type="success" 
-          @click="AddDialogVisible = true"
-          style="padding: 8px 16px; border-radius: 6px;"
-        >上传文件</el-button>
-        <el-button 
-          type="primary" 
-          @click="AddDialogVisible = true"
-          style="padding: 8px 16px; border-radius: 6px; margin-left: 8px;"
-        >分享文件</el-button>
-      </el-col>
-    </el-row>
-
-    <!-- 数据表格 -->
-    <el-table 
-      :data="tableData" 
-      border 
-      style="margin: 12px 0; border-radius: 6px; overflow: hidden;"
-      :header-cell-style="{ background: '#f8f9fa', color: '#303133' }"
-      :row-style="{ height: '48px' }"
-    >
-      <el-table-column label="文件编号" key="fileId" prop="fileId" />
-      <el-table-column label="文件名称" key="fileName" prop="fileName" show-overflow-tooltip />
-      <el-table-column label="文件大小(单位MB)" key="fileSize" prop="fileSize" />
-      <el-table-column label="文件地址" key="fileAddress" prop="fileAddress" show-overflow-tooltip />
-      <el-table-column label="备注" key="remark" prop="remark" show-overflow-tooltip />
-      <el-table-column label="操作">
-        <template #default="scope">
-          <el-tooltip content="下载文件" placement="top">
-            <el-button 
-              link 
-              type="primary" 
-              icon="Download" 
-              @click="toDownload(scope.row)"
-              style="color: #409eff; padding: 0 8px;"
-            />
-          </el-tooltip>
-          <el-tooltip content="删除" placement="top">
-            <el-button 
-              link 
-              type="danger" 
-              icon="Delete" 
-              @click="toDelete(scope.row)"
-              style="color: #f56c6c; padding: 0 8px;"
-            />
-          </el-tooltip>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <!-- 表格分页 -->
-    <el-pagination
-      @change="changePageData"
-      v-model:current-page="pageData.pageNum"
-      v-model:page-size="pageData.pageSize"
-      :page-sizes="pageData.pageSizes"
-      :background="true"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="pageData.total"
-      style="margin-top: 16px;"
-    />
-  </el-card>
-
-  <!-- 新增对话框 -->
-  <AddView />
 </template>
 <script setup>
 import { ref, onMounted, provide } from 'vue'
@@ -263,26 +235,15 @@ function changePageData() {
 }
 </script>
 <style scoped>
-/* 优化输入框聚焦效果 */
-.el-input:focus, .el-input:hover {
-  border-color: #409eff;
-  box-shadow: 0 0 0 2px rgba(64,158,255,0.1);
-}
-
-/* 调整标签样式 */
-.el-tag {
-  font-weight: 500;
-  padding: 4px 8px;
-}
-
-/* 优化按钮悬停效果 */
+/* 按钮悬停动画 */
 .el-button:not(.is-disabled):hover {
   transform: translateY(-1px);
   transition: transform 0.1s ease;
 }
 
-/* 表格行悬停样式 */
-.el-table__body tr:hover > td {
-  background-color: #f8f9fa !important;
+/* 卡片内边距样式 */
+.card-div {
+  padding: 10px; 
 }
+
 </style>

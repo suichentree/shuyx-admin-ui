@@ -68,13 +68,9 @@
   </el-dialog>
 </template>
 <script setup>
-import { ref, inject, onMounted, getCurrentInstance } from 'vue'
+import { ref, inject, onMounted } from 'vue'
 import MediaAPIResources from '@/api/media.service.js'
 import { ElMessage } from 'element-plus'
-import OSSAPIResources from '@/api/oss.service.js'
-
-//this
-const { proxy } = getCurrentInstance()
 //接收父组件传递的数据
 let DialogVisible = inject('AddDialogVisible')
 
