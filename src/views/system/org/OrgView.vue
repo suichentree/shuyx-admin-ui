@@ -4,7 +4,7 @@
     <el-card shadow="never" :body-style="{ padding: '0px' }">
       <div class="card-div">
         <el-row justify="space-between">
-          <el-col :span="2"><el-tag>查询条件</el-tag></el-col>
+          <el-col :span="2"><el-tag type="info">查询条件</el-tag></el-col>
           <el-col :span="6" style="text-align: right">
             <el-button type="primary" @click="search">搜索</el-button>
             <el-button @click="resetQuery">重置</el-button>
@@ -28,7 +28,7 @@
     <el-card shadow="never" :body-style="{ padding: '0px' }">
       <div class="card-div">
         <el-row justify="space-between">
-          <el-col :span="2"><el-tag>查询结果</el-tag></el-col>
+          <el-col :span="2"><el-tag type="info">查询结果</el-tag></el-col>
           <el-col :span="6" style="text-align: right">
             <el-button type="success" @click="AddDialogVisible = true">新增</el-button>
           </el-col>
@@ -37,7 +37,7 @@
       <div class="card-div">
         <!--数据表格-->
         <el-table :data="tableData" row-key="orgId" default-expand-all border stripe 
-          :header-cell-style="{ background: '#f8f9fa', color: '#303133', height: '48px' }">
+          :header-cell-style="{ background: '#f8f9fa', color: '#303133'}">
           <el-table-column label="组织机构编号" align="left" key="orgId" prop="orgId" />
           <el-table-column label="组织机构名称" align="center" key="orgName" prop="orgName" />
           <el-table-column label="组织机构路径" align="center" key="orgPath" prop="orgPath" />
@@ -183,7 +183,14 @@ function deleteOrg(orgId) {
 
 </script>
 <style scoped>
+/* 按钮悬停动画 */
+.el-button:not(.is-disabled):hover {
+  transform: translateY(-1px);
+  transition: transform 0.1s ease;
+}
+
+/* 卡片内边距样式 */
 .card-div {
-  padding: 5px;
+  padding: 10px; 
 }
 </style>

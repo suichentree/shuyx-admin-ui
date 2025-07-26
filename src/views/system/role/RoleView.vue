@@ -1,79 +1,55 @@
 <template>
-  <!-- 响应式容器，限制最大宽度 -->
-  <div class="responsive-container">
-    <el-row style="height: 100%" :gutter="16"> <!-- 调整列间距为16px -->
-      <!-- 左侧角色树列（小屏幕占满宽度） -->
-      <el-col :span="8" :xs="24" :sm="24" :md="8">
-        <el-card 
-          shadow="always" 
-          :body-style="{ padding: '16px 20px' }" 
-          style="height: 100%; border-radius: 8px;" 
-        >
-          <!-- 标题与新增按钮 -->
-          <div class="card-header">
+  <div>
+    <el-row style="height: 100%" :gutter="16"> 
+      <!-- 左侧角色树（小屏幕24,中等屏幕8） -->
+      <el-col :xs="24" :sm="8">
+        <el-card shadow="always" :body-style="{ padding: '0px' }" style="height: 100%;" >
+          <div class="card-div">
             <el-row justify="space-between" align="middle">
-              <el-tag type="info" effect="light">角色树</el-tag>  <!-- 优化标签样式 -->
-              <el-button 
-                type="success" 
-                @click="toAdd" 
-                size="small"
-                style="padding: 4px 12px; border-radius: 6px;" 
-              >
+              <el-tag type="info">角色树</el-tag>
+              <el-button  type="success"   @click="toAdd" size="small">
                 新增角色
               </el-button>
             </el-row>
           </div>
-
           <!-- 搜索输入框 -->
-          <div class="card-search" style="margin-top: 12px;">
-            <el-input 
-              v-model="queryform.roleName" 
-              placeholder="搜索角色名称" 
-              clearable
-              style="border-radius: 6px;" 
-            >
+          <div class="card-div">
+            <el-input v-model="queryform.roleName"  placeholder="搜索角色名称" clearable >
               <template #append>
-                <el-button 
-                  :icon="Search" 
-                  @click="search"
-                  style="border-radius: 0 6px 6px 0;" 
-                />
+                <el-button :icon="Search"  @click="search"/>
               </template>
             </el-input>
           </div>
-
           <!-- 角色树组件 -->
-          <div class="card-tree" style="margin-top: 16px; height: calc(100% - 80px); overflow-y: auto;">
+          <div class="card-div" >
             <el-tree 
               :data="treeData" 
               :props="{children:'children',label:'roleName'}" 
               @node-click="handleNodeClick" 
               default-expand-all 
               :highlight-current="true"
-              style="background: #f8f9fa; padding: 12px; border-radius: 6px;" 
+              style="background: #f8f9fa;" 
             />
           </div>
         </el-card>
       </el-col>
 
-      <!-- 右侧标签页列（小屏幕占满宽度） -->
-      <el-col :span="16" :xs="24" :sm="24" :md="16">
-        <el-card 
-          shadow="always" 
-          :body-style="{ padding: '16px 20px' }" 
-          style="border-radius: 8px; height: 100%;"
-        >
-          <el-tabs type="border-card" class="demo-tabs">
-            <el-tab-pane label="角色信息维护">
-              <EditRoleForm/>
-            </el-tab-pane>
-            <el-tab-pane label="角色菜单维护" lazy="true">
-              <EditRoleMenu/>
-            </el-tab-pane>
-            <el-tab-pane label="角色用户维护" lazy="true">
-              <EditRoleUser/>
-            </el-tab-pane>
-          </el-tabs>
+      <!-- 右侧标签页列（小屏幕24,中等屏幕16） -->
+      <el-col :xs="24" :sm="16">
+        <el-card shadow="always" :body-style="{ padding: '0px' }" style="height: 100%;" >
+          <div class="card-div">
+              <el-tabs type="border-card">
+                <el-tab-pane label="角色信息维护">
+                  <EditRoleForm/>
+                </el-tab-pane>
+                <el-tab-pane label="角色菜单维护" lazy="true">
+                  <EditRoleMenu/>
+                </el-tab-pane>
+                <el-tab-pane label="角色用户维护" lazy="true">
+                  <EditRoleUser/>
+                </el-tab-pane>
+              </el-tabs>
+          </div>
         </el-card>
       </el-col>
     </el-row>
@@ -169,54 +145,15 @@ function search() {
 </script>
 
 <style scoped>
-/* 响应式容器，限制最大宽度并居中 */
-.responsive-container {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 16px; /* 替代外部margin，使用内边距控制整体间距 */
+/* 按钮悬停动画 */
+.el-button:not(.is-disabled):hover {
+  transform: translateY(-1px);
+  transition: transform 0.1s ease;
 }
 
-/* 卡片头部样式 */
-.card-header {
-  padding-bottom: 8px; /* 替代margin，使用底部内边距 */
+/* 卡片内边距样式 */
+.card-div {
+  padding: 10px; 
 }
 
-/* 搜索区域样式 */
-.card-search .el-input {
-  border-color: #e4e7ed;
-  transition: all 0.3s;
-}
-
-.card-search .el-input:focus, 
-.card-search .el-input:hover {
-  border-color: #409eff;
-  box-shadow: 0 0 0 2px rgba(64,158,255,0.1); /* 新增聚焦阴影 */
-}
-
-/* 树组件样式优化 */
-.el-tree {
-  --el-tree-node-hover-bg-color: #f0f2f5; /* 调整悬停背景色 */
-  --el-tree-node-padding: 4px 0; /* 调整节点间距 */
-}
-
-/* 标签页样式优化 */
-.el-tabs.demo-tabs {
-  height: 100%; /* 标签页占满容器高度 */
-}
-
-.el-tabs__content {
-  height: calc(100% - 40px); /* 调整内容区域高度 */
-  overflow-y: auto;
-}
-
-/* 小屏幕适配 */
-@media (max-width: 768px) {
-  .el-row {
-    height: auto !important; /* 小屏幕取消固定高度 */
-  }
-  .card-tree {
-    height: auto; /* 小屏幕树组件高度自适应 */
-    margin-bottom: 16px;
-  }
-}
 </style>

@@ -1,22 +1,13 @@
 <template>
   <el-space direction="vertical" :fill="true" style="width: 100%;">
     <!-- 查询条件卡片 -->
-    <el-card 
-      shadow="always" 
-      :body-style="{ padding: '10px 10px' }" 
-      style="border-radius: 8px;"
-    >
+    <el-card  shadow="always" :body-style="{ padding: '0px' }">
       <div class="card-div">
-        <el-row justify="space-between" style="margin-bottom: 12px;">
-          <el-col :span="2"><el-tag type="info" effect="light">查询条件</el-tag></el-col>
+        <el-row justify="space-between">
+          <el-col :span="2"><el-tag type="info">查询条件</el-tag></el-col>
           <el-col :span="6" style="text-align: right">
-            <el-button 
-              type="primary" 
-              @click="search"
-            >搜索</el-button>
-            <el-button 
-              @click="resetQuery"
-            >重置</el-button>
+            <el-button type="primary" @click="search">搜索</el-button>
+            <el-button @click="resetQuery">重置</el-button>
           </el-col>
         </el-row>
       </div>
@@ -27,7 +18,6 @@
               v-model="queryform.userName" 
               placeholder="请输入用户名称" 
               clearable 
-              style="border-radius: 6px; width: 200px;"
             />
           </el-form-item>
           <el-form-item label="用户状态" prop="status">
@@ -35,7 +25,7 @@
               v-model="queryform.status" 
               placeholder="请选择用户状态" 
               clearable 
-              style="width: 200px; border-radius: 6px;"
+              style="width: 200px;"
             >
               <el-option v-for="obj in userStatusDict" :key="obj.value" :label="obj.label" :value="obj.value" />
             </el-select>
@@ -45,7 +35,6 @@
               v-model="queryform.phone" 
               placeholder="请输入手机号码" 
               clearable 
-              style="border-radius: 6px; width: 200px;"
             />
           </el-form-item>
           <el-form-item label="所属组织机构" prop="orgId">
@@ -57,7 +46,7 @@
               :render-after-expand="false"
               placeholder="请选择组织机构"
               clearable
-              style="width: 240px; border-radius: 6px;"
+              style="width: 200px;"
             />
           </el-form-item>
           <el-form-item label="创建时间" prop="dateRange">
@@ -69,7 +58,7 @@
               start-placeholder="开始日期" 
               end-placeholder="结束日期" 
               clearable
-              style="width: 280px; border-radius: 6px;"
+              style="width: 200px;"
             />
           </el-form-item>
         </el-form>
@@ -79,16 +68,13 @@
     <!-- 查询结果卡片 -->
     <el-card 
       shadow="always" 
-      :body-style="{ padding: '10px 10px' }" 
-      style="border-radius: 8px;"
+      :body-style="{ padding: '0px' }" 
     >
       <div class="card-div">
         <el-row justify="space-between">
-          <el-col :span="2"><el-tag type="info" effect="light">查询结果</el-tag></el-col>
+          <el-col :span="2"><el-tag type="info">查询结果</el-tag></el-col>
           <el-col :span="6" style="text-align: right">
-            <el-button 
-              type="success" 
-              @click="AddUserDialogVisible = true"
+            <el-button type="success" @click="AddUserDialogVisible = true"
             >新增</el-button>
           </el-col>
         </el-row>
@@ -99,9 +85,7 @@
           :data="tableData" 
           border 
           stripe
-          style="border-radius: 6px; overflow: hidden;"
-          :header-cell-style="{ background: '#f8f9fa', color: '#303133', height: '48px' }"
-          :row-style="{ height: '48px' }"
+          :header-cell-style="{ background: '#f8f9fa', color: '#303133',}"
         >
           <el-table-column label="用户编号" align="center" key="userId" prop="userId" show-overflow-tooltip/>
           <el-table-column label="用户名称" align="center" key="userName" prop="userName" show-overflow-tooltip/>
@@ -308,34 +292,14 @@ function changePageData() {
 
 </script>
 <style scoped>
-/* 输入框/选择器聚焦效果 */
-.el-input:focus, .el-input:hover,
-.el-select:focus, .el-select:hover,
-.el-date-picker:focus, .el-date-picker:hover,
-.el-tree-select:focus, .el-tree-select:hover {
-  border-color: #409eff;
-  box-shadow: 0 0 0 2px rgba(64,158,255,0.1);
-}
-
 /* 按钮悬停动画 */
 .el-button:not(.is-disabled):hover {
   transform: translateY(-1px);
   transition: transform 0.1s ease;
 }
 
-/* 表格行悬停样式 */
-.el-table__body tr:hover > td {
-  background-color: #f8f9fa !important;
-}
-
-/* 标签样式调整 */
-.el-tag {
-  font-weight: 500;
-  padding: 4px 8px;
-}
-
-/* 原有card-div样式优化 */
+/* 卡片内边距样式 */
 .card-div {
-  padding: 8px 0; /* 调整内边距与卡片整体风格一致 */
+  padding: 10px; 
 }
 </style>

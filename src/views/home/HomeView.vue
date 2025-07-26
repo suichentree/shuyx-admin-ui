@@ -1,7 +1,7 @@
 <template>
   <!-- 统计卡片-->
   <el-row :gutter="20" style="padding: 20px 16px;">
-    <el-col :span="24" :xs="24" :sm="12" :md="6" :lg="6">
+    <el-col :sm="6" :xs="24">
       <el-card 
         :body-style="{ padding: '16px 20px' }" 
         shadow="always" 
@@ -17,7 +17,7 @@
         </el-statistic>
       </el-card>
     </el-col>
-    <el-col :span="24" :xs="24" :sm="12" :md="6" :lg="6">
+    <el-col :sm="6" :xs="24">
       <el-card 
         :body-style="{ padding: '16px 20px' }" 
         shadow="always" 
@@ -33,7 +33,7 @@
         </el-statistic>
       </el-card>
     </el-col>
-    <el-col :span="24" :xs="24" :sm="12" :md="6" :lg="6">
+    <el-col :sm="6" :xs="24">
       <el-card 
         :body-style="{ padding: '16px 20px' }" 
         shadow="always" 
@@ -49,7 +49,7 @@
         </el-statistic>
       </el-card>
     </el-col>
-    <el-col :span="24" :xs="24" :sm="12" :md="6" :lg="6">
+    <el-col :sm="6" :xs="24">
       <el-card 
         :body-style="{ padding: '16px 20px' }" 
         shadow="always" 
@@ -70,10 +70,10 @@
   <!-- 优化后的图表容器 -->
   <div style="padding: 10px 16px;">
     <el-row :gutter="20">
-      <el-col :span="12">
+      <el-col :sm="12" :xs="24">
         <div class="chart-box" id="myPieChart"></div>
       </el-col>
-      <el-col :span="12">
+      <el-col :sm="12" :xs="24">
         <div class="chart-box" id="myLineChart"></div>
       </el-col>
     </el-row>
