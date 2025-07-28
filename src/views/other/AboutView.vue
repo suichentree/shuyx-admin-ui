@@ -17,7 +17,7 @@
       <!--描述-->
       <div class="card-content">
         <p class="desc">
-          这个UI框架主要是为了提高自己前端的技术能力而搭建的。以后要写个人项目的话,这个搭建好的前端工程也可以拿来复用。
+          这个前端工程主要为提升个人前端技术能力而搭建的。未来开发项目时,这套已搭建完成的前端工程可直接复用。
         </p>
         <div class="tech-stack">
           <el-tag type="info" effect="light" v-for="tech in techList" :key="tech">
