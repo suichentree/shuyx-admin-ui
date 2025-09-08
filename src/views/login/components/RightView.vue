@@ -49,7 +49,6 @@
               >
               <img :src="codeURL" />
               <!-- 用canvas替代img，用于自定义绘制 -->
-
               <canvas
                 v-if="hasVerifyCode"
                 ref="verifyCanvas"
@@ -76,6 +75,23 @@
               :loading="loginLoading"
               >登录</el-button
             >
+          </el-form-item>
+          <el-form-item>
+            <el-divider content-position="center">其他登录方式</el-divider>
+            <el-row justify="space-between" style="text-align:center;width: 100%;">
+              <el-col :span="6">
+                <el-icon :size="30"><Eleme /></el-icon>
+              </el-col>
+              <el-col :span="6">
+                <el-icon :size="30"><ElementPlus /></el-icon>
+              </el-col>
+              <el-col :span="6">
+                <el-icon :size="30"><SwitchFilled /></el-icon>
+              </el-col>
+              <el-col :span="6">
+                <el-icon :size="30"><ChromeFilled /></el-icon>
+              </el-col>
+            </el-row>
           </el-form-item>
           <el-form-item>
             还没有账号？
