@@ -1,11 +1,11 @@
 <template>
-  <el-space direction="vertical" :fill="true" style="width: 100%">
+  <div class="container">
     <!--查询条件-->
     <el-card shadow="never" :body-style="{ padding: '0px' }">
       <div class="card-div">
         <el-row justify="space-between">
-          <el-col :span="2"><el-tag type="info">查询条件</el-tag></el-col>
-          <el-col :span="6" style="text-align: right">
+          <el-col :span="8"><el-tag type="info">查询条件</el-tag></el-col>
+          <el-col :span="16" style="text-align: right">
             <el-button type="primary" @click="search">搜索</el-button>
             <el-button @click="resetQuery">重置</el-button>
           </el-col>
@@ -26,8 +26,8 @@
     <el-card shadow="never" :body-style="{ padding: '0px' }">
       <div class="card-div">
         <el-row justify="space-between">
-          <el-col :span="2"><el-tag type="info">查询结果</el-tag></el-col>
-          <el-col :span="6" style="text-align: right">
+          <el-col :span="8"><el-tag type="info">查询结果</el-tag></el-col>
+          <el-col :span="16" style="text-align: right">
             <el-button type="success" @click="AddDialogVisible = true">新增</el-button>
           </el-col>
         </el-row>
@@ -65,7 +65,7 @@
         />
       </div>
     </el-card>
-  </el-space>
+  </div>
   <!--新增对话框-->
   <AddView />
   <!--编辑对话框-->
@@ -169,6 +169,13 @@ function changePageData() {
 }
 </script>
 <style scoped>
+/* flex垂直布局，子元素间隔10px */
+.container{
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+}
+
 /* 按钮悬停动画 */
 .el-button:not(.is-disabled):hover {
   transform: translateY(-1px);

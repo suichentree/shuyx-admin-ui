@@ -1,5 +1,5 @@
 <script setup>
-// 组件注册
+// 引入各个组件和文件
 import Header from './Header/HeaderView.vue'
 import Aside from './Aside/AsideView.vue'
 import TagsView from "./Header/TagsView.vue"
@@ -34,7 +34,7 @@ onUnmounted(() => {
       <el-header style="padding: 0px;width: 100%;height:auto;">
         <!--头部导航栏组件-->
         <Header></Header>
-        <!--tagview组件-->
+        <!--标签栏tagview组件-->
         <TagsView></TagsView>
       </el-header>
       <!--主区域高auto自适应，宽100%，背景色灰白-->
