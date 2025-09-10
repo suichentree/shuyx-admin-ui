@@ -21,7 +21,7 @@
       />
       <p class="middle-text">SHUYX ADMIN UI</p>
       <p class="middle-text">高性能 · 精致 · 优雅</p>
-      <p class="middle-text">基于 Vue3 + Element-Plus + JS 的个人网站管理模板</p>
+      <p class="middle-text">基于Vue3 + Element-Plus + JS的后台管理模板</p>
     </div>
 </div>  
 </template>

@@ -329,21 +329,6 @@ export default [
                   ]
               },
               {
-                  "menuId": 28,
-                  "menuName": "博客管理",
-                  "parentId": 0,
-                  "menuPath": "/blog/index",
-                  "menuPage": "/src/views/blog/BlogView.vue",
-                  "menuType": 1,
-                  "visible": 0,
-                  "isLink": 0,
-                  "status": null,
-                  "icon": "DataLine",
-                  "createTime": null,
-                  "updateTime": null,
-                  "children": []
-              },
-              {
                   "menuId": 34,
                   "menuName": "个人管理",
                   "parentId": 0,
@@ -722,21 +707,6 @@ export default [
                         ]
                     },
                     {
-                        "menuId": 28,
-                        "menuName": "博客管理",
-                        "parentId": 0,
-                        "menuPath": "/blog/index",
-                        "menuPage": "/src/views/blog/BlogView.vue",
-                        "menuType": 1,
-                        "visible": 0,
-                        "isLink": 0,
-                        "status": null,
-                        "icon": "Memo",
-                        "createTime": null,
-                        "updateTime": null,
-                        "children": []
-                    },
-                    {
                         "menuId": 34,
                         "menuName": "个人管理",
                         "parentId": 0,
@@ -1113,21 +1083,6 @@ export default [
                 children: []
               }
             ]
-          },
-          {
-            menuId: 28,
-            menuName: "博客管理",
-            parentId: 0,
-            menuPath: "/blog/index",
-            menuPage: "/src/views/blog/BlogView.vue",
-            menuType: 1,
-            visible: 0,
-            isLink: 0,
-            status: "0",
-            icon: "Memo",
-            createTime: "2024-04-05T22:36:06.000+08:00",
-            updateTime: "2024-04-05T22:36:06.000+08:00",
-            children: []
           },
           {
             menuId: 34,
