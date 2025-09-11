@@ -13,7 +13,7 @@ export default defineConfig(({mode}) =>  {
       vue(),
       viteMockServe({
         mockPath: 'src/mock', // Mock 文件存放的目录
-        enable: true,        // 开启关闭mock服务，默认开启
+        enable: true,        // 开启或关闭mock服务，默认开启
         watchFiles: true,     // 监听 Mock 文件变化
       }),
     ],
@@ -29,8 +29,8 @@ export default defineConfig(({mode}) =>  {
       proxy: {
         //当接口路径是/api开头的时候，将请求转发到如下地址
         '/api': {
-          target: "http://127.0.0.1:38080",
-          changeOrigin: true,
+          target: "http://127.0.0.1:38080",           // 后端API服务器地址
+          changeOrigin: true,                       // 设置跨域
           rewrite: (p) => p.replace(/^\/api/, '')  //将接口路径中的/api替换为空字符串
         }
       }

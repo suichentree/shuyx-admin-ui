@@ -3,7 +3,7 @@
     <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-bottom: 1px solid #f0f2f5;">
         <!-- 左侧区域-->
         <div style="display: flex;align-items: center;gap: 16px;">
-            <!-- 折叠按钮 -->
+            <!-- 折叠图标按钮 -->
             <div>
                 <el-icon @click="changeExpand()" :size="24" style="color: #606266; cursor: pointer; transition: color 0.2s;"
                   v-if="sideIsExpand" >
@@ -36,6 +36,8 @@
                 </el-icon>
                 <template #dropdown>
                     <el-dropdown-menu>
+                        <el-dropdown-item style="font-size: 14px;">全屏展示</el-dropdown-item>
+                        <el-dropdown-item style="font-size: 14px;">全局刷新</el-dropdown-item>
                         <el-dropdown-item @click="logout" style="font-size: 14px;">退出系统</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>

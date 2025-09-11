@@ -8,7 +8,7 @@
           <el-icon ><component :is="route.icon"></component></el-icon>
           <span>{{ route.name }}</span>
         </template>
-        <!--嵌套使用 SidebarItem组件-->
+        <!--递归使用 SidebarItem组件-->
         <sidebar-item
           v-for="child in route.children"
           :key="child.path"
@@ -29,7 +29,7 @@
       <el-menu-item @click="toLink(route.path)" v-else>
         <template #title>
           <el-icon ><component :is="route.icon"></component></el-icon>
-          <span>{{ route.name }}</span>
+          <span>{{ route.name }} <el-icon><Link /></el-icon> </span>
         </template>
       </el-menu-item>
     </template>
