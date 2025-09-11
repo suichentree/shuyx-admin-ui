@@ -39,7 +39,7 @@ onUnmounted(() => {
       </el-header>
       <!--主区域高auto自适应，宽100%，背景色灰白-->
       <el-main style="padding: 10px;width: 100%;height: auto;background-color: #f6f8f9;">
-        <!--通过router-view标签来显示嵌套路由的内容-->
+        <!--通过router-view标签来显示嵌套路由对应的页面内容-->
         <router-view />
       </el-main>
     </el-container>
