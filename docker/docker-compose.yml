@@ -16,3 +16,11 @@ services:
       - ./ssl:/etc/nginx/ssl 
     environment:
       - TZ=Asia/Shanghai
+    networks:
+      - docker_shuyx-network
+
+# 连接内部网络，用于与其他服务通信
+networks:
+  docker_shuyx-network:
+    driver: bridge
+    external: true
