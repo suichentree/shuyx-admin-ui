@@ -17,6 +17,7 @@ export default defineConfig(({mode}) =>  {
         watchFiles: true,     // 监听 Mock 文件变化
       }),
     ],
+    base: './',   //部署在当前目录下
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))
@@ -29,7 +30,8 @@ export default defineConfig(({mode}) =>  {
       proxy: {
         //当接口路径是/api开头的时候，将请求转发到如下地址
         '/api': {
-          target: "http://127.0.0.1:38080",           // 后端API服务器地址
+          target: "http://1.12.53.44:31001",           // 远程后端API服务器地址（主要是网关gateway服务地址）
+          // target: "http://localhost:31001",           // 本地后端API服务器地址（主要是网关gateway服务地址）
           changeOrigin: true,                       // 设置跨域
           rewrite: (p) => p.replace(/^\/api/, '')  //将接口路径中的/api替换为空字符串
         }

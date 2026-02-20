@@ -1,0 +1,18 @@
+# 远程环境的docker-compose配置文件。需要将该文件上传到远程服务器的指定目录下去执行。并给与执行权限。
+# 注意事项
+# 1. 请确保远程服务器已开启Docker服务，且用户有推送镜像的权限。
+# 2. 请确保该脚本文件有执行权限（chmod +x build_docker_images.sh）。否则会提示权限不足，无法执行。
+# 3. 请确保镜像名称和打包后上传到远程服务器的镜像名称一致。
+# 4. 请确保同目录存在ssl目录，且目录下存在证书文件。否则容器无法运行，会提示证书文件不存在。
+
+services:
+  # 网关服务
+  shuyx-admin-ui:
+    image: shuyx-admin-ui-image:latest
+    ports:
+      - "10086:10086"  # 同时支持 HTTP 和 HTTPS
+    volumes:
+      # docker-compose同目录下的ssl目录，挂载容器内的 SSL 证书目录
+      - ./ssl:/etc/nginx/ssl 
+    environment:
+      - TZ=Asia/Shanghai

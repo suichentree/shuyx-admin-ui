@@ -93,3 +93,31 @@ npm run dev
 ```sh
 npm run build
 ```
+
+
+## 页面请求接口说明
+
+对应的后台是shuyx-admin-service项目
+
+当部署到Nginx服务器中的时候，需要配置请求转发。将/api开头的请求转发到网关gateway服务地址。
+
+然后在网关gateway服务中，自行路由到对应的后台服务。
+
+
+## docker 部署说明
+
+docker目录中包含4个文件：
+
+```sh
+- Dockerfile # dockerfile文件，用于构建生产nginx镜像,并将打包产物复制到nginx静态目录，最后暴露端口10086
+- nginx.conf # nginx配置文件，nginx容器需要的配置文件，也会被打包到nginx镜像中
+- build_docker_images.sh # 构建docker镜像脚本，并将其推送到远程服务器的Docker仓库中
+- docker-compose.yml # 该文件主要在远程服务器中执行，用于启动nginx容器
+```
+
+使用顺序：
+1. 先通过build_docker_images.sh脚本构建生产nginx镜像，并将其推送到远程服务器的Docker仓库中。
+2. 然后将docker-compose.yml文件上传到远程服务器的某个目录中。注意同目录下还需要存在ssl目录，该ssl目录下需要包含证书文件。
+3. 然后执行docker-compose.yml文件，启动nginx容器。
+
+

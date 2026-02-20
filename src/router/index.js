@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import { useMenuStore } from '@/stores/menuStore'
 // 布局页面（包含侧边栏，头部导航栏）。 除了注册登录等少数页面，其他页面都会嵌套在布局页面的main区域中展示。
 import LayoutView from '@/layouts/LayoutView.vue'
@@ -94,7 +94,8 @@ export const constantRoutes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  // history: createWebHistory(),    //history模式
+  history: createWebHashHistory(),  //hash模式
   routes: constantRoutes
 })
 
