@@ -109,15 +109,18 @@ npm run build
 docker目录中包含4个文件：
 
 ```sh
-- Dockerfile # dockerfile文件，用于构建生产nginx镜像,并将打包产物复制到nginx静态目录，最后暴露端口10086
+- Dockerfile # dockerfile文件，用于构建生产镜像（基于nginx镜像）,并将打包的静态页面复制到nginx静态目录，最后暴露端口10086
 - nginx.conf # nginx配置文件，nginx容器需要的配置文件，也会被打包到nginx镜像中
 - build_docker_images.sh # 构建docker镜像脚本，并将其推送到远程服务器的Docker仓库中
 - docker-compose.yml # 该文件主要在远程服务器中执行，用于启动nginx容器
 ```
 
 使用顺序：
-1. 先通过build_docker_images.sh脚本构建生产nginx镜像，并将其推送到远程服务器的Docker仓库中。
-2. 然后将docker-compose.yml文件上传到远程服务器的某个目录中。注意同目录下还需要存在ssl目录，该ssl目录下需要包含证书文件。
-3. 然后执行docker-compose.yml文件，启动nginx容器。
+1. 先通过执行build_docker_images.sh脚本构建生产镜像（基于nginx镜像），并将其推送到远程服务器的Docker仓库中。
+2. 然后将docker-compose.yml文件上传到远程服务器的某个目录中。注意docker-compose.yml文件的同目录下还需要存在ssl目录，该ssl目录中需要包含证书文件。否则nginx容器无法读取到ssl证书，无法正常启动nginx容器。
+3. 然后使用下面的命令，执行docker-compose.yml文件，启动nginx容器。
 
+```sh
+docker-compose up -d
+```
 
